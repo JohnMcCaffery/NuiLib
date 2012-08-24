@@ -1,4 +1,21 @@
-NuiLib is a utility library intended to ease integration of NUI (Natural User Input) Devices (such as the Microsoft Kinect) into applications. By providing a simplified abstraction layer over NUI device inputs programmers can focus on the maths and the logic associated with integrating a NuiDevice into an application rather than the bookkeeping necessary to get the input in the first place. The abstraction layer also makes it easy to swap out different devices or different drivers for the same device for cross compatibility. 
+NuiLib is a utility library intended to ease integration of NUI (Natural User Input) Devices (such as the Microsoft Kinect) into applications. The abstraction layer hides the device being input from and provides easy support for common operations. Applications built using NUI lib benefit from the ability to make the logic of how the device is used clear and easy to understand. They also gain the ability to switch to different driver sets or even different devices just by changing which libraries are linked.
+
+The following code snippet is an example of NuiLib's ease of use. It demonstrates initialising the device, gaining access to the location information for two skeleton joints and then computing the vector between the two joints and then outputing this vector whenever the values change.
+<code>
+	#include <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation/_nui_lib-_a_p_i_8h_source.html">&lt;NuiLib-API.h&gt;</a>
+	using namespace NuiLib;
+	...
+	NuiFactory()-&gt;Init();
+	Vector arm = joint(HAND_RIGHT) - joint(SHOULDER_RIGHT);
+	arm.AddListener([&arm](IObservable *s) { cout &lt;&lt; "Right Arm: " &lt;&lt; arm.X() &lt;&lt; ',' &lt;&lt; arm.Y() &lt;&lt; ',' &lt;&lt; arm.Z() &lt;&lt; '\n'; });
+	NuiFactory()-&gt;SetAutoPoll(true);
+	...
+</code>
+
+The syntax makes it very clear what is happening. There is an extension mechanism so any device capable of providing cartesian coordinates for skeleton joints could be integrated. Advanced functionality can also be added. An example of this is that the library supplies fist detection using the thresholding algorithm described <a href="">here</a> and implemented in <a href="">this</a> example.
+
+
+By providing a simplified abstraction layer over NUI device inputs programmers can focus on the maths and the logic associated with integrating a NuiDevice into an application rather than the bookkeeping necessary to get the input in the first place. The abstraction layer also makes it easy to swap out different devices or different drivers for the same device for cross compatibility. 
 
 NuiLib has three target audiences. Firstly, those who want to integrate NUI input into their applications. Secondly, those developing new algorithms and mechanisms for parsing NUI input who wish that work to plug in easily to existing systems. Thirdly, those interested in optimising NUI input across a range of pre-existing projects.
 
