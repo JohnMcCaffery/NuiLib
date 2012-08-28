@@ -19,7 +19,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 #include <NuiLib-API.h>
 #include <NuiLib-Operators.h>
-#include <NuiLib-Processing.h>
+#include <NuiLib-HandProcessing.h>
 #include <NuiLib-Extendable.h>
 #include <NuiLib-Vectors.h>
 

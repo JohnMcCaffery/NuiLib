@@ -15,7 +15,6 @@ GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
 along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
-
 **************************************************************************/
 #include <NuiLib-Kinect-MS.h>
 #include <opencv/cv.h>
@@ -395,7 +394,7 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 }
 
 void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
-	HRESULT hr = _pNuiSensor->NuiTransformSmooth(&frame, NULL);
+	_pNuiSensor->NuiTransformSmooth(&frame, NULL);
 	int index = -1;
 	for (int i = 0; i < NUI_SKELETON_COUNT; i++) {
 		if (frame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED) {

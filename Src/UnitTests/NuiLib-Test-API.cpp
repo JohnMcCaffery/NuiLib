@@ -18,7 +18,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 
 **************************************************************************/
 #include "NuiLib-Test-API.h"
-#include <NuiLib-Processing.h>
+#include <NuiLib-HandProcessing.h>
 
 
 Listener::Listener(IObservable *target) {

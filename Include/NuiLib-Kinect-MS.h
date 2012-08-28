@@ -38,7 +38,6 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 #include <NuiLib-Vectors.h>
 #include <NuiLib-Scalars.h>
 #include <NuiLib-Conditions.h>
-#include <NuiLib-Processing.h>
 
 #ifndef KINECT_MS_H
 #define KINECT_MS_H

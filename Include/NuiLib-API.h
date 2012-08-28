@@ -1391,113 +1391,115 @@ namespace NuiLib {
 
 
 
-///
-/// \mainpage Home
-///
-/// \section license License
-/// Copyright (c) 2012 John McCaffery 
-/// 
-/// This file is part of NuiLib.
-/// 
-/// NuiLib is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Lesser General Public License as published by
-/// the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-/// 
-/// NuiLib is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Lesser General Public License for more details.
-/// 
-/// You should have received a copy of the GNU Lesser General Public License
-/// along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
-///
-/// \section blog Blog / Source
-/// The blog for this project is available <a href="blogs.cs.st-andrews.ac.uk/johnmcc">here</a>. This includes more information how to use and extend the library. The repository for the source code is <a href="https://github.com/JohnMcCaffery/NuiLib">here</a>.
-/// 
-/// \section instructions Instructions
-/// <strong>&lt;NuiLib dir&gt;</strong> specifies the directory where NuiLib is installed to. It includes the sub directories "Include" and "Src" and has the solution, prebuild and makefile files in it.<br>
-/// <strong>&lt;flags&gt;</strong> can be d, v, dv or nothing. D specifies debug, V specifies visual. Visual mode means that, if the depth stream is enabled, the depth frames will be output, overlaid with debug information such as the position of joints and how the fist finder algorithm is operating.
-///
-/// \subsection setup Setting Up:
-/// This project relies upon <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a>. To work you will need <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a> to be present on your computer. Before attempting to compile NuiLib or any project that links to NuiLib you will need to download and install <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a> which can be downloaded <a href="http://sourceforge.net/projects/opencvlibrary/files/latest/download">here</a>. Once installed you need to copy the relevant libraries to your Bin/ directory. If you want to use the pre-setup build tools such as the makefile and Visual Studio projects you also need to set up a global environment variable called "OPENCV_DIR" which points to the <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a> installation. To do both these things automatically run run prebuild.bat (Visual Studio) or prebuild.sh (MingW).
-/// 
-/// \subsection build How To Build:
-/// \subsubsection build_vc Visual Studio 10
-/// 1. Open NuiLib.sln
-/// 2. Select a profile
-/// 3. Build all (F6)
-/// Libraries compile to 'NuiLib-VC10&lt;flags&gt;.lib' and 'NuiLib-Kinect-MS-VC10&lt;flags&gt;.lib' in Lib/.
-/// 
-/// \subsubsection build_gpp MingW + Make + G++
-/// 1. Run the make target "DLL".
-/// Library compiles to "NuiLib.dll" in Lib/. "libNuiLib.dll.a" is also compiled to the same folder for linking. "NuiLib.dll" is copied to Bin/.
-///
-/// \subsection include How To Include:
-///Add /Include/ to the include path.<br>
-/// <em>VS-10</em>: &lt;NuiLib dir&gt;Project-&gt;Properties-&gt;VC++ Directories-&gt;Include Directories.<br>
-/// <em>G++</em>: -I &lt;NuiLib dir&gt;/Include/<br>
-/// <strong>#include &lt;NuiLib-API.h&gt;</strong> at the top of any relevant source. This will give access to everything documented <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation/html/">here</a>. 
-/// 
-/// \subsection link How To Link:
-/// \subsubsection link_vc10 Visual Studio 10
-/// Add the following to the library path (Project-&gt;Properties-&gt;VC++ Directories-&gt;Library Directories):<br>
-/// <em>&lt;NuiLib dir&gt;\Lib\ <br>
-/// $(OPENCV_DIR)build\x86\vc10\lib\ <br>
-/// $(KINECTSDK10_DIR)lib\x86</em>
-/// 
-/// Add the following to the linker's additional dependencies (Project-&gt;Properties-&gt;Linker-&gt;Input-&gt;Additional Dependencies):<br>
-/// <em>NuiLib-VC10&lt;flags&gt;.lib<br>
-/// NuiLib-Kinect-MS-VC10&lt;flags&gt;.lib<br>
-/// opencv_core241[d].lib<br>
-/// opencv_highgui241[d].lib<br>
-/// opencv_imgproc241[d].lib<br>
-/// opencv_objdetect241[d].lib<br>
-/// kinect10.lib</em>
-/// 
-/// \subsubsection link_gpp G++
-/// Add the following to the library path (-L flag for each folder):<br>
-/// <em>&lt;NuiLib dir&gt;/Lib/<br>
-/// $(OPENCV_DIR)build/x86/mingw/lib/<br>
-/// $(KINECTSDK10_DIR)lib/x86/</em>
-/// 
-/// Add the following to the linker's inputs (-l flag for each file):<br>
-/// <em>NuiLib.dll<br>
-/// opencv_core241.dll<br>
-/// opencv_highgui241.dll<br>
-/// opencv_imgproc241.dll<br>
-/// opencv_objdetect241.dll<br>
-/// Kinect10.lib</em>
-///
-/// Full flag list: -L &lt;NuiLib dir&gt;/Lib/ -L $(OPENCV_DIR)build/x86/mingw/lib/ -L $(KINECTSDK10_DIR)lib/x86/</em> -l NuiLib.dll -l opencv_core241.dll -l opencv_highgui241.dll -l opencv_imgproc241.dll -l opencv_objdetect241.dll -l Kinect10.lib
-/// 
-/// \subsection components How To Add Components:
-/// 
-/// Add /Include/ to the include path.
-/// <em>VS-10</em>: &lt;NuiLib dir&gt;Project-&gt;Properties-&gt;VC++ Directories-&gt;Include Directories.
-/// <em>G++</em>: -I &lt;NuiLib dir&gt;/Include/
-/// <strong>#include &lt;NuiLib-Extendable.h&gt;</strong> at the top of any relevant source. This will give access to everything documented <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation-Full/html/">here</a>. Specifically IComponent, IScalar, IVector and ICondition.
-/// To be compatible new components must extend from IScalar, IVector or ICondition (or one of their pre-existing abstract sub-classes such as VectorWrappingScalar. These are found in 'NuiLib-Vectors.h', 'NuiLib-Conditions.h' or 'NuiLib-Scalars.h').
-/// Generally all that is necessary is to implement a new component is to declare the class and one or more factory methods. The class must have a 0 argument constructor. It must also override the 'CalculateValue' method and implement 'static string GetName()' method. It may also need to provide mechanisms for setting any fields it needs to work with. If it has generic behaviour such as wrapping a Vector a pre-existing abstract super class may exist that does this for you.
-/// The factory methods should return a Scalar, Vector or Condition with the _p field assigned to a new instance of the class that has been fully initialized.
-/// 
-/// \subsection drivers How To Add Support for Other Drivers/Devices:
-/// Add /Include/ to the include path.
-/// <em>VS-10</em>: &lt;NuiLib dir&gt;Project-&gt;Properties-&gt;VC++ Directories-&gt;Include Directories.
-/// <em>G++</em>: -I &lt;NuiLib dir&gt;/Include/
-/// <strong>#include &lt;NuiLib-Extendable.h&gt;</strong> at the top of any relevant source. This will give access to everything documented <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation-Full/html/">here</a>. Specifically INuiFactoryExtension.
-/// The main implementation is done via a factory class which extends INuiFactoryExtension. This should take care of polling the device and updating any components which need to be updated.
-/// As well as extending the INuiFactoryExtension class the following methods must be implemented:<br>
-/// INuiFactory()<br>
-/// ExtensionFactory()<br>
-/// GetHandProcessor()<br>
-/// joint(const int joint)<br>
-/// The first two should return a pointer to a singleton instance of the new factory class. The last should return a Vector that will contain the coordinates of a skeleton joint.
-/// 
-/// \subsection info More Info:
-/// \subsubsection prebuild Prebuild
-/// Prebuild does 3 things. Firstly it creates a global environment variable $(OPENCV_DIR) and asks the user to enter a value for it. This value should point to the main directory where Open CV has been installed and built. This variable will be used in the Visual Studio projects and the makefile to resolve dependencies. Secondly the prebuild creates a Bin/ directory. Thirdly it copies all the required libraries from the Open CV installation and the Microsoft Kinect SDK installation into Bin/.
-///
-/// \section notes Notes
-/// This project has only been tested on Windows 7 using Visual Studio 10 and MingW. 
-/// 
+/**
+
+\mainpage Home
+
+\section license License
+Copyright (c) 2012 John McCaffery 
+
+This file is part of NuiLib.
+
+NuiLib is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+NuiLib is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
+
+\section blog Blog / Source
+The blog for this project is available <a href="blogs.cs.st-andrews.ac.uk/johnmcc">here</a>. This includes more information how to use and extend the library. The repository for the source code is <a href="https://github.com/JohnMcCaffery/NuiLib">here</a>.
+
+\section instructions Instructions
+<strong>&lt;NuiLib dir&gt;</strong> specifies the directory where NuiLib is installed to. It includes the sub directories "Include" and "Src" and has the solution, prebuild and makefile files in it.<br>
+<strong>&lt;flags&gt;</strong> can be d, v, dv or nothing. D specifies debug, V specifies visual. Visual mode means that, if the depth stream is enabled, the depth frames will be output, overlaid with debug information such as the position of joints and how the fist finder algorithm is operating.
+
+\subsection setup Setting Up:
+This project relies upon <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a>. To work you will need <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a> to be present on your computer. Before attempting to compile NuiLib or any project that links to NuiLib you will need to download and install <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a> which can be downloaded <a href="http://sourceforge.net/projects/opencvlibrary/files/latest/download">here</a>. Once installed you need to copy the relevant libraries to your Bin/ directory. If you want to use the pre-setup build tools such as the makefile and Visual Studio projects you also need to set up a global environment variable called "OPENCV_DIR" which points to the <a href="http://sourceforge.net/projects/opencvlibrary/">OpenCV</a> installation. To do both these things automatically run run prebuild.bat (Visual Studio) or prebuild.sh (MingW).
+
+\subsection build How To Build:
+\subsubsection build_vc Visual Studio 10
+1. Open NuiLib.sln
+2. Select a profile
+3. Build all (F6)
+Libraries compile to 'NuiLib-VC10&lt;flags&gt;.lib' and 'NuiLib-Kinect-MS-VC10&lt;flags&gt;.lib' in Lib/.
+
+\subsubsection build_gpp MingW + Make + G++
+1. Run the make target "DLL".
+Library compiles to "NuiLib.dll" in Lib/. "libNuiLib.dll.a" is also compiled to the same folder for linking. "NuiLib.dll" is copied to Bin/.
+
+\subsection include How To Include:
+Add /Include/ to the include path.<br>
+<em>VS-10</em>: &lt;NuiLib dir&gt;Project-&gt;Properties-&gt;VC++ Directories-&gt;Include Directories.<br>
+<em>G++</em>: -I &lt;NuiLib dir&gt;/Include/<br>
+<strong>#include &lt;NuiLib-API.h&gt;</strong> at the top of any relevant source. This will give access to everything documented <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation/">here</a>. 
+
+\subsection link How To Link:
+\subsubsection link_vc10 Visual Studio 10
+Add the following to the library path (Project-&gt;Properties-&gt;VC++ Directories-&gt;Library Directories):<br>
+<em>&lt;NuiLib dir&gt;\Lib\ <br>
+$(OPENCV_DIR)build\x86\vc10\lib\ <br>
+$(KINECTSDK10_DIR)lib\x86</em>
+
+Add the following to the linker's additional dependencies (Project-&gt;Properties-&gt;Linker-&gt;Input-&gt;Additional Dependencies):<br>
+<em>NuiLib-VC10&lt;flags&gt;.lib<br>
+NuiLib-Kinect-MS-VC10&lt;flags&gt;.lib<br>
+opencv_core241[d].lib<br>
+opencv_highgui241[d].lib<br>
+opencv_imgproc241[d].lib<br>
+opencv_objdetect241[d].lib<br>
+kinect10.lib</em>
+
+\subsubsection link_gpp G++
+Add the following to the library path (-L flag for each folder):<br>
+<em>&lt;NuiLib dir&gt;/Lib/<br>
+$(OPENCV_DIR)build/x86/mingw/lib/<br>
+$(KINECTSDK10_DIR)lib/x86/</em>
+
+Add the following to the linker's inputs (-l flag for each file):<br>
+<em>NuiLib.dll<br>
+opencv_core241.dll<br>
+opencv_highgui241.dll<br>
+opencv_imgproc241.dll<br>
+opencv_objdetect241.dll<br>
+Kinect10.lib</em>
+
+Full flag list: -L &lt;NuiLib dir&gt;/Lib/ -L $(OPENCV_DIR)build/x86/mingw/lib/ -L $(KINECTSDK10_DIR)lib/x86/</em> -l NuiLib.dll -l opencv_core241.dll -l opencv_highgui241.dll -l opencv_imgproc241.dll -l opencv_objdetect241.dll -l Kinect10.lib
+
+\subsection components How To Add Components:
+
+Add /Include/ to the include path.
+<em>VS-10</em>: &lt;NuiLib dir&gt;Project-&gt;Properties-&gt;VC++ Directories-&gt;Include Directories.
+<em>G++</em>: -I &lt;NuiLib dir&gt;/Include/
+<strong>#include &lt;NuiLib-Extendable.h&gt;</strong> at the top of any relevant source. This will give access to everything documented <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation-Full/">here</a>. Specifically IComponent, IScalar, IVector and ICondition.
+To be compatible new components must extend from IScalar, IVector or ICondition (or one of their pre-existing abstract sub-classes such as VectorWrappingScalar. These are found in 'NuiLib-Vectors.h', 'NuiLib-Conditions.h' or 'NuiLib-Scalars.h').
+Generally all that is necessary is to implement a new component is to declare the class and one or more factory methods. The class must have a 0 argument constructor. It must also override the 'CalculateValue' method and implement 'static string GetName()' method. It may also need to provide mechanisms for setting any fields it needs to work with. If it has generic behaviour such as wrapping a Vector a pre-existing abstract super class may exist that does this for you.
+The factory methods should return a Scalar, Vector or Condition with the _p field assigned to a new instance of the class that has been fully initialized.
+
+\subsection drivers How To Add Support for Other Drivers/Devices:
+Add /Include/ to the include path.
+<em>VS-10</em>: &lt;NuiLib dir&gt;Project-&gt;Properties-&gt;VC++ Directories-&gt;Include Directories.
+<em>G++</em>: -I &lt;NuiLib dir&gt;/Include/
+<strong>#include &lt;NuiLib-Extendable.h&gt;</strong> at the top of any relevant source. This will give access to everything documented <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation-Full/">here</a>. Specifically INuiFactoryExtension.
+The main implementation is done via a factory class which extends INuiFactoryExtension. This should take care of polling the device and updating any components which need to be updated.
+As well as extending the INuiFactoryExtension class the following methods must be implemented:<br>
+INuiFactory()<br>
+ExtensionFactory()<br>
+GetHandProcessor()<br>
+joint(const int joint)<br>
+The first two should return a pointer to a singleton instance of the new factory class. The last should return a Vector that will contain the coordinates of a skeleton joint.
+
+\subsection info More Info:
+\subsubsection prebuild Prebuild
+Prebuild does 3 things. Firstly it creates a global environment variable $(OPENCV_DIR) and asks the user to enter a value for it. This value should point to the main directory where Open CV has been installed and built. This variable will be used in the Visual Studio projects and the makefile to resolve dependencies. Secondly the prebuild creates a Bin/ directory. Thirdly it copies all the required libraries from the Open CV installation and the Microsoft Kinect SDK installation into Bin/.
+
+\section notes Notes
+This project has only been tested on Windows 7 using Visual Studio 10 and MingW. 
+
+**/

@@ -667,13 +667,14 @@ WARN_LOGFILE           =
 
 INPUT                  = Include/ \
                          Src/ \
-                         Src/ManipulationDemo \
-                         Src/MovementDemo \
-                         Src/SlideshowDemo \
+                         Src/Demo-Manipulation \
+                         Src/Demo-Movement \
+                         Src/Demo-Slideshow \
                          Src/Test \
                          Src/UnitTests \
                          Src/NuiLib \
-                         Src/NuiLib-Kinect-MS
+                         Src/NuiLib-Kinect-MS \
+                         Src/Demo-Basic
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 

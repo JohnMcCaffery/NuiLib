@@ -182,7 +182,7 @@
     <ClInclude Include="..\..\Include\NuiLib-Conditions.h" />
     <ClInclude Include="..\..\Include\NuiLib-Extendable.h" />
     <ClInclude Include="..\..\Include\NuiLib-Operators.h" />
-    <ClInclude Include="..\..\Include\NuiLib-Processing.h" />
+    <ClInclude Include="..\..\Include\NuiLib-HandProcessing.h" />
     <ClInclude Include="..\..\Include\NuiLib-Scalars.h" />
     <ClInclude Include="..\..\Include\NuiLib-Vectors.h" />
   </ItemGroup>
@@ -190,7 +190,7 @@
     <ClCompile Include="NuiLib-API.cpp" />
     <ClCompile Include="NuiLib-Conditions.cpp" />
     <ClCompile Include="NuiLib-Extendable.cpp" />
-    <ClCompile Include="NuiLib-Processing.cpp" />
+    <ClCompile Include="NuiLib-HandProcessing.cpp" />
     <ClCompile Include="NuiLib-Scalars.cpp" />
     <ClCompile Include="NuiLib-Vectors.cpp" />
   </ItemGroup>
