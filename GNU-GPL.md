@@ -1,0 +1,3 @@
+Armadillo is a modified second life client. Its eventual aims are to allow immersive interaction with Virtual Worlds. Currently what has been implemented is the ability to move around in the Virtual World using the Kinect. This movement is done using the exact same code from the <a href="Movement">movement demo</a>. The movement demo was used to refine the parameters and then they are plugged into the Second Life client with minimum code. 
+
+You can download Armadillo <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Armadillo.001.zip">here</a>. To run it unzip the folder and run "Armadillo.exe".  Armadillo was compiled for 32bit windows 7. It has only been tested in Windows 7 32bit and 64bit. The source code is not currently available but will be released in the future. 
