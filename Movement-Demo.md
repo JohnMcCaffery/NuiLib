@@ -4,7 +4,7 @@ To control the various axes different gestures are used. To go forward, push for
 
 The demo will output a graphic displaying what movement is being triggered. This is represented by pitch and yaw values shown as numbers and ASCII bars. 'FORWARD' is printed if the forward state is entered. Vertical movement is represented by 'UP' and 'down' being printed. The ASCII bar output is normalized against largest value that field has ever contained. This means that if the largest yaw value so far has been .2 the bar will go all the way to the right. If the yaw value then raises to .4 the bar will stay all the way right.
 
-Some example output:
+Some example output:<br>
 <code>
 	1. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yaw:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pitch:&nbsp;-------|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.048&nbsp;&nbsp;&nbsp;&nbsp;Fly:<br>
 	2. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yaw:&nbsp;-------|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.048&nbsp;&nbsp;&nbsp;&nbsp;Pitch:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.000&nbsp;&nbsp;&nbsp;&nbsp;Fly:<br>
