@@ -7,16 +7,16 @@ The library is focused on three users groups. Firstly, developers creating / mod
 Making it easy to integrate NUI input is a primary concern for NuiLib. This is what should make it attractive to application developers. The following code snippet is an example of the simplicity of accessing NUI input through NuiLib. It demonstrates initialising the device, gaining access to the location information for two skeleton joints and then computing the vector between the two joints. Last it outputs this vector whenever the value changes.
 <code>
 	<a name="example"></a>
-	#include <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation/_nui_lib-_a_p_i_8h_source.html">&lt;NuiLib-API.h&gt;</a>
-	using namespace NuiLib;
-	...
-	NuiFactory()-&gt;Init();
-	Vector arm = joint(HAND_RIGHT) - joint(SHOULDER_RIGHT);
-	arm.AddListener([&arm](IObservable *s) { 
-	&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; "Right Arm: " &lt;&lt; arm.X() &lt;&lt; ',' &lt;&lt; arm.Y() &lt;&lt; ',' &lt;&lt; arm.Z() &lt;&lt; '\n';
-	});
-	NuiFactory()-&gt;SetAutoPoll(true);
-	...
+	#include <a href="http://www.cs.st-andrews.ac.uk/~johnmcc/Documentation/_nui_lib-_a_p_i_8h_source.html">&lt;NuiLib-API.h&gt;</a><br>
+	using namespace NuiLib;<br>
+	...<br>
+	NuiFactory()-&gt;Init();<br>
+	Vector arm = joint(HAND_RIGHT) - joint(SHOULDER_RIGHT);<br>
+	arm.AddListener([&arm](IObservable *s) { <br>
+	&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; "Right Arm: " &lt;&lt; arm.X() &lt;&lt; ',' &lt;&lt; arm.Y() &lt;&lt; ',' &lt;&lt; arm.Z() &lt;&lt; '\n';<br>
+	});<br>
+	NuiFactory()-&gt;SetAutoPoll(true);<br>
+	...<br>
 </code>
 The full source code for this example is available <a href="Demos/Basic/">here</a>.
 
