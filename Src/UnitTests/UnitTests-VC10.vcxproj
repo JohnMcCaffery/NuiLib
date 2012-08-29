@@ -64,10 +64,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Work\OpenCV\build\include;$(KINECTSDK10_DIR)inc/;$(SolutionDir)Include/;$(IncludePath)</IncludePath>
+    <IncludePath>$(OPENCV_DIR)build\include;$(KINECTSDK10_DIR)inc/;$(SolutionDir)Include/;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)d</TargetName>
     <SourcePath>$(SourcePath)</SourcePath>
-    <LibraryPath>D:\Work\OpenCV\build\x86\vc10\lib;$(SolutionDir)Lib/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OPENCV_DIR)build\x86\vc10\lib;$(SolutionDir)Lib/;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <OutDir>$(SolutionDir)Bin</OutDir>
     <IntDir>$(Confguration)$(Configuration)\</IntDir>

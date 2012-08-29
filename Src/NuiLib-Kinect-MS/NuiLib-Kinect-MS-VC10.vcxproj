@@ -71,7 +71,7 @@
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)d</TargetName>
-    <IncludePath>$(KINECTSDK10_DIR)inc;D:\Work\OpenCV\build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(KINECTSDK10_DIR)inc;$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(KINECTSDK10_DIR)lib\x86;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'">
