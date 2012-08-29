@@ -217,7 +217,7 @@ TCL_SUBST              =
 # For instance, some of the names that are used will be different. The list 
 # of all members will be omitted, etc.
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java 
 # sources only. Doxygen will then generate output that is more tailored for 
@@ -811,7 +811,7 @@ FILTER_SOURCE_FILES    = YES
 # using *.ext= (so without naming a filter). This option only has effect when 
 # FILTER_SOURCE_FILES is enabled.
 
-FILTER_SOURCE_PATTERNS = NuiLib*
+FILTER_SOURCE_PATTERNS = 
 
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
