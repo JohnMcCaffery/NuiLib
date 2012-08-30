@@ -81,7 +81,7 @@ UNITTEST_LIB=../UnitTest++/UnitTest.lib
 
 # - TOOLS -
 
-CC=g++ -DGPLUSPLUS
+CC=g++
 COPY=cp
 RM=rm
 
@@ -89,7 +89,7 @@ RM=rm
 
 INCLUDE_FLAGS=-I $(INC_DIR) -I $(INC_DIR)Win32 -I $(KINECT_DIR)inc -I $(CV_DIR)build/include
 LIB_FLAGS=-L $(CV_DIR)build/x86/mingw/lib/ -L $(KINECT_DIR)lib/x86/
-CFLAGS=-DBUILD -std=c++0x -c -Wall $(INCLUDE_FLAGS)
+CFLAGS=-DGPLUSPLUS -DBUILD -std=c++0x -c -Wall $(INCLUDE_FLAGS)
 
 #LIBRARIES=$(CORE_F).lib $(KINECT_MS_LIB)
 LIBRARIES=$(DLL_LINK_LIB)
@@ -137,19 +137,19 @@ $(CORE_F)%.a: $(CORE_F)%.dll
 $(dir $(CORE_F))lib$(notdir $(CORE_F))%.dll.a: $(CORE_F)%.dll
 
 # - DEMOS -
-$(DEMO_BASIC_F)%exe: $(DEMO_BASIC_SOURCES:.cpp=%o) $(CORE_F)%dll 
-	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
-$(DEMO_SLIDESHOW_F)%exe: $(DEMO_SLIDESHOW_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
-$(DEMO_MOVEMENT_F)%exe: $(DEMO_MOVEMENT_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
-$(DEMO_MANIPULATION_F)%exe: $(DEMO_MANIPULATION_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
-# - TESTS -
-$(TEST_F): $(TEST_SOURCES:.o=.cpp) $(CORE_F).dll
+$(DEMO_BASIC_F)%exe: $(DEMO_BASIC_SOURCES:.cpp=%o) $(CORE_F)%lib $(KINECT_MS_F)%lib
 	$(CC) -o $@ $^ $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
-$(UNITTEST_F): $(UNITTEST_SOURCES:.o=.cpp) $(CORE_F).dll
-	$(CC) -o $@ $^ $(UNITTEST_LIB) $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
+$(DEMO_SLIDESHOW_F)%exe: $(DEMO_SLIDESHOW_SOURCES:.cpp=%o) $(CORE_F)%lib $(KINECT_MS_F)%lib
+	$(CC) -o $@ $^ $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
+$(DEMO_MOVEMENT_F)%exe: $(DEMO_MOVEMENT_SOURCES:.cpp=%o) $(CORE_F)%lib $(KINECT_MS_F)%lib
+	$(CC) -o $@ $^ $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
+$(DEMO_MANIPULATION_F)%exe: $(DEMO_MANIPULATION_SOURCES:.cpp=%o) $(CORE_F)%lib $(KINECT_MS_F)%lib
+	$(CC) -o $@ $^ $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
+# - TESTS -
+$(TEST_EXE): $(TEST_SOURCES:.cpp=.o) $(CORE_F).dll
+	$(CC) -o $@ $^ -L $(LIB_DIR) -l$(NAME)dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
+$(UNITTEST_EXE): $(UNITTEST_SOURCES:.cpp=.o) $(CORE_F).dll
+	$(CC) -o $@ $^ -L $(LIB_DIR) -l$(NAME)dll $(UNITTEST_LIB) $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 
 # --------------  FINAL --------------
 
