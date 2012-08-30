@@ -41,6 +41,19 @@ then
 	mkdir Bin/x86/mingw 
 fi
 
+if [ ! -d Lib ] 
+then 
+	mkdir Lib 
+fi
+if [ ! -d Lib/x86 ] 
+then 
+	mkdir Lib/x86
+fi
+if [ ! -d Lib/x86/mingw ] 
+then 
+	mkdir Lib/x86/mingw 
+fi
+
 echo Copying mingw OpenCV libraries to Bin
 cp "${cvDir}build/x86/mingw/bin/libopencv_core241.dll" Bin/x86/mingw/
 cp "${cvDir}build/x86/mingw/bin/libopencv_highgui241.dll" Bin/x86/mingw/
