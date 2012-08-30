@@ -15,6 +15,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 
+# If this produces errors about "$'\r': command not found" load the file with vim
+# (vim prebuild.sh) type :set ff=unix in vim and then save and quit (:wq).
+
 echo "Enter the root directory for your OpenCV installation: "
 read CV
 
@@ -25,8 +28,6 @@ else
 	export OPENCV_DIR=$CV/
 	cvDir=$CV/
 fi
-
-echo $cvDir
 
 if [ ! -d Bin ] 
 then 
