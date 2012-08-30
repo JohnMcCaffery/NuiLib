@@ -32,16 +32,24 @@ if [ ! -d Bin ]
 then 
 	mkdir Bin 
 fi
+if [ ! -d Bin/x86 ] 
+then 
+	mkdir Bin/x86
+fi
+if [ ! -d Bin/x86/mingw ] 
+then 
+	mkdir Bin/x86/mingw 
+fi
 
-echo Moving mingw OpenCV libraries to Bin
-cp "${cvDir}build/x86/mingw/bin/libopencv_core241.dll" Bin/
-cp "${cvDir}build/x86/mingw/bin/libopencv_highgui241.dll" Bin/
-cp "${cvDir}build/x86/mingw/bin/libopencv_imgproc241.dll" Bin/
-cp "${cvDir}build/x86/mingw/bin/libopencv_objdetect241.dll" Bin/
-cp "${cvDir}build/common/tbb/ia32/mingw/tbb.dll" Bin/
-cp "${cvDir}build/common/tbb/ia32/mingw/tbb_debug.dll" Bin/
+echo Copying mingw OpenCV libraries to Bin
+cp "${cvDir}build/x86/mingw/bin/libopencv_core241.dll" Bin/x86/mingw/
+cp "${cvDir}build/x86/mingw/bin/libopencv_highgui241.dll" Bin/x86/mingw/
+cp "${cvDir}build/x86/mingw/bin/libopencv_imgproc241.dll" Bin/x86/mingw/
+cp "${cvDir}build/x86/mingw/bin/libopencv_objdetect241.dll" Bin/x86/mingw/
+cp "${cvDir}build/common/tbb/ia32/mingw/tbb.dll" Bin/x86/mingw/
+cp "${cvDir}build/common/tbb/ia32/mingw/tbb_debug.dll" Bin/x86/mingw/
 
 if [ -n "$KINECTSDK10_DIR" ]; then
-	echo Moving Microsoft Kinect libraries to Bin
-	cp "${KINECTSDK10_DIR}Assemblies/Microsoft.Kinect.dll" Bin/Microsoft.Kinect.dll
+	echo Copying Microsoft Kinect libraries to Bin
+	cp "${KINECTSDK10_DIR}Assemblies/Microsoft.Kinect.dll" Bin/x86/mingw/
 fi

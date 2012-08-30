@@ -5,26 +5,48 @@
       <Configuration>DebugVisual</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugVisual|x64">
+      <Configuration>DebugVisual</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseVisual|Win32">
       <Configuration>ReleaseVisual</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseVisual|x64">
+      <Configuration>ReleaseVisual</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A6850FE0-C53B-418D-9462-2B821B33E1FF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>UnitTests</RootNamespace>
+    <ProjectName>UnitTests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -34,7 +56,18 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -46,55 +79,108 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(OPENCV_DIR)build\include;$(KINECTSDK10_DIR)inc/;$(SolutionDir)Include/;$(IncludePath)</IncludePath>
-    <TargetName>$(ProjectName)d</TargetName>
+    <TargetName>$(ProjectName)_d</TargetName>
     <SourcePath>$(SourcePath)</SourcePath>
-    <LibraryPath>$(OPENCV_DIR)build\x86\vc10\lib;$(SolutionDir)Lib/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OPENCV_DIR)build\x86\vc10\lib;$(SolutionDir)Lib\x86\vc10\;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <OutDir>$(SolutionDir)Bin</OutDir>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
+    <IntDir>$(Confguration)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(OPENCV_DIR)build\include;$(KINECTSDK10_DIR)inc/;$(SolutionDir)Include/;$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <LibraryPath>$(OPENCV_DIR)build\x86\vc10\lib;$(SolutionDir)Lib\x86\vc10\;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
     <IntDir>$(Confguration)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(OPENCV_DIR)build\include;$(KINECTSDK10_DIR)inc/;$(SolutionDir)..\UnitTest++\src;$(SolutionDir)..\UnitTest++\src\Win32;$(SolutionDir)Include/;$(IncludePath)</IncludePath>
-    <TargetName>$(ProjectName)dv</TargetName>
+    <TargetName>$(ProjectName)_dv</TargetName>
     <SourcePath>$(SourcePath)</SourcePath>
-    <LibraryPath>$(SolutionDir)..\UnitTest++;$(SolutionDir)..\OpenCV\build\x86\vc10\lib;$(SolutionDir)Lib/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\UnitTest++;$(SolutionDir)..\OpenCV\build\x86\vc10\lib;$(SolutionDir)Lib\x86\vc10\;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <OutDir>$(SolutionDir)Bin\</OutDir>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(OPENCV_DIR)build\include;$(KINECTSDK10_DIR)inc/;$(SolutionDir)..\UnitTest++\src;$(SolutionDir)..\UnitTest++\src\Win32;$(SolutionDir)Include/;$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)_dv</TargetName>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <LibraryPath>$(SolutionDir)..\UnitTest++;$(SolutionDir)..\OpenCV\build\x86\vc10\lib;$(SolutionDir)Lib\x86\vc10\;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)Include;$(KINECTSDK10_DIR)inc;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <OutDir>$(SolutionDir)Bin\</OutDir>
+    <LibraryPath>$(SolutionDir)Lib\x86\vc10\;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)Include;$(KINECTSDK10_DIR)inc;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\x86\vc10\;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)Include;$(KINECTSDK10_DIR)inc;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <OutDir>$(SolutionDir)Bin\</OutDir>
-    <TargetName>$(ProjectName)v</TargetName>
+    <LibraryPath>$(SolutionDir)Lib\x86\vc10\;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
+    <TargetName>$(ProjectName)_v</TargetName>
+    <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)Include;$(KINECTSDK10_DIR)inc;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\x86\vc10\;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <OutDir>$(SolutionDir)Bin\x86\vc10\</OutDir>
+    <TargetName>$(ProjectName)_v</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -107,7 +193,20 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>NuiLib-VC10d.lib;opencv_highgui241d.lib;opencv_core241d.lib;opencv_imgproc241d.lib;opencv_objdetect241d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib_d.lib;opencv_highgui241d.lib;opencv_core241d.lib;opencv_imgproc241d.lib;opencv_objdetect241d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>BUILD;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>NuiLib_d.lib;opencv_highgui241d.lib;opencv_core241d.lib;opencv_imgproc241d.lib;opencv_objdetect241d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'">
@@ -120,7 +219,20 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>NuiLib-VC10dv.lib;opencv_highgui241d.lib;opencv_core241d.lib;opencv_imgproc241d.lib;opencv_objdetect241d.lib;UnitTest-VC10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib_dv.lib;opencv_highgui241d.lib;opencv_core241d.lib;opencv_imgproc241d.lib;opencv_objdetect241d.lib;UnitTest-VC10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>BUILD;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>NuiLib_dv.lib;opencv_highgui241d.lib;opencv_core241d.lib;opencv_imgproc241d.lib;opencv_objdetect241d.lib;UnitTest-VC10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,7 +249,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>NuiLib-VC10.lib;UnitTest-VC10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib.lib;UnitTest-VC10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>NuiLib.lib;UnitTest-VC10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'">
@@ -154,7 +283,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>NuiLib-VC10.lib;UnitTest-VC10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib.lib;UnitTest-VC10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>NuiLib.lib;UnitTest-VC10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -38,20 +38,22 @@ if not defined OPENCV_DIR (
 ) else set cvDir=%OPENCV_DIR%
 
 if not exist Bin md Bin
+if not exist Bin\x86 md Bin\x86
+if not exist Bin\x86\vc10 md Bin\x86\vc10
 
 @echo Moving VC10 OpenCV libraries to Bin
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core241.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core241d.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui241.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui241d.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc241.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc241d.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect241.dll" Bin\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect241d.dll" Bin\
-copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb.dll" Bin\
-copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb_debug.dll" Bin\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core241.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core241d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui241.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui241d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc241.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc241d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect241.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect241d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb_debug.dll" Bin\x86\vc10\
 
 if defined KINECTSDK10_DIR (
 	@echo Moving Microsoft Kinect libraries to Bin
-	copy "%KINECTSDK10_DIR:/=\%Assemblies\Microsoft.Kinect.dll" Bin\Microsoft.Kinect.dll
+	copy "%KINECTSDK10_DIR:/=\%Assemblies\Microsoft.Kinect.dll" Bin\x86\vc10\
 )

@@ -18,9 +18,9 @@
 NAME=NuiLib
 
 # - ROOT DIRECTORIES -
-BIN_DIR=Bin/
+BIN_DIR=Bin/x86/mingw/
 INC_DIR=Include/
-LIB_DIR=Lib/
+LIB_DIR=Lib/x86/mingw/
 SRC_DIR=Src/
 
 # - SRC DIRECTORIES -
@@ -131,25 +131,25 @@ $(KINECT_MS_F)%lib: $(KINECT_MS_SOURCES:.cpp=%o)
 	ar crf $@ $^
 # - DYNAMIC LIBRARIES -
 $(CORE_F)%dll: $(CORE_SOURCES:.cpp=%o) $(KINECT_MS_SOURCES:.cpp=%o)
-	$(CC) -o $@ -shared -Wl,--out-implib,$(dir $@)lib$(notdir $@).a,--output-def,$@.def $(LIB_FLAGS) $^ $(THIRD_PARTY_LIBS)
+	$(CC) -o $@ -shared -Wl,--out-implib,$(dir $@)lib$(notdir $@).a,--output-def,$@.def $^ $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 	$(COPY) -f $@ $(BIN_DIR)
 $(CORE_F)%.a: $(CORE_F)%.dll
 $(dir $(CORE_F))lib$(notdir $(CORE_F))%.dll.a: $(CORE_F)%.dll
 
 # - DEMOS -
-$(DEMO_BASIC_F)%exe: $(DEMO_BASIC_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) $(LIB_FLAGS) -o $@ $^ $(THIRD_PARTY_LIBS)
+$(DEMO_BASIC_F)%exe: $(DEMO_BASIC_SOURCES:.cpp=%o) $(CORE_F)%dll 
+	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 $(DEMO_SLIDESHOW_F)%exe: $(DEMO_SLIDESHOW_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) $(LIB_FLAGS) -o $@ $^ $(THIRD_PARTY_LIBS)
+	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 $(DEMO_MOVEMENT_F)%exe: $(DEMO_MOVEMENT_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) $(LIB_FLAGS) -o $@ $^ $(THIRD_PARTY_LIBS)
+	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 $(DEMO_MANIPULATION_F)%exe: $(DEMO_MANIPULATION_SOURCES:.cpp=%o) $(CORE_F)%dll
-	$(CC) $(LIB_FLAGS) -o $@ $^ $(THIRD_PARTY_LIBS)
+	$(CC) -o $@ $< -L $(LIB_DIR) -l$(NAME)$*dll $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 # - TESTS -
-$(TEST_F): $(TEST_SOURCES:.o=.cpp) $(LIBRARIES)
-	$(CC) $(LIB_FLAGS) -o $@ $^ $(THIRD_PARTY_LIBS)
-$(UNITTEST_F): $(UNITTEST_SOURCES:.o=.cpp) $(LIBRARIES)
-	$(CC) $(LIB_FLAGS) -o $@ $^ $(UNITTEST_LIB) $(THIRD_PARTY_LIBS)
+$(TEST_F): $(TEST_SOURCES:.o=.cpp) $(CORE_F).dll
+	$(CC) -o $@ $^ $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
+$(UNITTEST_F): $(UNITTEST_SOURCES:.o=.cpp) $(CORE_F).dll
+	$(CC) -o $@ $^ $(UNITTEST_LIB) $(LIB_FLAGS) $(THIRD_PARTY_LIBS)
 
 # --------------  FINAL --------------
 
@@ -259,4 +259,4 @@ $(CORE_LIB_MS): $(CORE_DEF)
 $(TEST_EXE_MS): $(CORE_LIB_MS)
 	cl /I $(INC_DIR) /I "C:\Program Files\Microsoft SDKs\Kinect\v1.0\inc" Main.cpp $^
 	
-all: LIB_CORE LIB_CORE_D LIB_CORE_V LIB_CORE_DV LIB_KINECT_MS LIB_KINECT_MS_V LIB_KINECT_MS_D LIB_KINECT_MS_DV DEMOS DEMOS_V DEMOS_D DEMOS_DV
+all: DEMOS DEMOS_V DEMOS_D DEMOS_DV LIB LIB_V LIB_D LIB_DV
