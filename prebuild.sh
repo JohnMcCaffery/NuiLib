@@ -18,6 +18,9 @@
 echo "Enter the root directory for your OpenCV installation: "
 read CV
 
+# If this produces errors about "$'\r': command not found" load the file with vim
+# (vim prebuild.sh) type :set ff=unix in vim and then save and quit (:wq).
+
 if [[ "${CV:(-1)}" = "\\" || "${CV:(-1)}" = "/" ]]; then
 	export OPENCV_DIR=$CV
 	cvDir=$CV
