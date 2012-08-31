@@ -456,14 +456,6 @@ namespace NuiLib {
 		///
 		virtual ~INuiFactoryExtension();
 
-		///
-		/// Get the current depth frame.
-		///
-		virtual const cv::Mat GetDepth() = 0;
-		///
-		/// Get the current colour frame.
-		///
-		virtual const cv::Mat GetColour() = 0;
 #ifdef VISUAL
 		///
 		/// Get the mat that will be displayed after each poll.
