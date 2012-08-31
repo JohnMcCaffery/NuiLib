@@ -34,10 +34,6 @@ The paper was written by Heng Du and TszHang To. The example is provided by Bran
 const int XRES = 640;
 const int YRES = 480;
 
-//const double DEPTH_SCALE_FACTOR = 255./8191.;
-const double DEPTH_SCALE_FACTOR = 255./65535.;
-//const double DEPTH_SCALE_FACTOR = 255./8191.;
-
 const USHORT HAND_OFFSET_MM = 20;
 const USHORT HIP_OFFSET_MM = 250;
 

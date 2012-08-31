@@ -23,6 +23,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 #undef NULL
 #define NULL 0
 
+const double DEPTH_SCALE_FACTOR = 255./65535.;
 
 const int COLOUR = 0;
 const int DEPTH = 1;
@@ -447,7 +448,7 @@ void KinectFactory::ProcessDepth(NUI_IMAGE_FRAME *frame) {
 	if (newDebug) {
 		newDebug = false;
 		_depthFrame.convertTo(_debugFrame, CV_8UC1, DEPTH_SCALE_FACTOR);
-		cv::cvtColor(_debugFrame, _debugFrame, CV_GRAY2RGB);	
+		cv::cvtColor(_debugFrame, _debugFrame, CV_GRAY2RGB);
 		//cv::imshow("Depth", _debugFrame);
 	}
 #endif
@@ -576,7 +577,7 @@ void KinectJoint::Update(NUI_SKELETON_DATA *skeleton) {
 	Vector4 vector = skeleton->SkeletonPositions[_index];
 	Set(vector.x, vector.y, vector.z);
 	float x, y;
-	NuiTransformSkeletonToDepthImage(vector, &x, &y, NUI_IMAGE_RESOLUTION_640x480);
+	NuiTransformSkeletonToDepthImage(vector, &x, &y, DEPTH_RES);
 #ifdef VISUAL
 	cv::Scalar colour = skeleton->eSkeletonPositionTrackingState[_index] == NUI_SKELETON_POSITION_INFERRED ? cv::Scalar(255, 255, 0) : cv::Scalar(0, 0, 255);
 	cv::circle(_factory.GetDebugFrame(), cv::Point((int)x, (int)y), 5, colour, 3);

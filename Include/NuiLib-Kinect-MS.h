@@ -163,6 +163,9 @@ namespace NuiLib {
 			static DWORD WINAPI Nui_ProcessThread (LPVOID p);
 			DWORD WINAPI Nui_ProcessThread();
 
+			///
+			/// @return An array with of USHORTs (16bit unsigned integers). Any calls to mat.at<T> should use .at<USHORT>.
+			///
 			const cv::Mat GetDepth();
 			const cv::Mat GetColour();
 #ifdef VISUAL

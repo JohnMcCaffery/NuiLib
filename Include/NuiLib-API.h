@@ -1372,6 +1372,25 @@ namespace NuiLib {
 		///
 		virtual const cv::Mat GetColour() = 0;
 
+
+		///
+		/// Convert a point in 3D space to a 2D coordinate on the depth image.
+		///
+		virtual cv::Point SkeletonToDepth(Vector point) = 0;
+		///
+		/// Convert a point in 3D space to a 2D coordinate on the colour image.
+		///
+		virtual cv::Point SkeletonToColour(Vector point) = 0;
+
+		///
+		/// Convert a point in 2D depth image coordinates to a point in 3D space.
+		///
+		virtual cv::Point3f DepthToSkeleton(cv::Point point) = 0;
+		///
+		/// Convert a point in 2D colour image coordinates to a point in 3D space.
+		///
+		virtual cv::Point3f ColourToSkeleton(cv::Point point) = 0;
+
 		///
 		/// Write all components created by this factory, and their relationships, to XML.
 		/// Not currently implemented.

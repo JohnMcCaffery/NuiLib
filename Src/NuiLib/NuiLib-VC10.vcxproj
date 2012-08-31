@@ -124,7 +124,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(KINECTSDK10_DIR)\lib\x86;$(KINECTSDK10_DIR)\Assemblies;C:\Program Files\Microsoft SDKs\Kinect\v1.0\Assemblies;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -169,7 +169,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'">
     <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(KINECTSDK10_DIR)\lib\x86;$(KINECTSDK10_DIR)\Assemblies;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <TargetExt>.lib</TargetExt>
     <TargetName>$(ProjectName)_v</TargetName>
@@ -196,7 +196,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>Kinect10.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -311,7 +312,8 @@
       <AdditionalDependencies>Kinect10.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>Kinect10.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'">
@@ -335,9 +337,6 @@
       <AdditionalDependencies>Kinect10.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\NuiLib-API.h" />
     <ClInclude Include="..\..\Include\NuiLib-Conditions.h" />

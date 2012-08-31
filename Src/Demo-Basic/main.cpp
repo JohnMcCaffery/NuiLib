@@ -26,7 +26,7 @@ int main (int argc, char **args) {
 	//Initialise the factory.
 	NuiLib::NuiFactory()->Init();
 
-	//Create the arm vector.
+	//Create the arm vector as the difference between the shoulder and the hand.
 	NuiLib::Vector arm = NuiLib::joint(NuiLib::HAND_RIGHT) - NuiLib::joint(NuiLib::SHOULDER_RIGHT);
 	//Add a listener so whenever the arm vector changes its new values are output.
 	arm.AddListener([&arm](NuiLib::IObservable *s) { cout << "Right Arm: " << arm.X() << ',' << arm.Y() << ',' << arm.Z() << '\n'; });

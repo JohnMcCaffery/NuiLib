@@ -126,7 +126,7 @@
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <IncludePath>$(KINECTSDK10_DIR)inc;$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(KINECTSDK10_DIR)lib\x86;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -199,7 +199,8 @@
       </AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>Kinect10.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -320,9 +321,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Include\NuiLib-Kinect-MS.h" />

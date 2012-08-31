@@ -476,24 +476,6 @@ namespace NuiLib {
 		virtual bool HasSkeleton() = 0;
 
 		///
-		/// Convert a point in 3D space to a 2D coordinate on the depth image.
-		///
-		virtual cv::Point SkeletonToDepth(Vector point) = 0;
-		///
-		/// Convert a point in 3D space to a 2D coordinate on the colour image.
-		///
-		virtual cv::Point SkeletonToColour(Vector point) = 0;
-
-		///
-		/// Convert a point in 2D depth image coordinates to a point in 3D space.
-		///
-		virtual cv::Point3f DepthToSkeleton(cv::Point point) = 0;
-		///
-		/// Convert a point in 2D colour image coordinates to a point in 3D space.
-		///
-		virtual cv::Point3f ColourToSkeleton(cv::Point point) = 0;
-
-		///
 		/// Get a component with a given name.
 		/// If there are more than one components which fit the criteria the one that was added first will be returned. If there are no components with the given name NULL is returned.
 		/// @param The name to search for.
