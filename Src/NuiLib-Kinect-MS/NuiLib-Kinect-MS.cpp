@@ -84,12 +84,10 @@ INuiFactoryExtension("KinectFactory", "KinectFactory"),
 bool KinectFactory::Init() {
 	if (_initialised) {
 		cout << "NuiFactory already initialised. Ignored Init request.\n";
+		return false;
 	}
 	for (int i = 0; i < 3; i++) 
 		_enabledEvents[i] = false;
-
-	DWORD nuiFlags = NUI_INITIALIZE_FLAG_USES_DEPTH | NUI_INITIALIZE_FLAG_USES_SKELETON; 
-	//nuiFlags = NUI_INITIALIZE_FLAG_USES_DEPTH_AND_PLAYER_INDEX | NUI_INITIALIZE_FLAG_USES_SKELETON;
 
 	HRESULT hr = NuiCreateSensorByIndex(0, &_pNuiSensor);
 
@@ -102,6 +100,7 @@ bool KinectFactory::Init() {
 	_eventHandles[COLOUR] = CreateEvent( NULL, true, false, NULL );
 	_eventHandles[DEPTH] = CreateEvent( NULL, true, false, NULL );
 
+	DWORD nuiFlags = NUI_INITIALIZE_FLAG_USES_DEPTH | NUI_INITIALIZE_FLAG_USES_SKELETON | NUI_INITIALIZE_FLAG_USES_COLOR; 
 	hr = _pNuiSensor->NuiInitialize(nuiFlags);    
 	if (E_NUI_SKELETAL_ENGINE_BUSY == hr) {
 		nuiFlags = NUI_INITIALIZE_FLAG_USES_DEPTH;
