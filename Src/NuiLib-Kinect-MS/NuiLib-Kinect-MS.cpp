@@ -485,86 +485,86 @@ string KinectJoint::NameFromIndex(NUI_SKELETON_POSITION_INDEX index) {
 	if (NUI_SKELETON_POSITION_HIP_CENTER == index)
 		return HIP_CENTER;
 	else if (NUI_SKELETON_POSITION_SPINE == index)
-		return SPINE;
+		return NUILIB_KINECTMS_SPINE;
 	else if (NUI_SKELETON_POSITION_SHOULDER_CENTER == index)
-		return SHOULDER_CENTER;
+		return NUILIB_KINECTMS_SHOULDER_CENTER;
 	else if (NUI_SKELETON_POSITION_HEAD == index)
-		return HEAD;
+		return NUILIB_KINECTMS_HEAD;
 	else if (NUI_SKELETON_POSITION_SHOULDER_LEFT == index)
-		return SHOULDER_LEFT;
+		return NUILIB_KINECTMS_SHOULDER_LEFT;
 	else if (NUI_SKELETON_POSITION_ELBOW_LEFT == index)
-		return ELBOW_LEFT;
+		return NUILIB_KINECTMS_ELBOW_LEFT;
 	else if (NUI_SKELETON_POSITION_WRIST_LEFT == index)
-		return WRIST_LEFT;
+		return NUILIB_KINECTMS_WRIST_LEFT;
 	else if (NUI_SKELETON_POSITION_HAND_LEFT == index)
-		return HAND_LEFT;
+		return NUILIB_KINECTMS_HAND_LEFT;
 	else if (NUI_SKELETON_POSITION_SHOULDER_RIGHT == index)
-		return SHOULDER_RIGHT;
+		return NUILIB_KINECTMS_SHOULDER_RIGHT;
 	else if (NUI_SKELETON_POSITION_ELBOW_RIGHT == index)
-		return ELBOW_RIGHT;
+		return NUILIB_KINECTMS_ELBOW_RIGHT;
 	else if (NUI_SKELETON_POSITION_WRIST_RIGHT == index)
-		return WRIST_RIGHT;
+		return NUILIB_KINECTMS_WRIST_RIGHT;
 	else if (NUI_SKELETON_POSITION_HAND_RIGHT == index)
-		return HAND_RIGHT;
+		return NUILIB_KINECTMS_HAND_RIGHT;
 	else if (NUI_SKELETON_POSITION_HIP_LEFT == index)
-		return HIP_LEFT;
+		return NUILIB_KINECTMS_HIP_LEFT;
 	else if (NUI_SKELETON_POSITION_KNEE_LEFT == index)
-		return KNEE_LEFT;
+		return NUILIB_KINECTMS_KNEE_LEFT;
 	else if (NUI_SKELETON_POSITION_ANKLE_LEFT == index)
-		return ANKLE_LEFT;
+		return NUILIB_KINECTMS_ANKLE_LEFT;
 	else if (NUI_SKELETON_POSITION_FOOT_LEFT == index)
-		return FOOT_LEFT;
+		return NUILIB_KINECTMS_FOOT_LEFT;
 	else if (NUI_SKELETON_POSITION_HIP_RIGHT == index)
-		return HIP_RIGHT;
+		return NUILIB_KINECTMS_HIP_RIGHT;
 	else if (NUI_SKELETON_POSITION_KNEE_RIGHT == index)
-		return KNEE_RIGHT;
+		return NUILIB_KINECTMS_KNEE_RIGHT;
 	else if (NUI_SKELETON_POSITION_ANKLE_RIGHT == index)
-		return ANKLE_RIGHT;
+		return NUILIB_KINECTMS_ANKLE_RIGHT;
 	else if (NUI_SKELETON_POSITION_FOOT_RIGHT == index)
-		return FOOT_RIGHT;
+		return NUILIB_KINECTMS_FOOT_RIGHT;
 	return "";
 }
 
 NUI_SKELETON_POSITION_INDEX KinectJoint::IndexFromName(string name) {
-	if (name.compare(HIP_CENTER) == 0)
+	if (name.compare(NUILIB_KINECTMS_HIP_CENTER) == 0)
 		return NUI_SKELETON_POSITION_HIP_CENTER;
-	else if (name.compare(SPINE) == 0)
+	else if (name.compare(NUILIB_KINECTMS_SPINE) == 0)
 		return NUI_SKELETON_POSITION_SPINE;
-	else if (name.compare(SHOULDER_CENTER) == 0)
+	else if (name.compare(NUILIB_KINECTMS_SHOULDER_CENTER) == 0)
 		return NUI_SKELETON_POSITION_SHOULDER_CENTER;
-	else if (name.compare(HEAD) == 0)
+	else if (name.compare(NUILIB_KINECTMS_HEAD) == 0)
 		return NUI_SKELETON_POSITION_HEAD;
-	else if (name.compare(SHOULDER_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_SHOULDER_LEFT) == 0)
 		return NUI_SKELETON_POSITION_SHOULDER_LEFT;
-	else if (name.compare(ELBOW_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_ELBOW_LEFT) == 0)
 		return NUI_SKELETON_POSITION_ELBOW_LEFT;
-	else if (name.compare(WRIST_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_WRIST_LEFT) == 0)
 		return NUI_SKELETON_POSITION_WRIST_LEFT;
-	else if (name.compare(HAND_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_HAND_LEFT) == 0)
 		return NUI_SKELETON_POSITION_HAND_LEFT;
-	else if (name.compare(SHOULDER_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_SHOULDER_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_SHOULDER_RIGHT;
-	else if (name.compare(ELBOW_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_ELBOW_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_ELBOW_RIGHT;
-	else if (name.compare(WRIST_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_WRIST_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_WRIST_RIGHT;
-	else if (name.compare(HAND_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_HAND_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_HAND_RIGHT;
-	else if (name.compare(HIP_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_HIP_LEFT) == 0)
 		return NUI_SKELETON_POSITION_HIP_LEFT;
-	else if (name.compare(KNEE_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_KNEE_LEFT) == 0)
 		return NUI_SKELETON_POSITION_KNEE_LEFT;
-	else if (name.compare(ANKLE_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_ANKLE_LEFT) == 0)
 		return NUI_SKELETON_POSITION_ANKLE_LEFT;
-	else if (name.compare(FOOT_LEFT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_FOOT_LEFT) == 0)
 		return NUI_SKELETON_POSITION_FOOT_LEFT;
-	else if (name.compare(HIP_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_HIP_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_HIP_RIGHT;
-	else if (name.compare(KNEE_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_KNEE_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_KNEE_RIGHT;
-	else if (name.compare(ANKLE_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_ANKLE_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_ANKLE_RIGHT;
-	else if (name.compare(FOOT_RIGHT) == 0)
+	else if (name.compare(NUILIB_KINECTMS_FOOT_RIGHT) == 0)
 		return NUI_SKELETON_POSITION_FOOT_RIGHT;
 	return NUI_SKELETON_POSITION_COUNT;
 }
