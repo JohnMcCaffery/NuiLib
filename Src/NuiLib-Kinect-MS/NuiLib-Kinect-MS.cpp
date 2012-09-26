@@ -68,18 +68,13 @@ INuiFactoryExtension("KinectFactory", "KinectFactory"),
 {
 	function<IVector *()> kinectJointCreator = [this]() -> IVector* { 
 		KinectJoint *j = new KinectJoint();
+		j->SetName(j->GetJoint());
 		AddSkeletonListener(j);
 		return j;
 	};
 
-	function<IComponent *()> fistConditionCreator = [this] () -> IComponent *{
-		FistCondition *c = new FistCondition();
-		return c;
-	};
-
 	RegisterCreator(KinectJoint::GetTypeName(), kinectJointCreator);
 	RegisterCreator(JointVector::GetTypeName(), kinectJointCreator);
-	RegisterCreator(FistCondition::GetTypeName(), fistConditionCreator);
 }
 
 bool KinectFactory::Init() {
@@ -478,12 +473,12 @@ void **KinectFactory::GetNuiDevices() { return (void **) (&_pNuiSensor); }
 
 //----------------------- KinectJoint -------------------------------
 
-KinectJoint::KinectJoint() : JointVector(GetTypeName(), HIP_CENTER), _index(NUI_SKELETON_POSITION_HIP_CENTER) { }
+KinectJoint::KinectJoint() : JointVector(GetTypeName(), NUILIB_KINECTMS_HIP_CENTER), _index(NUI_SKELETON_POSITION_HIP_CENTER) { }
 KinectJoint::KinectJoint(NUI_SKELETON_POSITION_INDEX index) : JointVector(GetTypeName(), NameFromIndex(index)), _index(index) { }
 
 string KinectJoint::NameFromIndex(NUI_SKELETON_POSITION_INDEX index) {
 	if (NUI_SKELETON_POSITION_HIP_CENTER == index)
-		return HIP_CENTER;
+		return NUILIB_KINECTMS_HIP_CENTER;
 	else if (NUI_SKELETON_POSITION_SPINE == index)
 		return NUILIB_KINECTMS_SPINE;
 	else if (NUI_SKELETON_POSITION_SHOULDER_CENTER == index)

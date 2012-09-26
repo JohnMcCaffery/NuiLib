@@ -619,9 +619,7 @@ void Vector::Set(float x, float y, float z) { Update(x, y, z); }
 //------------------------ Joint Vector -----------------
 
 JointVector::JointVector(string type) : IVector(type) { }
-JointVector::JointVector(string type, string joint) : IVector(type), _joint(joint) {
-	SetName(joint);
-}
+JointVector::JointVector(string type, string joint) : IVector(type), _joint(joint) { }
 
 string JointVector::GetJoint() { return _joint; }
 

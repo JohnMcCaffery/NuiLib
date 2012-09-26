@@ -56,7 +56,7 @@ void Init();
 void Pause();
 
 int main(int argc, const char* argv[]) { 
-	ExtensionFactory()->Init();
+	NuiFactory()->Init();
 
 	Init();
 

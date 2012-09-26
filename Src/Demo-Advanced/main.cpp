@@ -26,10 +26,10 @@ int main (int argc, char **args) {
 	//Initialise the factory.
 	NuiLib::NuiFactory()->Init();
 
-	//Get the hand position.
-	NuiLib::Vector hand = NuiLib::joint(NuiLib::HAND_RIGHT);
 	//Get the shoulder position.
 	NuiLib::Vector shoulder = NuiLib::joint(NuiLib::SHOULDER_RIGHT);
+	//Get the hand position.
+	NuiLib::Vector hand = NuiLib::joint(NuiLib::HAND_RIGHT);
 
 	//Add a listener so whenever the arm vector changes its new values are output.
 	NuiLib::NuiFactory()->AddListener([shoulder, hand](NuiLib::IObservable *s) {
