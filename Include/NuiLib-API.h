@@ -1277,6 +1277,26 @@ namespace NuiLib {
 	DLL Vector joint(const int joint);	
 	
 	///
+	/// True if all points are reasonable spread out.
+	/// Guards against incorrect input when all the points cluster together.
+	/// Reasonably spread out is defined as the area contained in the circle head->handR->footR->footL->handL->head.
+	///
+	DLL Condition closeGuard();
+	///
+	/// True if all points are reasonable spread out.
+	/// Guards against incorrect input when all the points cluster together.
+	/// Reasonably spread out is defined as the area contained in the circle head->handR->footR->footL->handL->head.
+	/// @param scale The threshold for the area of the points within the circle.
+	///
+	DLL Condition closeGuard(float scale);
+	///
+	/// True if all points are reasonable spread out.
+	/// Guards against incorrect input when all the points cluster together.
+	/// Reasonably spread out is defined as the area contained in the circle head->handR->footR->footL->handL->head.
+	/// @param scale The threshold for the area of the points within the circle.
+	///
+	DLL Condition closeGuard(Scalar *scale);
+	///
 	/// True if the specified hand is in a fist. False otherwise
 	/// @param rightHand If true, track the right hand. False, left hand.
 	/// 

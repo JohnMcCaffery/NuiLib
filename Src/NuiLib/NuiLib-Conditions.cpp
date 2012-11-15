@@ -40,6 +40,20 @@ HoldCondition *NuiLib::holdP(ICondition *condition) {
 	hold->Changed(condition);
 	return hold;
 }
+CloseGuard *NuiLib::closeGuardP() {
+	CloseGuard *guard = ExtensionFactory()->Make<CloseGuard>("CloseGuard");
+	return guard;
+}
+CloseGuard *NuiLib::closeGuardP(float scale) {
+	CloseGuard *guard = ExtensionFactory()->Make<CloseGuard>("CloseGuard");
+	guard->SetScale(scale);
+	return guard;
+}
+CloseGuard *NuiLib::closeGuardP(IScalar *scale) {
+	CloseGuard *guard = ExtensionFactory()->Make<CloseGuard>("CloseGuard");
+	guard->SetScale(scale);
+	return guard;
+}
 
 Condition NuiLib::fist(bool rightHand) {
 	return Condition(fistP(rightHand));
@@ -50,6 +64,16 @@ Condition NuiLib::click(const Condition &condition) {
 Condition NuiLib::hold(const Condition &condition) {
 	return Condition(holdP(condition._p));
 }
+Condition NuiLib::closeGuard() {
+	return Condition(closeGuardP());
+}
+Condition NuiLib::closeGuard(float scale) {
+	return Condition(closeGuardP(scale));
+}
+Condition NuiLib::closeGuard(Scalar scale) {
+	return Condition(closeGuardP(scale._p));
+}
+
 //-------------------------------------------- ICondition ---------------------------------------
 
 ICondition::ICondition() : IComponent("ICondition", "AnonymousCondition"), _value(false) { }
@@ -437,5 +461,77 @@ bool HoldCondition::CalculateValue() {
 		time_t now;
 		time(&now);
 		return difftime(now, _press) > _threshold;
+	}
+}
+
+
+	//----------------------- CloseGuard ---------------------
+
+CloseGuard::CloseGuard() : 
+ICondition(GetTypeName()), 
+	_scale(2000.f), 
+	_head(joint(NuiLib::HEAD)), 
+	_handR(joint(NuiLib::HAND_RIGHT)), 
+	_handL(joint(NuiLib::HAND_LEFT)), 
+	_footR(joint(NuiLib::FOOT_RIGHT)), 
+	_footL(joint(NuiLib::FOOT_LEFT)) { }
+
+CloseGuard::CloseGuard(float val) : 
+ICondition(GetTypeName()), 
+	_scale(val),
+	_head(joint(NuiLib::HEAD)), 
+	_handR(joint(NuiLib::HAND_RIGHT)), 
+	_handL(joint(NuiLib::HAND_LEFT)), 
+	_footR(joint(NuiLib::FOOT_RIGHT)), 
+	_footL(joint(NuiLib::FOOT_LEFT)){ } 
+
+CloseGuard::CloseGuard(IScalar* val) : 
+ICondition(GetTypeName()), 
+	_scale(val),
+	_head(joint(NuiLib::HEAD)), 
+	_handR(joint(NuiLib::HAND_RIGHT)), 
+	_handL(joint(NuiLib::HAND_LEFT)), 
+	_footR(joint(NuiLib::FOOT_RIGHT)), 
+	_footL(joint(NuiLib::FOOT_LEFT)){ }
+
+void CloseGuard::SetScale(float val) { _scale.Set(val); }
+void CloseGuard::SetScale(IScalar* val) { _scale.Set(val); }
+
+cv::Point extreme(std::vector<cv::Point> points, bool min, bool x) {
+	cv::Point current = points.front();
+	for (auto p = points.begin(); p != points.end(); p++) {
+		if (x && min && (*p).x < current.x)
+			current = *p;
+		if (!x && min && (*p).y < current.y)
+			current = *p;
+		if (x && !min && (*p).x > current.x)
+			current = *p;
+		if (!x && !min && (*p).y > current.y)
+			current = *p;
+		return current;
+	}
+}
+
+bool CloseGuard::CalculateValue() {
+	std::vector<cv::Point> allPoints;
+	allPoints.push_back(ExtensionFactory()->SkeletonToDepth(_head));
+	allPoints.push_back(ExtensionFactory()->SkeletonToDepth(_handR));
+	allPoints.push_back(ExtensionFactory()->SkeletonToDepth(_footR));
+	allPoints.push_back(ExtensionFactory()->SkeletonToDepth(_footL));
+	allPoints.push_back(ExtensionFactory()->SkeletonToDepth(_handL));
+
+	std::vector<cv::Point> points;
+	points.push_back(extreme(allPoints, true, true));
+	points.push_back(extreme(allPoints, true, false));
+	points.push_back(extreme(allPoints, false, true));
+	points.push_back(extreme(allPoints, false, false));
+
+	float area = cv::contourArea(points);
+	if (area > *_scale)
+		return true;
+	else {
+		if (area > 0.f)
+			cv::polylines(ExtensionFactory()->GetDebugFrame(), points, true, cv::Scalar(0, 0, 255), 2);
+		return false;
 	}
 }

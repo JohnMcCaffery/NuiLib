@@ -31,8 +31,6 @@ using namespace std;
 #define CONDITIONS_H
 
 namespace NuiLib {
-
-
 	//--------------Comparison---------------------
 
 	class DLL ComparisonCondition : public ICondition, public BinaryOperator<IScalar, float, float> {
@@ -201,16 +199,44 @@ namespace NuiLib {
 		inline static std::string GetTypeName() { return "HoldCondition"; }
 	};
 
+	//----------------------- CloseGuard ---------------------
+
+	class DLL CloseGuard : public ICondition {
+	private:
+		ScalarOperand _scale;
+		Vector _head;
+		Vector _handR;
+		Vector _handL;
+		Vector _footR;
+		Vector _footL;
+
+	public:
+		CloseGuard();
+		CloseGuard(float);
+		CloseGuard(IScalar*);
+
+		void SetScale(float);
+		void SetScale(IScalar*);
+
+		bool CalculateValue();
+		inline static std::string GetTypeName() { return "CloseGuard"; }
+		inline static bool FactoryUpdated() { return true; }
+	};
+
 	FistCondition *fistP(bool rightHand);
 	ClickCondition *clickP(ICondition *condition);
 	HoldCondition *holdP(ICondition *condition);
-	
+	CloseGuard *closeGuardP();
+	CloseGuard *closeGuardP(float scale);
+	CloseGuard *closeGuardP(IScalar *scale);
 
 
 	DLL Condition fist(bool rightHand);
 	DLL Condition click(Condition &condition);
 	DLL Condition hold(Condition &condition);
-
+	DLL Condition closeGuard();
+	DLL Condition closeGuard(float scale);
+	DLL Condition closeGuard(Scalar scale);
 
 
 	DLL ICondition *pGreater(IScalar*, IScalar*);

@@ -495,7 +495,9 @@ namespace NuiLib {
 		/// @return The new component of type T.
 		///
 		template<typename T> T *Make(string name) {
-			T *item;
+			T *item = Get<T>(name);
+			if (item)
+				return item;
 			string type = T::GetTypeName();
 			if (_componentCreators.count(type) > 0)
 				item = (T*)_componentCreators[type]();
