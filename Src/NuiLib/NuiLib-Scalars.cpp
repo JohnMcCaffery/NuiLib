@@ -154,7 +154,7 @@ ConditionalScalar *ifT(ICondition* condition, TrueT ifTrue, FalseT ifFalse, stri
 	ConditionalScalar *scalar = ExtensionFactory()->Make<ConditionalScalar>(name);
 	scalar->SetCondition(condition);
 	scalar->SetScalar1(ifTrue);
-	scalar->SetScalar1(ifFalse);
+	scalar->SetScalar2(ifFalse);
 	scalar->Changed(condition);
 	return scalar;
 }
