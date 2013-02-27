@@ -32,8 +32,12 @@ using namespace std;
 #define API_H
 
 #if !defined GPLUSPLUS
+#if defined BUILD
+#define DLL __declspec(dllexport)
+#else
+#define DLL __declspec(dllimport)
+#endif
 #define SPRINTF sprintf_s
-#define DLL
 #elif defined BUILD
 #define DLL __declspec(dllexport)
 #define SPRINTF snprintf

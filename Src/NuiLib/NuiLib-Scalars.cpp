@@ -275,8 +275,8 @@ Scalar NuiLib::ifScalar(const Condition& conditional, const Scalar &ifTrue, cons
 
 //-------------------------------------------- IScalar ---------------------------------------
 
-	IScalar::IScalar() : 
-IComponent("IScalar", "AnonymousScalar"),
+IScalar::IScalar() : 
+	IComponent("IScalar", "AnonymousScalar"),
 	_printMax(0.f),
 	_value(0.f) {}
 

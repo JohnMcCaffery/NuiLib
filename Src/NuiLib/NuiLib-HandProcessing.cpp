@@ -66,7 +66,7 @@ struct ConvexityDefect
 	float depth;
 };
 
-SkeletonPoint::SkeletonPoint(LONG X, LONG Y, USHORT Z) : x(X), y(Y), z(Z) { }
+SkeletonPoint::SkeletonPoint(long X, long Y, ushort Z) : x(X), y(Y), z(Z) { }
 
 bool hand = false;
 
@@ -98,7 +98,7 @@ std::vector<Point> HandProcessor::adjustPoints(int w, std::vector<Point> points)
 }
 
 // returns true if the hand is near the edge of the sensor area
-bool handApproachingDisplayPerimeter(LONG x, LONG y, int hROI, int vROI, cv::Scalar colour)
+bool handApproachingDisplayPerimeter(long x, long y, int hROI, int vROI, cv::Scalar colour)
 {
 	bool ret = (x > (XRES - hROI)) || (x < (hROI)) || (y > (YRES - vROI)) || (y < (vROI));
 	if (ret) {
@@ -120,17 +120,17 @@ bool handApproachingDisplayPerimeter(LONG x, LONG y, int hROI, int vROI, cv::Sca
 	return ret;
 }
 //TODO if head.y < hand.y + vROI we're fine
-bool handNearBody(Point hand, USHORT handz, Point hip, USHORT hipz, Mat depth16, int hROI, int vROI, cv::Scalar colour) {
+bool handNearBody(Point hand, ushort handz, Point hip, ushort hipz, Mat depth16, int hROI, int vROI, cv::Scalar colour) {
 	if (handz  > hipz - (BODY_THRESHOLD << 3)) {
 		int edgeR = -1, edgeL = -1;
-		USHORT hipOffset = (BODY_THRESHOLD << 3);
-		USHORT bodyMax = hipz + hipOffset;
-		USHORT bodyMin = hipz - hipOffset;
+		ushort hipOffset = (BODY_THRESHOLD << 3);
+		ushort bodyMax = hipz + hipOffset;
+		ushort bodyMin = hipz - hipOffset;
 		for (int i = 0; edgeR == -1 || edgeL == -1; i++) {
 			if (hip.x + i >= depth16.cols-1) 
 				edgeR = depth16.cols - 1;
 			else {
-				USHORT r = depth16.at<USHORT>(Point(hip.x + i, hand.y));
+				ushort r = depth16.at<ushort>(Point(hip.x + i, hand.y));
 				if (edgeR == -1 && (i > 2*hROI || r < bodyMin || r > bodyMax || r == 0)) 
 					edgeR = hip.x + i;
 			}
@@ -138,7 +138,7 @@ bool handNearBody(Point hand, USHORT handz, Point hip, USHORT hipz, Mat depth16,
 			if (hip.x - i < 0) 
 				edgeL = 0;
 			else {
-				USHORT l = depth16.at<USHORT>(Point(hip.x - i, hand.y));
+				ushort l = depth16.at<ushort>(Point(hip.x - i, hand.y));
 				if (edgeL == -1 && (i > 2*hROI || l < bodyMin || l > bodyMax || l == 0)) edgeL = hip.x - i;
 			}
 		}
@@ -158,9 +158,9 @@ bool handNearBody(Point hand, USHORT handz, Point hip, USHORT hipz, Mat depth16,
 ///
 /// Create a reduced size matrix that is just the region of interest around the hand and has been thresholded so the hand is white and everything else is black.
 ///
-Mat HandProcessor::thresholdHand(Mat depth16, Point hand, USHORT handz, int hROI, int vROI) {
+Mat HandProcessor::thresholdHand(Mat depth16, Point hand, ushort handz, int hROI, int vROI) {
 	//Extract and threshold hand
-	USHORT thresh = handz + (HAND_OFFSET_MM << 3);	
+	ushort thresh = handz + (HAND_OFFSET_MM << 3);	
 
 	int w = hROI * 2;	
 	int h = vROI * 2;	
@@ -171,7 +171,7 @@ Mat HandProcessor::thresholdHand(Mat depth16, Point hand, USHORT handz, int hROI
 	int displayShift = _isRight ? XRES - w : 0;
 #endif
 	Mat handThresh(w, w, CV_8UC1);
-	USHORT *raw = (USHORT *) depth16.data;
+	ushort *raw = (ushort *) depth16.data;
 	for (int row = 0; row < w; row++) {
 		for (int col = 0; col < h; col++) {
 			int rawIndex = ((row+yShift) * XRES) + (col+xShift);
@@ -228,8 +228,8 @@ void HandProcessor::Changed(IObservable *source) {
 
 	if (hand.x < 0 || hand.y < 0 || hip.x < 0 || hip.y < 0 || hand.x >= XRES || hand.y >= YRES || hip.x >= XRES || hip.y >= YRES)
 		return;
-	USHORT handz = depth16.at<USHORT>(hand);
-	USHORT hipz = depth16.at<USHORT>(hip);
+	ushort handz = depth16.at<ushort>(hand);
+	ushort hipz = depth16.at<ushort>(hip);
 
 	int hROI = (int) ((1./handz) * ROI_SCALE_H);
 	int vROI = (int) ((1./handz) * ROI_SCALE_V);

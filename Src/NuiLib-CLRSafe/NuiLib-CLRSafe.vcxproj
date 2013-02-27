@@ -16,9 +16,10 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -39,8 +40,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
-    <TargetName>$(ProjectName)_dv</TargetName>
-    <TargetExt>.lib</TargetExt>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetExt>.dll</TargetExt>
     <IncludePath>$(OPENCV_DIR)build/include/;$(KINECTSDK10_DIR)inc;$(SolutionDir)Include;$(WindowsSdkDir)\Include;$(WindowsSdkDir)\Include\gl;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(SolutionDir)Lib\x86\vc10\;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
@@ -48,9 +49,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>BUILD;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opencv_core244d.lib;opencv_objdetect244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;kinect10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,6 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NuiLib-CLRSafe.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NuiLib\NuiLib-VC10.vcxproj">
+      <Project>{7726434f-1330-45d9-aa09-7949c3cb3e58}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

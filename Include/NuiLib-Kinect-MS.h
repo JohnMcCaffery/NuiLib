@@ -104,7 +104,7 @@ namespace NuiLib {
 			friend class KinectFactory;
 	};
 
-	class KinectFactory : public INuiFactoryExtension {
+	class DLL KinectFactory : public INuiFactoryExtension {
 		private:
 			bool _pollOnly;
 			bool _polling;

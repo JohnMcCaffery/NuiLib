@@ -42,10 +42,11 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -123,10 +124,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
-    <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Iain\Documents\John\opencv\build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(SolutionDir)Lib\x86\vc10\;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
@@ -194,6 +196,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opencv_core244d.lib;opencv_objdetect244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;kinect10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -341,12 +344,14 @@
     <ClInclude Include="..\..\Include\NuiLib-API.h" />
     <ClInclude Include="..\..\Include\NuiLib-Conditions.h" />
     <ClInclude Include="..\..\Include\NuiLib-Extendable.h" />
+    <ClInclude Include="..\..\Include\NuiLib-Kinect-MS.h" />
     <ClInclude Include="..\..\Include\NuiLib-Operators.h" />
     <ClInclude Include="..\..\Include\NuiLib-HandProcessing.h" />
     <ClInclude Include="..\..\Include\NuiLib-Scalars.h" />
     <ClInclude Include="..\..\Include\NuiLib-Vectors.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\NuiLib-Kinect-MS\NuiLib-Kinect-MS.cpp" />
     <ClCompile Include="NuiLib-API.cpp" />
     <ClCompile Include="NuiLib-Conditions.cpp" />
     <ClCompile Include="NuiLib-Extendable.cpp" />

@@ -1,9 +1,20 @@
 #include <NuiLib-CLRSafe.h>
 #include <NuiLib-Extendable.h>
-#include <vector>
+
 
 using namespace NuiLib;
 
+Student::Student(char *name, double gpa) {
+    _fullname = new char [ strlen(name+1) ];
+    strcpy(_fullname, name);
+    _gpa = gpa;
+
+
+	int *p = new int;
+	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
+	//IScalar * scalar = new IScalar;
+	//Scalar *s = new Scalar();
+  }
 ///
 /// Value = 0
 ///
@@ -19,18 +30,21 @@ using namespace NuiLib;
 }
 */
 
+/*
 ///
 /// Value = value
 ///
-SafeScalar::SafeScalar(float value) {
+NuiLib::SafeScalar::SafeScalar(float value)  {
 	char name[50];
 	SPRINTF(name, 50, "%.3f", value);
 	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
-	scalar->Set(value);
-	_p = scalar;
+	//scalar->Set(value);
+	//_p = scalar;
 	//scalar->AddListener([this] (IObservable* src) { Changed(); });
 }
 
+NuiLib::SafeScalar::~SafeScalar() { }
+*/
 
 ///
 /// Value = value

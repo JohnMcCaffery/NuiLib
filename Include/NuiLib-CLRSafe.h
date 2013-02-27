@@ -1,7 +1,38 @@
 #ifndef CLRSAFE_H
 #define CLRSAFE_H
 
+#ifdef BUILD
+   #define DLL __declspec(dllexport)
+#else
+   #define DLL __declspec(dllimport)
+#endif
+
 namespace NuiLib {
+class DLL Student
+{
+private:
+  char *_fullname;
+  double _gpa;
+  void *_scalar;
+public:
+  Student(char *name, double gpa);
+  
+  ~Student()
+  {
+    delete [] _fullname;
+  }
+  double getGpa()
+  {
+    return _gpa;
+  }
+  char *getName()
+  {
+    return _fullname;
+  }
+};
+
+
+/*
 	///
 	/// Wrapper around a scalar value.
 	/// The value is stored as a float.
@@ -16,8 +47,8 @@ namespace NuiLib {
 	/// They will be de-allocated by the factory.
 	/// 
 	class SafeScalar {
-		private:
-			void *_p;
+		//private:
+			//void *_p;
 
 		public: 
 			/// Value = 0
@@ -32,6 +63,11 @@ namespace NuiLib {
 			/// Value = value
 			///
 			SafeScalar(float value);
+
+			///
+			/// Destructor
+			///
+			~SafeScalar();
 
 			///
 			/// Value = value
@@ -54,13 +90,12 @@ namespace NuiLib {
 			///
 			//void Set(float);
 
-			/*
 			///
 			/// Triggered whenever this's value changes.
 			///
-			void Changed();
-			*/
+			//void Changed();
 	};	
+*/
 }
 
 #endif //CLRFSAFE

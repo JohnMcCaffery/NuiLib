@@ -106,7 +106,7 @@ namespace NuiLib {
 				case WRAPPER: Set(value->_value.wrapper); break;
 				case VALUE: Set(value->_value.value); break;
 				}
-				Init(value._def, converter, printer);
+				//Init(value, converter, printer); //Taking out this line was a hack
 		}
 
 		const OperandT operator*() { return Get(); }
@@ -144,8 +144,8 @@ namespace NuiLib {
 			return _type == WRAPPER ? _value.wrapper->GetCName() : _printer(format, _value.value);
 		}
 
-		Operand<WrapperT, SimpleT, OperandT> operator=(WrapperT *in) { return Operand<WrapperT, SimpleT, OperandT>(in); }
-		Operand<WrapperT, SimpleT, OperandT> operator=(OperandT in) { return Operand<WrapperT, SimpleT, OperandT>(in); }	
+		//Operand<WrapperT, SimpleT, OperandT> operator=(WrapperT *in) { return Operand<WrapperT, SimpleT, OperandT>(in); } TODO taking out this line was a hack
+		//Operand<WrapperT, SimpleT, OperandT> operator=(OperandT in) { return Operand<WrapperT, SimpleT, OperandT>(in); }	 //Taking out this line was a hack
 
 	};
 

@@ -34,16 +34,16 @@ The paper was written by Heng Du and TszHang To. The example is provided by Bran
 const int XRES = 640;
 const int YRES = 480;
 
-const USHORT HAND_OFFSET_MM = 20;
-const USHORT HIP_OFFSET_MM = 250;
+const ushort HAND_OFFSET_MM = 20;
+const ushort HIP_OFFSET_MM = 250;
 
 namespace NuiLib {
 	enum Hand { RIGHT, LEFT };
 
 	struct DLL SkeletonPoint {
-		LONG x, y;
-		USHORT z;
-		SkeletonPoint(LONG X, LONG Y, USHORT Z);
+		long x, y;
+		ushort z;
+		SkeletonPoint(long X, long Y, ushort Z);
 	};
 
 	class DLL HandProcessor : public IObservable, public IObserver {
@@ -63,7 +63,7 @@ namespace NuiLib {
 
 		inline cv::Point displayShift(int w, cv::Point point);
 		std::vector<cv::Point> adjustPoints(int w, std::vector<cv::Point> points);
-		cv::Mat thresholdHand(cv::Mat depth16, cv::Point hand, USHORT handz, int hROI, int vROI);
+		cv::Mat thresholdHand(cv::Mat depth16, cv::Point hand, ushort handz, int hROI, int vROI);
 
 		Vector _vHand;
 		Vector _vHip;

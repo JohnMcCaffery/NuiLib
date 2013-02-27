@@ -42,14 +42,14 @@ if not exist Bin\x86 md Bin\x86
 if not exist Bin\x86\vc10 md Bin\x86\vc10
 
 @echo Moving VC10 OpenCV libraries to Bin
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core241.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core241d.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui241.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui241d.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc241.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc241d.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect241.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect241d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core244.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core244d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui244.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui244d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc244.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc244d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect244.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect244d.dll" Bin\x86\vc10\
 copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb.dll" Bin\x86\vc10\
 copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb_debug.dll" Bin\x86\vc10\
 

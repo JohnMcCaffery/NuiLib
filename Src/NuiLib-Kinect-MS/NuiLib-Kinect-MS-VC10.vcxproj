@@ -45,7 +45,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -125,7 +125,7 @@
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>$(KINECTSDK10_DIR)inc;$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(KINECTSDK10_DIR)inc;C:\Users\Iain\Documents\John\opencv\build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
