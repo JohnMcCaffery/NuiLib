@@ -76,7 +76,6 @@ int main(int argc, const char* argv[]) {
 		cout << buffer;
 	});
 
-
 	cout << "Press return to start auto polling.\n";
 	Pause();
 	ExtensionFactory()->SetAutoPoll(true);

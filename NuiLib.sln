@@ -1,18 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests-VC10", "Src\UnitTests\UnitTests-VC10.vcxproj", "{A6850FE0-C53B-418D-9462-2B821B33E1FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "Src\UnitTests\UnitTests-VC10.vcxproj", "{A6850FE0-C53B-418D-9462-2B821B33E1FF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7726434F-1330-45D9-AA09-7949C3CB3E58} = {7726434F-1330-45D9-AA09-7949C3CB3E58}
 		{5842F85E-1326-4EDB-918B-9EDFF9F0621E} = {5842F85E-1326-4EDB-918B-9EDFF9F0621E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NuiLib-VC10", "Src\NuiLib\NuiLib-VC10.vcxproj", "{7726434F-1330-45D9-AA09-7949C3CB3E58}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NuiLib", "Src\NuiLib\NuiLib-VC10.vcxproj", "{7726434F-1330-45D9-AA09-7949C3CB3E58}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NuiLib-Kinect-MS-VC10", "Src\NuiLib-Kinect-MS\NuiLib-Kinect-MS-VC10.vcxproj", "{5842F85E-1326-4EDB-918B-9EDFF9F0621E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NuiLib-Kinect-MS", "Src\NuiLib-Kinect-MS\NuiLib-Kinect-MS-VC10.vcxproj", "{5842F85E-1326-4EDB-918B-9EDFF9F0621E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7726434F-1330-45D9-AA09-7949C3CB3E58} = {7726434F-1330-45D9-AA09-7949C3CB3E58}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NuiLib-DotNet", "Src\NuiLib-DotNet\NuiLib-DotNet.vcxproj", "{2FEBF860-5378-451F-8ECE-502E04DE85DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,14 @@ Global
 		{5842F85E-1326-4EDB-918B-9EDFF9F0621E}.Release|Win32.Build.0 = Release|Win32
 		{5842F85E-1326-4EDB-918B-9EDFF9F0621E}.ReleaseVisual|Win32.ActiveCfg = ReleaseVisual|Win32
 		{5842F85E-1326-4EDB-918B-9EDFF9F0621E}.ReleaseVisual|Win32.Build.0 = ReleaseVisual|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.Debug|Win32.Build.0 = Debug|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.DebugVisual|Win32.ActiveCfg = Debug|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.DebugVisual|Win32.Build.0 = Debug|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.Release|Win32.ActiveCfg = Release|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.Release|Win32.Build.0 = Release|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.ReleaseVisual|Win32.ActiveCfg = Release|Win32
+		{2FEBF860-5378-451F-8ECE-502E04DE85DC}.ReleaseVisual|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

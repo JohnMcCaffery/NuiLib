@@ -530,8 +530,10 @@ bool CloseGuard::CalculateValue() {
 	if (area > *_scale)
 		return true;
 	else {
+#ifdef VISUAL
 		if (area > 0.f)
 			cv::polylines(ExtensionFactory()->GetDebugFrame(), points, true, cv::Scalar(0, 0, 255), 2);
+#endif
 		return false;
 	}
 }

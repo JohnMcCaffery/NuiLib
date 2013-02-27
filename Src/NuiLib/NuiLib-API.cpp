@@ -39,9 +39,9 @@ Scalar::Scalar(string name, float value)  {
 	_p = scalar;
 }
 
-void Scalar::AddListener(function<void(IObservable*)> listener) {
-	_p->AddListener(listener);
-}
+//void Scalar::AddListener(function<void(IObservable*)> listener) {
+	//_p->AddListener(listener);
+//}
 
 float Scalar::operator*() { return Get(); }
 float Scalar::Get() { return _p ? **_p : 0.f; }
