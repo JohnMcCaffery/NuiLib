@@ -28,23 +28,30 @@ namespace Demo_CSharp {
             */
 
 
-            NuiFactory.Init();
-            NuiFactory.SetAutoPoll(true);
+            Nui.Init();
+            Nui.SetAutoPoll(true);
 
-            DotNetVector hand = DotNetVector.joint(11);
-            DotNetVector head = DotNetVector.joint(3);
+            DotNetVector hand = Nui.joint(Nui.Hand_Right);
+            DotNetVector head = Nui.joint(Nui.Head);
 
 
-            DotNetScalar x = DotNetScalar.x(hand);
-            DotNetScalar y = DotNetScalar.y(head);
+            DotNetScalar x = Nui.x(hand);
+            DotNetScalar y = Nui.y(head);
             DotNetScalar diff = x - y;
+            DotNetVector diffV = hand - head;
+            DotNetCondition equal = x == y;
+            DotNetCondition not = x != y;
+            //DotNetCondition or = equal || not;
+            //DotNetCondition and = equal && not;
+
+            DotNetScalar tracker = Nui.tracker("Test", 1f, 0f, 0f);
 
             hand.OnChange += () => Console.WriteLine("{0} - {1} = {2}", x.Value, y.Value, diff.Value);
 
-            NuiFactory.Pause();
-            NuiFactory.SetAutoPoll(false);
+            Nui.Pause();
+            Nui.SetAutoPoll(false);
             Console.WriteLine("{0} - {1} = {2}", x.Value, y.Value, diff.Value);
-            NuiFactory.Pause();
+            Nui.Pause();
             //Console.ReadLine();
         }
     }

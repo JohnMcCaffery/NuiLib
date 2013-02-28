@@ -1167,14 +1167,13 @@ namespace NuiLib {
 	DLL Scalar ifScalar(const Condition &condition, const Scalar &t, const Scalar &f);
 	///
 	/// Value is set by an opencv track bar.
-	/// Takes parameters to define how the integer value, starting at 0, that the tracker supplies is converted to a float.
+	/// Takes parameters to define a range that the tracker will go between and an initial value.
 	/// @param title The name of the tracker bar.
-	/// @param max the maximum value the track bar can have.
-	/// @param scale How the tracker input (between 0 and max) should be scaled to convert it to a float.
-	/// @param shift How the tracker input (between 0 and max) should be shifted to convert it to a float.
+	/// @param max The maximum value the track bar can have.
+	/// @param min The minum value the track bar can have.
 	/// @param value The initial value of the track bar.
 	///
-	DLL Scalar tracker(string title, const int max, float scale = 1.f, float shift = 0.f, const int value = 0);
+	DLL Scalar tracker(string title, const float max, float min = 0.f, float value = 0.f);
 
 
 	//-------------------------------------------------------------------------------------------------------------

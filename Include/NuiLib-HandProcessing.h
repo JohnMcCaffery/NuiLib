@@ -92,6 +92,7 @@ namespace NuiLib {
 
 	void OnTracker(int, void*);
 
+	const float _ticks = 50;
 	class DLL TrackerScalar : public IScalar {
 	private:
 		int _value;
@@ -99,13 +100,14 @@ namespace NuiLib {
 		float _shift;
 		void Update();
 
+
 	public:
-		TrackerScalar(string title, int max, float scale = 1.f, float shift = 0.f, int value = 0);
+		TrackerScalar(string title, float max, float min = 0.f, float value = 0.f);
 		float CalculateValue();
 		friend void OnTracker(int, void*);
 	};
 
-	DLL TrackerScalar *trackerP(string title, int max, float scale = 1.f, float shift = 0.f, int value = 0);
+	DLL TrackerScalar *trackerP(string title, float max, float min = 0.f, float value = 0.f);
 }
 
 

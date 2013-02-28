@@ -37,6 +37,10 @@ DLL void Pause();
 			///
 			/// Value = value
 			///
+			SafeScalar(const char *name, float value);
+			///
+			/// Value = value
+			///
 			SafeScalar(void *scalar);
 
 			///
@@ -55,6 +59,8 @@ DLL void Pause();
 			/// Set the value of this SafeScalar.
 			///
 			void Set(float);
+
+			const char *GetName();
 	};	
 
 
@@ -73,7 +79,15 @@ DLL void Pause();
 			///
 			/// Value = value
 			///
+			SafeVector(const char *name, float value);
+			///
+			/// Value = value
+			///
 			SafeVector(float x, float y, float z);
+			///
+			/// Value = value
+			///
+			SafeVector(const char *name, float x, float y, float z);
 			///
 			/// Value = value
 			///
@@ -93,6 +107,8 @@ DLL void Pause();
 			void SetY(float);
 			void SetZ(float);
 			void Set(float, float, float);
+
+			const char *GetName();
 	};
 
 
@@ -123,6 +139,10 @@ DLL void Pause();
 			///
 			/// Value = value
 			///
+			SafeCondition(const char *name, bool value);
+			///
+			/// Value = value
+			///
 			SafeCondition(void *condition);
 
 			///
@@ -141,6 +161,8 @@ DLL void Pause();
 			/// Set the value of this SafeCondition.
 			///
 			void Set(bool);
+
+			const char *GetName();
 	};	
 
 
@@ -382,7 +404,6 @@ DLL void Pause();
 	/// @param b The vector being projected on.
 	///
 	DLL SafeScalar *project(SafeVector *a, SafeVector *b);
-	/*
 	///
 	/// Value is one of two inputs depending on a condition.
 	/// Value = *condition ? t : f;
@@ -415,7 +436,6 @@ DLL void Pause();
 	/// @param b Value == b if condition is false.
 	///
 	DLL SafeScalar *ifScalar(SafeCondition *condition, SafeScalar *t, SafeScalar *f);
-	*/
 	///
 	/// Value is set by an opencv track bar.
 	/// Takes parameters to define how the integer value, starting at 0, that the tracker supplies is converted to a float.
@@ -429,8 +449,64 @@ DLL void Pause();
 
 
 
+
 	//-------------------------------------------------------------------------
 
+
+
+
+	///
+	/// Arithmetic sum of two scalars.
+	///
+	DLL SafeVector *sum(SafeVector *addend1, SafeVector *addend2);
+	///
+	/// Arithmetic difference of two scalars.
+	///
+	DLL SafeVector *difference(SafeVector *minuend, SafeVector *subtrahend);
+	///
+	/// Arithmetic product of two scalars.
+	///
+	DLL SafeVector *product(SafeVector *factor1, SafeVector *factor2);
+	///
+	/// Arithmetic quotient of two scalars.
+	///
+	DLL SafeVector *quotient(SafeVector *dividend, SafeVector *divisor);
+
+	///
+	/// Arithmetic sum of two scalars.
+	///
+	DLL SafeVector *sum(SafeVector *addend1, float addend2);
+	///
+	/// Arithmetic difference of two scalars.
+	///
+	DLL SafeVector *difference(SafeVector *minuend, float subtrahend);
+	///
+	/// Arithmetic product of two scalars.
+	///
+	DLL SafeVector *product(SafeVector *factor1, float factor2);
+	///
+	/// Arithmetic quotient of two scalars.
+	///
+	DLL SafeVector *quotient(SafeVector *dividend, float divisor);
+
+	///
+	/// Arithmetic sum of two scalars.
+	///
+	DLL SafeVector *sum(float addend1, SafeVector *addend2);
+	///
+	/// Arithmetic difference of two scalars.
+	///
+	DLL SafeVector *difference(float minuend, SafeVector *subtrahend);
+	///
+	/// Arithmetic product of two scalars.
+	///
+	DLL SafeVector *product(float factor1, SafeVector *factor2);
+	///
+	/// Arithmetic quotient of two scalars.
+	///
+	DLL SafeVector *quotient(float dividend, SafeVector *divisor);
+
+	//-------------------------------------------------------------------------
 
 
 	///
@@ -539,6 +615,145 @@ DLL void Pause();
 
 
 	//-------------------------------------------------------------------------
+
+	/*----------------- Condition Operators --------------*/
+
+	///
+	/// True if operand1 is greater than operand2.
+	///
+	DLL SafeCondition *Greater(SafeScalar *operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is less than operand2.
+	///
+	DLL SafeCondition *Less(SafeScalar *operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is greater than or equ.al to operand2
+	///
+	DLL SafeCondition *GreaterEqual(SafeScalar *operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is less than or equal. to operand2
+	///
+	DLL SafeCondition *LessEqual(SafeScalar *operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	///
+	DLL SafeCondition *Equal(SafeScalar *operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	///
+	//DLL SafeCondition *Equal(SafeVector *operand1, SafeVector *operand2);
+	///
+	/// True if operand1 is not equal to operand2.
+	///
+	DLL SafeCondition *NotEqual(SafeScalar *operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is not equal to operand2.
+	///
+	DLL SafeCondition *NotEqual(SafeVector *operand1, SafeVector *operand2);
+	///
+	/// True if both operand1 and operand2 are true.
+	///
+	DLL SafeCondition *And(SafeCondition *operand1, SafeCondition *operand2);
+	///
+	/// True if either operand1 or operand2 or both are true.
+	///
+	DLL SafeCondition *Or(SafeCondition *operand1, SafeCondition *operand2);
+	///
+	/// True if operand is false.
+	///
+	DLL SafeCondition *Not(SafeCondition *operand);
+
+	///
+	/// True if operand1 is greater than operand2.
+	///
+	DLL SafeCondition *Greater(SafeScalar *operand1, float operand2);
+	///
+	/// True if operand1 is less than operand2.
+	///
+	DLL SafeCondition *Less(SafeScalar *operand1, float operand2);
+	///
+	/// True if operand1 is greater than or equ.al to operand2
+	///
+	DLL SafeCondition *GreaterEqual(SafeScalar *operand1, float operand2);
+	///
+	/// True if operand1 is less than or equal. to operand2
+	///
+	DLL SafeCondition *LessEqual(SafeScalar *operand1, float operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	/// All components of operand1 (x, y and z) must be equal of to operand1.
+	///
+	DLL SafeCondition *Equal(SafeScalar *operand1, float operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	///	
+	//DLL SafeCondition *Equal(SafeVector *operand1, float operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	///	
+	//DLL SafeCondition *Equal(SafeVector *operand1, cv::Point3f);
+	///
+	/// True if operand1 is not equal to operand2.
+	///
+	DLL SafeCondition *NotEqual(SafeScalar *operand1, float operand2);
+	///
+	/// False if all components of operand1 (x, y and z) are equal to operand2.
+	///
+	DLL SafeCondition *NotEqual(SafeVector *operand1, float operand2);
+	///
+	/// True if both operand1 and operand2 are true.
+	///
+	DLL SafeCondition *And(SafeCondition *operand1, bool);
+	///
+	/// True if either operand1 or operand2 or both are true.
+	///
+	DLL SafeCondition *Or(SafeCondition *operand1, bool);
+
+	///
+	/// True if operand1 is greater than operand2.
+	///
+	DLL SafeCondition *Greater(float operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is less than operand2.
+	///
+	DLL SafeCondition *Less(float operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is greater than or equ.al to operand2
+	///
+	DLL SafeCondition *GreaterEqual(float operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is less than or equal. to operand2
+	///
+	DLL SafeCondition *LessEqual(float operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	/// Operand1 must be qual to all components of operand2 (x, y and z).
+	///
+	DLL SafeCondition *Equal(float operand1, SafeScalar *operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	///
+	//DLL SafeCondition *Equal(float operand1, SafeVector *operand2);
+	///
+	/// True if operand1 is equal to operand2.
+	///
+	//DLL SafeCondition *Equal(cv::Point3f operand1, SafeVector *operand2);
+	///
+	/// True if operand1 is not equal to operand2.
+	///
+	DLL SafeCondition *NotEqual(float operand1, SafeScalar *operand2);
+	///
+	/// False if operand1 is equal to all components of operand2 (x, y and z).
+	///
+	DLL SafeCondition *NotEqual(float operand1, SafeVector *operand2);
+	///
+	/// True if both operand1 and operand2 are true.
+	///
+	DLL SafeCondition *And(bool operand1, SafeCondition *operand2);
+	///
+	/// True if either operand1 or operand2 or both are true.
+	///
+	DLL SafeCondition *Or(bool operand1, SafeCondition *operand2);
 
 
 	///

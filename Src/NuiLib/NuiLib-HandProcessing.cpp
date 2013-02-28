@@ -319,17 +319,17 @@ void NuiLib::OnTracker(int val, void *userData) {
 }
 bool windowCreated = false;
 
-TrackerScalar::TrackerScalar(string name, int max, float scale, float shift, int value) : 
-IScalar(name, (value * scale) + shift), 
+TrackerScalar::TrackerScalar(string name, float max, float min, float value) : 
+IScalar(name, value), 
 	_value(value), 
-	_scale(scale),
-	_shift(shift) {
+	_scale(_ticks / (max - min)),
+	_shift(-min) {
 #ifdef VISUAL
 		if (!windowCreated) {
 			windowCreated = true;
 			namedWindow("TrackerWindow", CV_WINDOW_NORMAL);
 		}
-		createTrackbar(name, "TrackerWindow", &_value, max, NuiLib::OnTracker, this);
+		createTrackbar(name, "TrackerWindow", &_value, _ticks, NuiLib::OnTracker, this);
 #endif
 }
 
@@ -341,12 +341,12 @@ float TrackerScalar::CalculateValue() {
 	return (_value * _scale) + _shift;
 }
 
-TrackerScalar *NuiLib::trackerP(string title, int max, float scale, float shift, int value) {
-	TrackerScalar *scalar = new TrackerScalar(title, max, scale, shift, value);
+TrackerScalar *NuiLib::trackerP(string title, float max, float min, float value) {
+	TrackerScalar *scalar = new TrackerScalar(title, max, min, value);
 	ExtensionFactory()->Add(scalar);
 	return scalar;
 }
 
-NuiLib::Scalar NuiLib::tracker(string title, int max, float scale, float shift, int value) {
-	return NuiLib::Scalar(trackerP(title, max, scale, shift, value));
+NuiLib::Scalar NuiLib::tracker(string title, float max, float min, float value) {
+	return NuiLib::Scalar(trackerP(title, max, min, value));
 }

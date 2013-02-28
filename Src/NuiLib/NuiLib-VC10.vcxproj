@@ -230,7 +230,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opencv_core244d.lib;opencv_objdetect244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;kinect10.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core241d.lib;opencv_objdetect241d.lib;opencv_highgui241d.lib;opencv_imgproc241d.lib;kinect10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>

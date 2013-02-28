@@ -146,10 +146,10 @@ void Init() {
 	//mPush = !cameraActive && push > 0 && z(armR) > ((abs(x(armR) + abs(y(armR)))) * tracker("PushActive", 9, .5f, .5f, 5));
 
 	//Pitch
-	Scalar pitchArmD = tracker("PitchArmD", 20, 1.f, 0.f, 10);
-	Scalar pitchArmR = tracker("PitchArmR", 40, 2.f, 10.f, 17);
-	Scalar pitchArmG = tracker("PitchArmG", 30, 1.f, 0.f, 15);
-	Scalar pitchAS = tracker("PitchAS", 29, 1.f, 1.f, 20);
+	Scalar pitchArmD = tracker("PitchArmD", 20.f, 1.f, 10.f);
+	Scalar pitchArmR = tracker("PitchArmR", 40.f, 2.f, 34.f);
+	Scalar pitchArmG = tracker("PitchArmG", 30.f, 1.f, 15.f);
+	Scalar pitchAS = tracker("PitchAS", 29.f, 1.f, 20.f);
 
 	Vector vPlaneCameraR = NuiLib::limit(lowerArmCameraR, false, true, true);
 	Vector vPlaneCameraL = NuiLib::limit(lowerArmCameraL, false, true, true);
@@ -164,15 +164,15 @@ void Init() {
 	mCanPitch = cameraActive && mPitch != 0.f;
 
 	//Yaw - Yaw has 3 components. The camera arm. The horizontal lean (head vs hip centre) and the twist of the shoulders.
-	Scalar yawArmD = tracker("YawArmD", 20, 1.f, 0.f, 10);
-	Scalar yawArmR = tracker("YawArmR", 40, 2.f, 10.f, 15);
-	Scalar yawArmG = tracker("YawArmG", 20, 1.f, 0.f, 10);
-	Scalar yawLeanD = tracker("YawLeanD", 20, .5f, 0.f, 10);
-	Scalar yawLeanR = tracker("YawLeanR", 20, 1.f, 0.f, 15);
-	Scalar yawLeanG = tracker("YawLeanG", 50, 1.f, 0.f, 30);
-	Scalar yawTwistD = tracker("YawTwistD", 10, .025f, 0.f, 6);
-	Scalar yawTwistR = tracker("YawTwistR", 20, .05f, 0.f, 9);
-	Scalar yawTwistG = tracker("YawTwistG", 20, 1.f, 0.f, 10);
+	Scalar yawArmD = tracker("YawArmD", 20.f, 1.f, 10.f);
+	Scalar yawArmR = tracker("YawArmR", 40.f, 2.f, 30.f);
+	Scalar yawArmG = tracker("YawArmG", 20.f, 1.f, 10.f);
+	Scalar yawLeanD = tracker("YawLeanD", 20.f, .5f, 5.f);
+	Scalar yawLeanR = tracker("YawLeanR", 20.f, 1.f, 15.f);
+	Scalar yawLeanG = tracker("YawLeanG", 50.f, 1.f, 30.f);
+	Scalar yawTwistD = tracker("YawTwistD", 10.f, .025f, .025 * 6.f);
+	Scalar yawTwistR = tracker("YawTwistR", 20.f, .05f, 05.f * 9);
+	Scalar yawTwistG = tracker("YawTwistG", 20.f, 1.f, 10.f);
 	
 	Vector hPlaneCameraR = NuiLib::limit(lowerArmCameraR, true, false, true);
 	Vector hPlaneCameraL = NuiLib::limit(lowerArmCameraL, true, false, true);
@@ -180,8 +180,8 @@ void Init() {
 	Scalar yawCameraR = NuiLib::acos(dot(normalize(hPlaneCameraR), normal)) * invert(y(cross(normal, hPlaneCameraR)) >= 0);
 	Scalar yawCameraL = NuiLib::acos(dot(normalize(hPlaneCameraL), normal)) * invert(y(cross(normal, hPlaneCameraL)) >= 0);
 	// Constrain the component value by 3 values input by 3 trackers.
-	yawCameraR = constrain(yawCameraR * R2DEG, yawArmD, yawArmR, yawArmG, true) / tracker("YawAS", 29, 1.f, 1.f, 20);
-	yawCameraL = constrain(yawCameraL * R2DEG, yawArmD, yawArmR, yawArmG, true) / tracker("YawAS", 29, 1.f, 1.f, 20);
+	yawCameraR = constrain(yawCameraR * R2DEG, yawArmD, yawArmR, yawArmG, true) / tracker("YawAS", 29, 1.f, 20.f);
+	yawCameraL = constrain(yawCameraL * R2DEG, yawArmD, yawArmR, yawArmG, true) / tracker("YawAS", 29, 1.f, 0.f);
 	//Only take the value if camera is active
 	yawCameraR = ifScalar(cameraActiveR, yawCameraR, .0f);
 	yawCameraL = ifScalar(cameraActiveL, yawCameraL, .0f);
@@ -190,22 +190,22 @@ void Init() {
 	// Yaw component 2 is how far the user is leaning horizontally. This is calculated the angle between vertical and the vector between the hip centre and the head.
 	Scalar yawLean = NuiLib::acos(dot(normalize(yawCore), yAxis)) * invert(z(cross(yawCore, yAxis)) >= 0);
 	// Constrain the component value by 3 values input by 3 trackers.
-	yawLean = constrain(yawLean * R2DEG, yawLeanD, yawLeanR, yawLeanG, true) / tracker("YawLS", 29, 1.f, 1.f, 20);
+	yawLean = constrain(yawLean * R2DEG, yawLeanD, yawLeanR, yawLeanG, true) / tracker("YawLS", 29, 1.f, 20.f);
 	
 	Vector shoulderDiff = shoulderR - shoulderL;
 	// Yaw component 3 is the twist of the shoulders. This is calculated as the difference between the two z values.
 	Scalar yawTwist = z(shoulderDiff) / magnitude(shoulderDiff);
 	// Constrain the component value by 3 values input by 3 trackers.
-	yawTwist = constrain(yawTwist, yawTwistD, yawTwistR, yawTwistG, true) / tracker("YawTS", 29, 1.f, 1.f, 20);
+	yawTwist = constrain(yawTwist, yawTwistD, yawTwistR, yawTwistG, true) / tracker("YawTS", 29, 1.f, 20.f);
 
 	// Combine all 3 components into the final yaw value.
 	mYaw = yawCameraR + yawCameraL + yawLean + yawTwist;
 	mCanYaw = (cameraActive && (yawCameraR + yawCameraL) != 0.f) || yawLean != 0.f || yawTwist != 0.f;
 
-	Scalar flyUpD = tracker("FlyUpD", 120, 1.f, 0.f, 65);
-	Scalar flyUpR = tracker("FlyUpR", 120, 1.f, 0.f, 50);
-	Scalar flyDownD = tracker("FlyDownD", 120, 1.f, 0.f, 45);
-	Scalar flyDownR = tracker("FlyDownR", 120, 1.f, 0.f, 15);
+	Scalar flyUpD = tracker("FlyUpD", 120, 1.f, 65.f);
+	Scalar flyUpR = tracker("FlyUpR", 120, 1.f, 65.f);
+	Scalar flyDownD = tracker("FlyDownD", 120, 1.f, 45.f);
+	Scalar flyDownR = tracker("FlyDownR", 120, 1.f, 45.f);
 
 	//Fly
 	NuiLib::Vector armR = shoulderR - handR;
@@ -239,7 +239,7 @@ void Init() {
 	// Fly if camera is inactive and flying with right or left arm
 	mCanFly = (flyCondR && !cameraActiveR) || (flyCondL && !cameraActiveL);
 
-	Scalar pushThresh = tracker("PushThreshold", 30, .05f, .0f, 9);
+	Scalar pushThresh = tracker("PushThreshold", 30, .05f, 9.f);
 	Condition pushR = z(shoulderR) - z(handR) > pushThresh; 
 	Condition pushL = z(shoulderL) - z(handL) > pushThresh; 
 	mPush = (pushR && !cameraActiveR) || (pushL && !cameraActiveL);

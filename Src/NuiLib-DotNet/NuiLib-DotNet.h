@@ -1,5 +1,6 @@
 // NuiLib-DotNet.h
 #include <NuiLib-CLRSafe.h>
+#include <cstring>
 
 #pragma once
 
@@ -14,15 +15,6 @@ namespace NuiLibDotNet {
 
 	public ref class NuiFactory {
 	public:
-		static bool Init() {
-			return NuiLibSafe::Init();
-		}
-		static void Pause() {
-			return NuiLibSafe::Pause();
-		}
-		static void SetAutoPoll(bool value) {
-			NuiLibSafe::SetAutoPoll(value);
-		}
 	};
 
 	public delegate void OnChangeEvt();
@@ -77,6 +69,13 @@ namespace NuiLibDotNet {
 		static DotNetScalar ^Create(float value) {
 			return Create(new SafeScalar(value));
 		}
+		static DotNetScalar ^Create(String ^name, float value) {
+			return Create(new SafeScalar((const char*) (Marshal::StringToHGlobalAnsi(name)).ToPointer(), value));
+		}
+
+		property String ^Name {
+			String ^get() { return gcnew String(_ps->GetName()); }
+		}
 
 		property float Value {
 			float get() { return _ps->Get(); }
@@ -85,97 +84,444 @@ namespace NuiLibDotNet {
 
 
 
-		///
+		//--------------------------------------------------------------------------------------------
+
+		/// <summary>
 		/// Arithmetic sum of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator+(DotNetScalar ^addend1, DotNetScalar ^addend2);
-		///
+		/// <summary>
 		/// Arithmetic difference of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator-(DotNetScalar ^minuend, DotNetScalar ^subtrahend);
-		///
+		/// <summary>
 		/// Arithmetic product of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator*(DotNetScalar ^factor1, DotNetScalar ^factor2);
-		///
+		/// <summary>
 		/// Arithmetic quotient of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator/(DotNetScalar ^dividend, DotNetScalar ^divisor);
-		///
+		/// <summary>
 		/// Arithmetic sum of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator+=(DotNetScalar ^addend1, DotNetScalar ^addend);
-		///
+		/// <summary>
 		/// Arithmetic difference of two scalars.
 		/// minuend is assigned the new value.
-		///
+		/// </summary>
 		static DotNetScalar ^operator-=(DotNetScalar ^minuend, DotNetScalar ^subtrahend);
-		///
+		/// <summary>
 		/// Arithmetic product of two scalars.
 		/// factor1 is assigned the new value.
-		///
+		/// </summary>
 		static DotNetScalar ^operator*=(DotNetScalar ^factor1, DotNetScalar ^factor2);
-		///
+		/// <summary>
 		/// Arithmetic quotient of two scalars.
 		/// dividend is assigned the new value.
-		///
+		/// </summary>
 		static DotNetScalar ^operator/=(DotNetScalar ^dividend, DotNetScalar ^divisor);
 
-		///
+		/// <summary>
 		/// Arithmetic sum of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator+(DotNetScalar ^addend1, float addend2);
-		///
+		/// <summary>
 		/// Arithmetic difference of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator-(DotNetScalar ^minuend, float subtrahend);
-		///
+		/// <summary>
 		/// Arithmetic product of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator*(DotNetScalar ^factor1, float factor2);
-		///
+		/// <summary>
 		/// Arithmetic quotient of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator/(DotNetScalar ^dividend, float divisor);
-		///
+		/// <summary>
 		/// Arithmetic sum of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator+=(DotNetScalar ^addend1, float addend);
-		///
+		/// <summary>
 		/// Arithmetic difference of two scalars.
 		/// minuend is assigned the new value.
-		///
+		/// </summary>
 		static DotNetScalar ^operator-=(DotNetScalar ^minuend, float subtrahend);
-		///
+		/// <summary>
 		/// Arithmetic product of two scalars.
 		/// factor1 is assigned the new value.
-		///
+		/// </summary>
 		static DotNetScalar ^operator*=(DotNetScalar ^factor1, float factor2);
-		///
+		/// <summary>
 		/// Arithmetic quotient of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator/=(DotNetScalar ^dividend, float divisor);
 
-		///
+		/// <summary>
 		/// Arithmetic sum of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator+(float addend1, DotNetScalar ^addend2);
-		///
+		/// <summary>
 		/// Arithmetic difference of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator-(float minuend, DotNetScalar ^subtrahend);
-		///
+		/// <summary>
 		/// Arithmetic product of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator*(float factor1, DotNetScalar ^factor2);
-		///
+		/// <summary>
 		/// Arithmetic quotient of two scalars.
-		///
+		/// </summary>
 		static DotNetScalar ^operator/(float dividend, DotNetScalar ^divisor);
 
 
+		/// <summary>
+		/// True if operand1 is not equal to operand2.
+		/// </summary>
+		static DotNetCondition ^operator!=(float operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is equal to operand2.
+		/// Operand1 must be qual to all components of operand2 (x, y and z).
+		/// </summary>
+		static DotNetCondition ^operator==(float operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is less than or equal. to operand2
+		/// </summary>
+		static DotNetCondition ^operator<=(float operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is greater than operand2.
+		/// </summary>
+		static DotNetCondition ^operator>(float operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is less than operand2.
+		/// </summary>
+		static DotNetCondition ^operator<(float operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is greater than or equ.al to operand2
+		/// </summary>
+		static DotNetCondition ^operator>=(float operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is not equal to operand2.
+		/// </summary>
+		static DotNetCondition ^operator!=(DotNetScalar ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is equal to operand2.
+		/// All components of operand1 (x, y and z) must be equal of to operand1.
+		/// </summary>
+		static DotNetCondition ^operator==(DotNetScalar ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is greater than operand2.
+		/// </summary>
+		static DotNetCondition ^operator>(DotNetScalar ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is less than operand2.
+		/// </summary>
+		static DotNetCondition ^operator<(DotNetScalar ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is greater than or equ.al to operand2
+		/// </summary>
+		static DotNetCondition ^operator>=(DotNetScalar ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is less than or equal. to operand2
+		/// </summary>
+		static DotNetCondition ^operator<=(DotNetScalar ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is not equal to operand2.
+		/// </summary>
+		static DotNetCondition ^operator!=(DotNetScalar ^operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is greater than operand2.
+		/// </summary>
+		static DotNetCondition ^operator>(DotNetScalar ^operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is less than operand2.
+		/// </summary>
+		static DotNetCondition ^operator<(DotNetScalar ^operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is greater than or equ.al to operand2
+		/// </summary>
+		static DotNetCondition ^operator>=(DotNetScalar ^operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is less than or equal. to operand2
+		/// </summary>
+		static DotNetCondition ^operator<=(DotNetScalar ^operand1, DotNetScalar ^operand2);
+		/// <summary>
+		/// True if operand1 is equal to operand2.
+		/// </summary>
+		static DotNetCondition ^operator==(DotNetScalar ^operand1, DotNetScalar ^operand2);
+
 
 		//--------------------------------------------------------------------------------------------
+
+
+	};
+
+
+	public ref class DotNetVector : public Observable {
+	private:
+		DotNetVector(SafeVector *vector) : _ps(vector) { }
+
+	public:
+		SafeVector *_ps;
+
+		~DotNetVector() { 
+			delete _ps;
+		}
+
+		static DotNetVector ^Create(SafeVector *safe) {
+			DotNetVector^ vector = gcnew DotNetVector(safe);
+
+			OnChangeEvt^ managedCallback = gcnew OnChangeEvt(vector, &ChangeListener);
+			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(managedCallback);
+			GC::KeepAlive(managedCallback);
+
+			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
+
+			return vector;
+		}
+
+		static DotNetVector ^Create(float value) {
+			return Create(new SafeVector(value));
+		}
+		static DotNetVector ^Create(String ^name, float value) {
+			return Create(new SafeVector((const char*) (Marshal::StringToHGlobalAnsi(name)).ToPointer(), value));
+		}
+
+		static DotNetVector ^Create(float x, float y, float z) {
+			return Create(new SafeVector(x, y, z));
+		}
+		static DotNetVector ^Create(String ^name, float x, float y, float z) {
+			return Create(new SafeVector((const char*) (Marshal::StringToHGlobalAnsi(name)).ToPointer(), x, y, z));
+		}
+
+		property String ^Name {
+			String ^get() { return gcnew String(_ps->GetName()); }
+		}
+
+		property float X {
+			float get() { return _ps->X(); }
+			void set(float value) { _ps->SetX(value); }
+		}
+		property float Y {
+			float get() { return _ps->Y(); }
+			void set(float value) { _ps->SetY(value); }
+		}	
+		property float Z {
+			float get() { return _ps->Z(); }
+			void set(float value) { _ps->SetZ(value); }
+		}
+		void Set(float x, float y, float z) {
+			_ps->Set(x, y, z);
+		}
+
+		//--------------------------------------------------------------------------------------------
+
+		/// <summary>
+		/// Arithmetic sum of two scalars.
+		/// </summary>
+		static DotNetVector ^operator+(DotNetVector ^addend1, DotNetVector ^addend2);
+		/// <summary>
+		/// Arithmetic difference of two scalars.
+		/// </summary>
+		static DotNetVector ^operator-(DotNetVector ^minuend, DotNetVector ^subtrahend);
+		/// <summary>
+		/// Arithmetic product of two scalars.
+		/// </summary>
+		static DotNetVector ^operator*(DotNetVector ^factor1, DotNetVector ^factor2);
+		/// <summary>
+		/// Arithmetic quotient of two scalars.
+		/// </summary>
+		static DotNetVector ^operator/(DotNetVector ^dividend, DotNetVector ^divisor);
+		/// <summary>
+		/// Arithmetic sum of two scalars.
+		/// </summary>
+		static DotNetVector ^operator+=(DotNetVector ^addend1, DotNetVector ^addend);
+		/// <summary>
+		/// Arithmetic difference of two scalars.
+		/// minuend is assigned the new value.
+		/// </summary>
+		static DotNetVector ^operator-=(DotNetVector ^minuend, DotNetVector ^subtrahend);
+		/// <summary>
+		/// Arithmetic product of two scalars.
+		/// factor1 is assigned the new value.
+		/// </summary>
+		static DotNetVector ^operator*=(DotNetVector ^factor1, DotNetVector ^factor2);
+		/// <summary>
+		/// Arithmetic quotient of two scalars.
+		/// dividend is assigned the new value.
+		/// </summary>
+		static DotNetVector ^operator/=(DotNetVector ^dividend, DotNetVector ^divisor);
+
+		/// <summary>
+		/// Arithmetic sum of two scalars.
+		/// </summary>
+		static DotNetVector ^operator+(DotNetVector ^addend1, float addend2);
+		/// <summary>
+		/// Arithmetic difference of two scalars.
+		/// </summary>
+		static DotNetVector ^operator-(DotNetVector ^minuend, float subtrahend);
+		/// <summary>
+		/// Arithmetic product of two scalars.
+		/// </summary>
+		static DotNetVector ^operator*(DotNetVector ^factor1, float factor2);
+		/// <summary>
+		/// Arithmetic quotient of two scalars.
+		/// </summary>
+		static DotNetVector ^operator/(DotNetVector ^dividend, float divisor);
+		/// <summary>
+		/// Arithmetic sum of two scalars.
+		/// </summary>
+		static DotNetVector ^operator+=(DotNetVector ^addend1, float addend);
+		/// <summary>
+		/// Arithmetic difference of two scalars.
+		/// minuend is assigned the new value.
+		/// </summary>
+		static DotNetVector ^operator-=(DotNetVector ^minuend, float subtrahend);
+		/// <summary>
+		/// Arithmetic product of two scalars.
+		/// factor1 is assigned the new value.
+		/// </summary>
+		static DotNetVector ^operator*=(DotNetVector ^factor1, float factor2);
+		/// <summary>
+		/// Arithmetic quotient of two scalars.
+		/// </summary>
+		static DotNetVector ^operator/=(DotNetVector ^dividend, float divisor);
+
+		/// <summary>
+		/// Arithmetic sum of two scalars.
+		/// </summary>
+		static DotNetVector ^operator+(float addend1, DotNetVector ^addend2);
+		/// <summary>
+		/// Arithmetic difference of two scalars.
+		/// </summary>
+		static DotNetVector ^operator-(float minuend, DotNetVector ^subtrahend);
+		/// <summary>
+		/// Arithmetic product of two scalars.
+		/// </summary>
+		static DotNetVector ^operator*(float factor1, DotNetVector ^factor2);
+		/// <summary>
+		/// Arithmetic quotient of two scalars.
+		/// </summary>
+		static DotNetVector ^operator/(float dividend, DotNetVector ^divisor);
+
+		/// <summary>
+		/// False if operand1 is equal to all components of operand2 (x, y and z).
+		/// </summary>
+		static DotNetCondition ^operator!=(float operand1, DotNetVector ^operand2);
+		/// <summary>
+		/// False if all components of operand1 (x, y and z) are equal to operand2.
+		/// </summary>
+		static DotNetCondition ^operator!=(DotNetVector ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is not equal to operand2.
+		/// </summary>
+		static DotNetCondition ^operator!=(DotNetVector ^operand1, DotNetVector ^operand2);
+		/// <summary>
+		/// True if operand1 is equal to operand2.
+		/// </summary>
+		//static DotNetCondition ^operator==(float operand1, DotNetVector ^operand2);
+		/// <summary>
+		/// True if operand1 is equal to operand2.
+		///	</summary>
+		//static DotNetCondition ^operator==(DotNetVector ^operand1, float operand2);
+		/// <summary>
+		/// True if operand1 is equal to operand2.
+		/// </summary>
+		//static DotNetCondition ^operator==(DotNetVector ^operand1, DotNetVector ^operand2);
+
+
+	};
+
+
+	public ref class DotNetCondition : public Observable {
+	private:
+		DotNetCondition(SafeCondition *condition) : _ps(condition) { }
+
+	public:
+		SafeCondition *_ps;
+
+		~DotNetCondition() { 
+			delete _ps;
+		}
+
+		static DotNetCondition ^Create(SafeCondition *safe) {
+			DotNetCondition^ condition = gcnew DotNetCondition(safe);
+
+			OnChangeEvt^ managedCallback = gcnew OnChangeEvt(condition, &ChangeListener);
+			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(managedCallback);
+			GC::KeepAlive(managedCallback);
+
+			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
+
+			return condition;
+		}
+
+		static DotNetCondition ^Create(bool value) {
+			return Create(new SafeCondition(value));
+		}
+		static DotNetCondition ^Create(String ^name, bool value) {
+			return Create(new SafeCondition((const char*) (Marshal::StringToHGlobalAnsi(name)).ToPointer(), value));
+		}
+
+		property String ^Condition {
+			String ^get() { return gcnew String(_ps->GetName()); }
+		}
+
+		property bool Value {
+			bool get() { return _ps->Get(); }
+			void set(bool value) { _ps->Set(value); }
+		}
+
+
+
+
+
+		/// <summary>
+		/// True if operand is false.
+		/// </summary>
+		static DotNetCondition ^operator!(DotNetCondition ^operand);
+
+		/// <summary>
+		/// True if both operand1 and operand2 are true.
+		/// </summary>
+		static DotNetCondition ^operator&&(DotNetCondition ^operand1, DotNetCondition ^operand2);
+		/// <summary>
+		/// True if both operand1 and operand2 are true.
+		/// </summary>
+		static DotNetCondition ^operator&&(DotNetCondition ^operand1, bool);
+		/// <summary>
+		/// True if both operand1 and operand2 are true.
+		/// </summary>
+		static DotNetCondition ^operator&&(bool operand1, DotNetCondition ^operand2);
+
+		/// <summary>
+		/// True if either operand1 or operand2 or both are true.
+		/// </summary>
+		static DotNetCondition ^operator||(DotNetCondition ^operand1, DotNetCondition ^operand2);
+		/// <summary>
+		/// True if either operand1 or operand2 or both are true.
+		/// </summary>
+		static DotNetCondition ^operator||(DotNetCondition ^operand1, bool);
+		/// <summary>
+		/// True if either operand1 or operand2 or both are true.
+		/// </summary>
+		static DotNetCondition ^operator||(bool operand1, DotNetCondition ^operand2);
+	};
+
+	public ref class Nui {
+	public:
+		static bool Init() {
+			return NuiLibSafe::Init();
+		}
+		static void Pause() {
+			return NuiLibSafe::Pause();
+		}
+		static void SetAutoPoll(bool value) {
+			NuiLibSafe::SetAutoPoll(value);
+		}
+
+
+		//----------------------------Scalars------------------------------
 
 
 		/// <summary>
@@ -362,7 +708,6 @@ namespace NuiLibDotNet {
 		/// <param name="a"> The projecting vector.</param>
 		/// <param name="b"> The vector being projected on.</param>
 		static DotNetScalar ^project(DotNetVector ^a, DotNetVector ^b);
-		/*
 		/// <summary>
 		/// Value is one of two inputs depending on a condition.
 		/// Value = *condition ? t : f);
@@ -395,67 +740,18 @@ namespace NuiLibDotNet {
 		/// <param name="a"> Value == a if condition is true.</param>
 		/// <param name="b"> Value == b if condition is false.</param>
 		static DotNetScalar ^ifScalar(DotNetCondition ^condition, DotNetScalar ^t, DotNetScalar ^f);
-		*/
 		/// <summary>
 		/// Value is set by an opencv track bar.
 		/// Takes parameters to define how the integer value, starting at 0, that the tracker supplies is converted to a float.
 		/// </summary>
 		/// <param name="title"> The name of the tracker bar.</param>
-		/// <param name="max"> the maximum value the track bar can have.</param>
-		/// <param name="scale"> How the tracker input (between 0 and max) should be scaled to convert it to a float.</param>
-		/// <param name="shift"> How the tracker input (between 0 and max) should be shifted to convert it to a float.</param>
+		/// <param name="max"> The maximum value the track bar can have.</param>
+		/// <param name="scale"> The minumum value the track bar can have.</param>
 		/// <param name="value"> The initial value of the track bar.</param>
-		//static DotNetScalar ^tracker(string title, int max, float scale = 1.f, float shift = 0.f, int value = 0);
-
-	};
+		static DotNetScalar ^tracker(String ^title, float max, float min, float value);
 
 
-	public ref class DotNetVector : public Observable {
-	private:
-		DotNetVector(SafeVector *vector) : _ps(vector) { }
-
-	public:
-		SafeVector *_ps;
-
-		~DotNetVector() { 
-			delete _ps;
-		}
-
-		static DotNetVector ^Create(SafeVector *safe) {
-			DotNetVector^ vector = gcnew DotNetVector(safe);
-
-			OnChangeEvt^ managedCallback = gcnew OnChangeEvt(vector, &ChangeListener);
-			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(managedCallback);
-			GC::KeepAlive(managedCallback);
-
-			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
-
-			return vector;
-		}
-
-		static DotNetVector ^Create(float value) {
-			return Create(new SafeVector(value));
-		}
-
-		static DotNetVector ^Create(float x, float y, float z) {
-			return Create(new SafeVector(x, y, z));
-		}
-
-		property float X {
-			float get() { return _ps->X(); }
-			void set(float value) { _ps->SetX(value); }
-		}
-		property float Y {
-			float get() { return _ps->Y(); }
-			void set(float value) { _ps->SetY(value); }
-		}	
-		property float Z {
-			float get() { return _ps->Z(); }
-			void set(float value) { _ps->SetZ(value); }
-		}
-		void Set(float x, float y, float z) {
-			_ps->Set(x, y, z);
-		}
+		//----------------------------Scalars------------------------------
 
 
 		/// <summary>
@@ -562,39 +858,28 @@ namespace NuiLibDotNet {
 		/// </summary>
 		/// <param name="joint"> Which joint to track.</param>
 		static DotNetVector ^joint(const int joint);
-	};
 
 
-	public ref class DotNetCondition : public Observable {
-	private:
-		DotNetCondition(SafeCondition *condition) : _ps(condition) { }
 
-	public:
-		SafeCondition *_ps;
-
-		~DotNetCondition() { 
-			delete _ps;
-		}
-
-		static DotNetCondition ^Create(SafeCondition *safe) {
-			DotNetCondition^ condition = gcnew DotNetCondition(safe);
-
-			OnChangeEvt^ managedCallback = gcnew OnChangeEvt(condition, &ChangeListener);
-			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(managedCallback);
-			GC::KeepAlive(managedCallback);
-
-			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
-
-			return condition;
-		}
-
-		static DotNetCondition ^Create(bool value) {
-			return Create(new SafeCondition(value));
-		}
-
-		property bool Value {
-			bool get() { return _ps->Get(); }
-			void set(bool value) { _ps->Set(value); }
-		}
+		static int Hip_Centre=0;
+		static int Spine=1;
+		static int Shoulder_Centre=2;
+		static int Head=3;
+		static int Shoulder_Left=4;
+		static int Elbow_Left=5;
+		static int Wrist_Left=6;
+		static int Hand_Left=7;
+		static int Shoulder_Right=8;
+		static int Elbow_Right=9;
+		static int Wrist_Right=10;
+		static int Hand_Right=11;
+		static int Hip_Left=12;
+		static int Knee_Left=13;
+		static int Ankle_Left=14;
+		static int Foot_Left=15;
+		static int Hip_Right=16;
+		static int Knee_Right=17;
+		static int Ankle_Right=18;
+		static int Foot_Right=19;
 	};
 }

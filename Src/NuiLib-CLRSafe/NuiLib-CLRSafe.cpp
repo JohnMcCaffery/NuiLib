@@ -36,6 +36,12 @@ SafeScalar::SafeScalar(float value)  {
 	_p = scalar;
 }
 
+SafeScalar::SafeScalar(const char *name, float value)  {
+	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
+	scalar->Set(value);
+	_p = scalar;
+}
+
 SafeScalar::~SafeScalar() { }
 
 void SafeScalar::SetCallback(CallbackFunction callback) {
@@ -59,47 +65,11 @@ void SafeScalar::Set(float value) {
 	p->Set(value);
 }
 
-
-//-------------------------------------------------------------------------
-
-SafeScalar *NuiLibSafe::sum(SafeScalar *addend1, SafeScalar *addend2) {
-	return new SafeScalar(NuiLib::sum(((IScalar*)addend1->_p), ((IScalar*)addend2->_p)));
-}
-SafeScalar *NuiLibSafe::difference(SafeScalar *minuend, SafeScalar *subtrahend) {
-	return new SafeScalar(NuiLib::difference(((IScalar*)minuend->_p), ((IScalar*)subtrahend->_p)));
-}
-SafeScalar *NuiLibSafe::product(SafeScalar* factor1, SafeScalar* factor2) {
-	return new SafeScalar(NuiLib::product(((IScalar*)factor1->_p), ((IScalar*)factor2->_p)));
-}
-SafeScalar *NuiLibSafe::quotient(SafeScalar *dividend, SafeScalar *divisor) {
-	return new SafeScalar(NuiLib::quotient(((IScalar*)dividend->_p), ((IScalar*)divisor->_p)));
+const char *SafeScalar::GetName() {
+	IScalar *p = (IScalar*) _p;
+	return p->GetName().c_str();
 }
 
-SafeScalar *NuiLibSafe::sum(SafeScalar *addend1, float addend2) {
-	return new SafeScalar(NuiLib::sum(((IScalar*)addend1->_p), addend2));
-}
-SafeScalar *NuiLibSafe::difference(SafeScalar *minuend, float subtrahend) {
-	return new SafeScalar(NuiLib::difference(((IScalar*)minuend->_p), subtrahend));
-}
-SafeScalar *NuiLibSafe::product(SafeScalar *factor1, float factor2) {
-	return new SafeScalar(NuiLib::product(((IScalar*)factor1->_p), factor2));
-}
-SafeScalar *NuiLibSafe::quotient(SafeScalar *dividend, float divisor) {
-	return new SafeScalar(NuiLib::quotient(((IScalar*)dividend->_p), divisor));
-}
-
-SafeScalar *NuiLibSafe::sum(float addend1, SafeScalar *addend2) {
-	return new SafeScalar(NuiLib::sum(addend1, ((IScalar*)addend2->_p)));
-}
-SafeScalar *NuiLibSafe::difference(float minuend, SafeScalar *subtrahend) {
-	return new SafeScalar(NuiLib::difference(minuend, ((IScalar*)subtrahend->_p)));
-}
-SafeScalar *NuiLibSafe::product(float factor1, SafeScalar *factor2) {
-	return new SafeScalar(NuiLib::product(factor1, ((IScalar*)factor2->_p)));
-}
-SafeScalar *NuiLibSafe::quotient(float dividend, SafeScalar *divisor) {
-	return new SafeScalar(NuiLib::quotient(dividend, ((IScalar*)divisor->_p)));
-}
 
 ///
 /// Value = 0
@@ -111,6 +81,11 @@ SafeCondition::SafeCondition(void *p) : _p(p) { }
 ///
 SafeCondition::SafeCondition(bool value)  {
 	char *name = value ? "True": "False";
+	ICondition * condition = ExtensionFactory()->Make<ICondition>(string(name));
+	condition->Set(value);
+	_p = condition;
+}
+SafeCondition::SafeCondition(const char *name, bool value)  {
 	ICondition * condition = ExtensionFactory()->Make<ICondition>(string(name));
 	condition->Set(value);
 	_p = condition;
@@ -139,6 +114,12 @@ void SafeCondition::Set(bool value) {
 	p->Set(value);
 }
 
+const char *SafeCondition::GetName() {
+	IScalar *p = (IScalar*) _p;
+	return p->GetName().c_str();
+}
+
+
 
 
 //-------------------------------------------------------------------------
@@ -154,9 +135,19 @@ SafeVector::SafeVector(float value)  {
 	vector->Set(value, value, value);
 	_p = vector;
 }
+SafeVector::SafeVector(const char *name, float value)  {
+	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
+	vector->Set(value, value, value);
+	_p = vector;
+}
 SafeVector::SafeVector(float x, float y, float z)  {
 	char name[150];
 	SPRINTF(name, 150, "%.3f,%.3f,%.3f", x, y, z);
+	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
+	vector->Set(x, y, z);
+	_p = vector;
+}
+SafeVector::SafeVector(const char *name, float x, float y, float z)  {
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(x, y, z);
 	_p = vector;
@@ -199,8 +190,52 @@ void SafeVector::SetZ(float value) {
 	p->Set(p->X(), p->Y(), value);
 }
 
+const const char *SafeVector::GetName() {
+	IScalar *p = (IScalar*) _p;
+	return p->GetName().c_str();
+}
+
 //-------------------------------------------------------------------------
 
+SafeScalar *NuiLibSafe::sum(SafeScalar *addend1, SafeScalar *addend2) {
+	return new SafeScalar(NuiLib::sum(((IScalar*)addend1->_p), ((IScalar*)addend2->_p)));
+}
+SafeScalar *NuiLibSafe::difference(SafeScalar *minuend, SafeScalar *subtrahend) {
+	return new SafeScalar(NuiLib::difference(((IScalar*)minuend->_p), ((IScalar*)subtrahend->_p)));
+}
+SafeScalar *NuiLibSafe::product(SafeScalar* factor1, SafeScalar* factor2) {
+	return new SafeScalar(NuiLib::product(((IScalar*)factor1->_p), ((IScalar*)factor2->_p)));
+}
+SafeScalar *NuiLibSafe::quotient(SafeScalar *dividend, SafeScalar *divisor) {
+	return new SafeScalar(NuiLib::quotient(((IScalar*)dividend->_p), ((IScalar*)divisor->_p)));
+}
+
+SafeScalar *NuiLibSafe::sum(SafeScalar *addend1, float addend2) {
+	return new SafeScalar(NuiLib::sum(((IScalar*)addend1->_p), addend2));
+}
+SafeScalar *NuiLibSafe::difference(SafeScalar *minuend, float subtrahend) {
+	return new SafeScalar(NuiLib::difference(((IScalar*)minuend->_p), subtrahend));
+}
+SafeScalar *NuiLibSafe::product(SafeScalar *factor1, float factor2) {
+	return new SafeScalar(NuiLib::product(((IScalar*)factor1->_p), factor2));
+}
+SafeScalar *NuiLibSafe::quotient(SafeScalar *dividend, float divisor) {
+	return new SafeScalar(NuiLib::quotient(((IScalar*)dividend->_p), divisor));
+}
+
+SafeScalar *NuiLibSafe::sum(float addend1, SafeScalar *addend2) {
+	return new SafeScalar(NuiLib::sum(addend1, ((IScalar*)addend2->_p)));
+}
+SafeScalar *NuiLibSafe::difference(float minuend, SafeScalar *subtrahend) {
+	return new SafeScalar(NuiLib::difference(minuend, ((IScalar*)subtrahend->_p)));
+}
+SafeScalar *NuiLibSafe::product(float factor1, SafeScalar *factor2) {
+	return new SafeScalar(NuiLib::product(factor1, ((IScalar*)factor2->_p)));
+}
+SafeScalar *NuiLibSafe::quotient(float dividend, SafeScalar *divisor) {
+	return new SafeScalar(NuiLib::quotient(dividend, ((IScalar*)divisor->_p)));
+}
+//-------------------------------------------------------------------------
 
 SafeScalar *NuiLibSafe::x(SafeVector *vector) {
 	return new SafeScalar(xP(((IVector *)vector->_p)));
@@ -265,20 +300,59 @@ SafeScalar *NuiLibSafe::project(SafeVector *a, SafeVector *b) {
 SafeScalar *NuiLibSafe::abs(SafeScalar *wrappedSafeScalar) {
 	return new SafeScalar(absP(((IScalar *)wrappedSafeScalar->_p)));
 }
-/*
-SafeScalar *NuiLibSafe::ifSafeScalar(SafeCondition *conditional, float ifTrue, float ifFalse) {
-	return new SafeScalar(ifSafeScalarP(((ICondition *)conditional->_p), ifTrue, ifFalse));
+SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, float ifTrue, float ifFalse) {
+	return new SafeScalar(ifScalarP(((ICondition *)conditional->_p), ifTrue, ifFalse));
 }
-SafeScalar *NuiLibSafe::ifSafeScalar(SafeCondition *conditional, float ifTrue, SafeScalar *ifFalse) {
-	return new SafeScalar(ifSafeScalarP(((ICondition *)conditional->_p, ifTrue, (ICondition *)ifFalse->_p)));
+SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, float ifTrue, SafeScalar *ifFalse) {
+	return new SafeScalar(ifScalarP(((ICondition *)conditional->_p), ifTrue, ((IScalar *)ifFalse->_p)));
 }
-SafeScalar *NuiLibSafe::ifSafeScalar(SafeCondition *conditional, SafeScalar *ifTrue, float ifFalse) {
-	return new SafeScalar(ifSafeScalarP(((ICondition *)conditional->_p, (IScalar *)ifTrue->_p), ifFalse));
+SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, SafeScalar *ifTrue, float ifFalse) {
+	return new SafeScalar(ifScalarP(((ICondition *)conditional->_p), ((IScalar *)ifTrue->_p), ifFalse));
 }
-SafeScalar *NuiLibSafe::ifSafeScalar(SafeCondition *conditional, SafeScalar *ifTrue, SafeScalar *ifFalse) {
-	return new SafeScalar(ifSafeScalarP(((ICondition *)conditional->_p, (IScalar *)ifTrue->_p, (IScalar *)ifFalse->_p)));
+SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, SafeScalar *ifTrue, SafeScalar *ifFalse) {
+	return new SafeScalar(ifScalarP(((ICondition *)conditional->_p), ((IScalar *)ifTrue->_p), ((IScalar *)ifFalse->_p)));
 }
-*/
+
+//-------------------------------------------------------------------------
+
+SafeVector *NuiLibSafe::sum(SafeVector *addend1, SafeVector *addend2) {
+	return new SafeVector(NuiLib::sum(((IVector*)addend1->_p), ((IVector*)addend2->_p)));
+}
+SafeVector *NuiLibSafe::difference(SafeVector *minuend, SafeVector *subtrahend) {
+	return new SafeVector(NuiLib::difference(((IVector*)minuend->_p), ((IVector*)subtrahend->_p)));
+}
+SafeVector *NuiLibSafe::product(SafeVector* factor1, SafeVector* factor2) {
+	return new SafeVector(NuiLib::product(((IVector*)factor1->_p), ((IVector*)factor2->_p)));
+}
+SafeVector *NuiLibSafe::quotient(SafeVector *dividend, SafeVector *divisor) {
+	return new SafeVector(NuiLib::quotient(((IVector*)dividend->_p), ((IVector*)divisor->_p)));
+}
+
+SafeVector *NuiLibSafe::sum(SafeVector *addend1, float addend2) {
+	return new SafeVector(NuiLib::sum(((IVector*)addend1->_p), addend2));
+}
+SafeVector *NuiLibSafe::difference(SafeVector *minuend, float subtrahend) {
+	return new SafeVector(NuiLib::difference(((IVector*)minuend->_p), subtrahend));
+}
+SafeVector *NuiLibSafe::product(SafeVector *factor1, float factor2) {
+	return new SafeVector(NuiLib::product(((IVector*)factor1->_p), factor2));
+}
+SafeVector *NuiLibSafe::quotient(SafeVector *dividend, float divisor) {
+	return new SafeVector(NuiLib::quotient(((IVector*)dividend->_p), divisor));
+}
+
+SafeVector *NuiLibSafe::sum(float addend1, SafeVector *addend2) {
+	return new SafeVector(NuiLib::sum(addend1, ((IVector*)addend2->_p)));
+}
+SafeVector *NuiLibSafe::difference(float minuend, SafeVector *subtrahend) {
+	return new SafeVector(NuiLib::difference(minuend, ((IVector*)subtrahend->_p)));
+}
+SafeVector *NuiLibSafe::product(float factor1, SafeVector *factor2) {
+	return new SafeVector(NuiLib::product(factor1, ((IVector*)factor2->_p)));
+}
+SafeVector *NuiLibSafe::quotient(float dividend, SafeVector *divisor) {
+	return new SafeVector(NuiLib::quotient(dividend, ((IVector*)divisor->_p)));
+}
 
 //-------------------------------------------------------------------------
 
@@ -321,6 +395,209 @@ SafeVector *NuiLibSafe::joint(int joint) {
 
 
 //-------------------------------------------------------------------------
+
+///
+/// True if operand1 is greater than operand2.
+///
+SafeCondition *NuiLibSafe::Greater(SafeScalar *operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pGreater(((IScalar *)operand1->_p), ((IScalar *)operand2->_p)));
+}
+///
+/// True if operand1 is less than operand2.
+///
+SafeCondition *NuiLibSafe::Less(SafeScalar *operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pLess(((IScalar *)operand1->_p), ((IScalar *)operand2->_p)));
+}
+///
+/// True if operand1 is greater than or equ.al to operand2
+///
+SafeCondition *NuiLibSafe::GreaterEqual(SafeScalar *operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pGreaterEqual(((IScalar *)operand1->_p), ((IScalar *)operand2->_p)));
+}
+///
+/// True if operand1 is less than or equal. to operand2
+///
+SafeCondition *NuiLibSafe::LessEqual(SafeScalar *operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pLessEqual(((IScalar *)operand1->_p), ((IScalar *)operand2->_p)));
+}
+///
+/// True if operand1 is equal to operand2.
+///
+SafeCondition *NuiLibSafe::Equal(SafeScalar *operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pEqualTo(((IScalar*) operand1->_p), ((IScalar*) operand2->_p)));
+}
+///
+/// True if operand1 is equal to operand2.
+///
+//SafeCondition *NuiLibSafe::Equal(SafeVector *operand1, SafeVector *operand2) {
+	//return new SafeCondition(NuiLib::pEqual(((IVector*) operand1->_p), ((IVector*) operand2->_p)));
+//}
+///
+/// True if operand1 is not equal to operand2.
+///
+SafeCondition *NuiLibSafe::NotEqual(SafeScalar *operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pNotEqualTo(((IScalar*) operand1->_p), ((IScalar*) operand2->_p)));
+}
+///
+/// True if operand1 is not equal to operand2.
+///
+SafeCondition *NuiLibSafe::NotEqual(SafeVector *operand1, SafeVector *operand2) {
+	return new SafeCondition(NuiLib::pNotEqualTo(((IVector*) operand1->_p), ((IVector*) operand2->_p)));
+}
+///
+/// True if both operand1 and operand2 are true.
+///
+SafeCondition *NuiLibSafe::And(SafeCondition *operand1, SafeCondition *operand2) {
+	return new SafeCondition(NuiLib::pAnd(((ICondition*) operand1->_p), ((ICondition*) operand2->_p)));
+}
+///
+/// True if either operand1 or operand2 or both are true.
+///
+SafeCondition *NuiLibSafe::Or(SafeCondition *operand1, SafeCondition *operand2) {
+	return new SafeCondition(NuiLib::pOr(((ICondition*) operand1->_p), ((ICondition*) operand2->_p)));
+}
+///
+/// True if operand is false.
+///
+SafeCondition *NuiLibSafe::Not(SafeCondition *operand) {
+	return new SafeCondition(NuiLib::pNot(((ICondition*) operand->_p)));
+}
+
+///
+/// True if operand1 is greater than operand2.
+///
+SafeCondition *NuiLibSafe::Greater(SafeScalar *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pGreater(((IScalar*) operand1->_p), operand2));
+}
+///
+/// True if operand1 is less than operand2.
+///
+SafeCondition *NuiLibSafe::Less(SafeScalar *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pLess(((IScalar*) operand1->_p), operand2));
+}
+///
+/// True if operand1 is greater than or equ.al to operand2
+///
+SafeCondition *NuiLibSafe::GreaterEqual(SafeScalar *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pGreaterEqual(((IScalar*) operand1->_p), operand2));
+}
+///
+/// True if operand1 is less than or equal. to operand2
+///
+SafeCondition *NuiLibSafe::LessEqual(SafeScalar *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pLessEqual(((IScalar*) operand1->_p), operand2));
+}
+///
+/// True if operand1 is equal to operand2.
+/// All components of operand1 (x, y and z) must be equal of to operand1.
+///
+SafeCondition *NuiLibSafe::Equal(SafeScalar *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pEqualTo(((IScalar*) operand1->_p), operand2));
+}
+///
+/// True if operand1 is equal to operand2.
+///	
+//SafeCondition *NuiLibSafe::Equal(SafeVector *operand1, float operand2) {
+	//return new SafeCondition(NuiLib::pEqual(((IVector*) operand1->_p), operand2));
+//}
+///
+/// True if operand1 is equal to operand2.
+///	
+//SafeCondition *NuiLibSafe::Equal(SafeVector *operand1, cv::Point3f) {
+	//return new SafeCondition(NuiLib::pEqual(((IVector*) operand1->_p), cv::Point3f));
+//}
+///
+/// True if operand1 is not equal to operand2.
+///
+SafeCondition *NuiLibSafe::NotEqual(SafeScalar *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pNotEqualTo(((IScalar*) operand1->_p), operand2));
+}
+///
+/// False if all components of operand1 (x, y and z) are equal to operand2.
+///
+SafeCondition *NuiLibSafe::NotEqual(SafeVector *operand1, float operand2) {
+	return new SafeCondition(NuiLib::pNotEqualTo(((IVector*) operand1->_p), operand2));
+}
+///
+/// True if both operand1 and operand2 are true.
+///
+SafeCondition *NuiLibSafe::And(SafeCondition *operand1, bool operand2) {
+	return new SafeCondition(NuiLib::pAnd(((ICondition*) operand1->_p), operand2));
+}
+///
+/// True if either operand1 or operand2 or both are true.
+///
+SafeCondition *NuiLibSafe::Or(SafeCondition *operand1, bool operand2) {
+	return new SafeCondition(NuiLib::pOr(((ICondition*) operand1->_p), operand2));
+}
+
+///
+/// True if operand1 is greater than operand2.
+///
+SafeCondition *NuiLibSafe::Greater(float operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pGreater(operand1, ((IScalar*) operand2->_p)));
+}
+///
+/// True if operand1 is less than operand2.
+///
+SafeCondition *NuiLibSafe::Less(float operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pLess(operand1, ((IScalar*) operand2->_p)));
+}
+///
+/// True if operand1 is greater than or equ.al to operand2
+///
+SafeCondition *NuiLibSafe::GreaterEqual(float operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pGreaterEqual(operand1, ((IScalar*) operand2->_p)));
+}
+///
+/// True if operand1 is less than or equal. to operand2
+///
+SafeCondition *NuiLibSafe::LessEqual(float operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pLessEqual(operand1, ((IScalar*) operand2->_p)));	
+}
+///
+/// True if operand1 is equal to operand2.
+/// Operand1 must be qual to all components of operand2 (x, y and z).
+///
+SafeCondition *NuiLibSafe::Equal(float operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pEqualTo(operand1, ((IScalar*) operand2->_p)));	
+}
+///
+/// True if operand1 is equal to operand2.
+///
+//SafeCondition *NuiLibSafe::Equal(float operand1, SafeVector *operand2)  {
+	//return new SafeCondition(NuiLib::pEqual(operand1, ((IVector*) operand2->_p)) ){
+//}
+///
+/// True if operand1 is equal to operand2.
+///
+//SafeCondition *NuiLibSafe::Equal(cv::Point3f operand1, SafeVector *operand2) {
+	//return new SafeCondition(NuiLib::pEqual(cv::Point3f operand1, SafeVector *operand2));
+//}
+///
+/// True if operand1 is not equal to operand2.
+///
+SafeCondition *NuiLibSafe::NotEqual(float operand1, SafeScalar *operand2) {
+	return new SafeCondition(NuiLib::pNotEqualTo(operand1, ((IScalar*) operand2->_p)));	
+}
+///
+/// False if operand1 is equal to all components of operand2 (x, y and z).
+///
+SafeCondition *NuiLibSafe::NotEqual(float operand1, SafeVector *operand2) {
+	return new SafeCondition(NuiLib::pNotEqualTo(operand1, ((IVector*) operand2->_p)));	
+}
+///
+/// True if both operand1 and operand2 are true.
+///
+SafeCondition *NuiLibSafe::And(bool operand1, SafeCondition *operand2) {
+	return new SafeCondition(NuiLib::pAnd(operand1, ((ICondition*) operand2->_p)));	
+}
+///
+/// True if either operand1 or operand2 or both are true.
+///
+SafeCondition *NuiLibSafe::Or(bool operand1, SafeCondition *operand2) {
+	return new SafeCondition(NuiLib::pOr(operand1, ((ICondition*) operand2->_p)));	
+}
 
 
 /*
