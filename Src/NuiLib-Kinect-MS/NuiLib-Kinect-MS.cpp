@@ -565,10 +565,14 @@ NUI_SKELETON_POSITION_INDEX KinectJoint::IndexFromName(string name) {
 }
 
 void KinectJoint::Update() {
-	Set(0.f, 0.f, 0.f);
+	if (_updating) {
+		Set(0.f, 0.f, 0.f);
+		_updating = false;
+	}
 }
 
 void KinectJoint::Update(NUI_SKELETON_DATA *skeleton) {
+	_updating = true;
 	Vector4 vector = skeleton->SkeletonPositions[_index];
 	Set(vector.x, vector.y, vector.z);
 	float x, y;

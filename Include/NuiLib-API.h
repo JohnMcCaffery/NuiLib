@@ -1176,6 +1176,10 @@ namespace NuiLib {
 	///
 	DLL Scalar tracker(string title, const int max, float scale = 1.f, float shift = 0.f, const int value = 0);
 
+
+	//-------------------------------------------------------------------------------------------------------------
+
+
 	///
 	/// Normalize the value of a vector so its magnitude is 1.
 	/// @param vector The Vector to normalize.

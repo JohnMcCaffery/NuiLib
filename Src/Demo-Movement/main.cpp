@@ -19,6 +19,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 #include <NuiLib-Extendable.h>
 #include <opencv\highgui.h>
+#include <windows.h>
 
 #ifndef M_PI
 #define M_PI 3.14159

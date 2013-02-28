@@ -83,6 +83,8 @@ namespace NuiLib {
 	class DLL KinectJoint : public IListener<NUI_SKELETON_DATA>, public JointVector {
 		private:
 			NUI_SKELETON_POSITION_INDEX _index;
+			bool _updating;
+
 		public:
 			KinectJoint();
 			KinectJoint(NUI_SKELETON_POSITION_INDEX index);

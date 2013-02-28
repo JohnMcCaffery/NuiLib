@@ -186,7 +186,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>NuiLib_d.lib;NuiLib-Kinect-MS_d.lib;Kinect10.lib;opencv_core241d.lib;opencv_highgui241d.lib;opencv_imgproc241d.lib;opencv_objdetect241.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Kinect10.lib;opencv_core244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;opencv_objdetect244.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -200,7 +200,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>NuiLib_d.lib;NuiLib-Kinect-MS_d.lib;Kinect10.lib;opencv_core241d.lib;opencv_highgui241d.lib;opencv_imgproc241d.lib;opencv_objdetect241.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'">
@@ -214,7 +214,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>NuiLib_dv.lib;NuiLib-Kinect-MS_dv.lib;Kinect10.lib;opencv_core241d.lib;opencv_highgui241d.lib;opencv_imgproc241d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Kinect10.lib;opencv_core244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'">
@@ -308,6 +308,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NuiLib\NuiLib-VC10.vcxproj">
+      <Project>{7726434f-1330-45d9-aa09-7949c3cb3e58}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
