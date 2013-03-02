@@ -8,12 +8,31 @@
 
 using namespace NuiLibSafe;
 
+class Listener : public IObserver {
+private:
+	CallbackFunction _callback;
+
+public:
+	Listener(CallbackFunction callback) {
+		_callback = callback;
+	}
+
+	void Changed(IObservable *source) {
+		_callback();
+	}
+};
+
+void NuiLibSafe::RegisterCallback(CallbackFunction callback) {
+	NuiLib::NuiFactory()->AddListener([callback] (IObservable* src) { callback(); });
+}
 bool NuiLibSafe::Init() {
-	bool ret = NuiLib::NuiFactory()->Init();
-	return ret;
+	return NuiLib::NuiFactory()->Init();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {
 	NuiLib::NuiFactory()->SetAutoPoll(value);
+}
+void NuiLibSafe::Poll() {
+	NuiLib::NuiFactory()->Poll();
 }
 
 void NuiLibSafe::Pause() {
@@ -23,12 +42,12 @@ void NuiLibSafe::Pause() {
 ///
 /// Value = 0
 ///
-SafeScalar::SafeScalar(void *p) : _p(p) { }
+SafeScalar::SafeScalar(void *p) : _listener(NULL), _p(p) { }
 
 ///
 /// Value = value
 ///
-SafeScalar::SafeScalar(float value)  {
+SafeScalar::SafeScalar(float value) : _listener(NULL) {
 	char name[50];
 	SPRINTF(name, 50, "%.3f", value);
 	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
@@ -36,18 +55,28 @@ SafeScalar::SafeScalar(float value)  {
 	_p = scalar;
 }
 
-SafeScalar::SafeScalar(const char *name, float value)  {
+SafeScalar::SafeScalar(const char *name, float value) : _listener(NULL) {
 	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
 	scalar->Set(value);
 	_p = scalar;
 }
 
-SafeScalar::~SafeScalar() { }
+SafeScalar::~SafeScalar() {
+	if (_listener) {
+		Listener *listener = (Listener*) _listener;
+		IScalar *scalar = (IScalar*) _p;
+		listener->RemoveAsListener(scalar);
+		cout << "Removing listener";
+	}
+}
 
 void SafeScalar::SetCallback(CallbackFunction callback) {
 	IScalar *scalar = (IScalar*) _p;
-	scalar->AddListener([callback] (IObservable* src) { callback(); });
+	Listener *listener = new Listener(callback);
+	listener->AddAsListener(NULL, scalar);
+	_listener = listener;
 }
+
 
 ///
 /// Get the value of the scalar. 
@@ -74,28 +103,37 @@ const char *SafeScalar::GetName() {
 ///
 /// Value = 0
 ///
-SafeCondition::SafeCondition(void *p) : _p(p) { }
+SafeCondition::SafeCondition(void *p) : _listener(NULL), _p(p) { }
 
 ///
 /// Value = value
 ///
-SafeCondition::SafeCondition(bool value)  {
+SafeCondition::SafeCondition(bool value)  : _listener(NULL) {
 	char *name = value ? "True": "False";
 	ICondition * condition = ExtensionFactory()->Make<ICondition>(string(name));
 	condition->Set(value);
 	_p = condition;
 }
-SafeCondition::SafeCondition(const char *name, bool value)  {
+SafeCondition::SafeCondition(const char *name, bool value) : _listener(NULL)  {
 	ICondition * condition = ExtensionFactory()->Make<ICondition>(string(name));
 	condition->Set(value);
 	_p = condition;
 }
 
-SafeCondition::~SafeCondition() { }
+SafeCondition::~SafeCondition() {
+	if (_listener) {
+		Listener *listener = (Listener*) _listener;
+		IScalar *scalar = (IScalar*) _p;
+		listener->RemoveAsListener(scalar);
+		cout << "Removing listener";
+	}
+}
 
 void SafeCondition::SetCallback(CallbackFunction callback) {
 	ICondition *condition = (ICondition*) _p;
-	condition->AddListener([callback] (IObservable* src) { callback(); });
+	Listener *listener = new Listener(callback);
+	listener->AddAsListener(NULL, condition);
+	_listener = listener;
 }
 
 ///
@@ -126,38 +164,47 @@ const char *SafeCondition::GetName() {
 ///
 /// Value = 0
 ///
-SafeVector::SafeVector(void *p) : _p(p) { }
+SafeVector::SafeVector(void *p) : _listener(NULL), _p(p)  { }
 
-SafeVector::SafeVector(float value)  {
+SafeVector::SafeVector(float value)  : _listener(NULL) {
 	char name[150];
 	SPRINTF(name, 150, "%.3f,%.3f,%.3f", value, value, value);
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(value, value, value);
 	_p = vector;
 }
-SafeVector::SafeVector(const char *name, float value)  {
+SafeVector::SafeVector(const char *name, float value)  : _listener(NULL) {
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(value, value, value);
 	_p = vector;
 }
-SafeVector::SafeVector(float x, float y, float z)  {
+SafeVector::SafeVector(float x, float y, float z)  : _listener(NULL) {
 	char name[150];
 	SPRINTF(name, 150, "%.3f,%.3f,%.3f", x, y, z);
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(x, y, z);
 	_p = vector;
 }
-SafeVector::SafeVector(const char *name, float x, float y, float z)  {
+SafeVector::SafeVector(const char *name, float x, float y, float z)  : _listener(NULL) {
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(x, y, z);
 	_p = vector;
 }
 
-SafeVector::~SafeVector() { }
+SafeVector::~SafeVector() {
+	if (_listener) {
+		Listener *listener = (Listener*) _listener;
+		IScalar *scalar = (IScalar*) _p;
+		listener->RemoveAsListener(scalar);
+		cout << "Removing listener";
+	}
+}
 
 void SafeVector::SetCallback(CallbackFunction callback) {
 	IVector *vector = (IVector*) _p;
-	vector->AddListener([callback] (IObservable* src) { callback(); });
+	Listener *listener = new Listener(callback);
+	listener->AddAsListener(NULL, vector);
+	_listener = listener;
 }
 
 float SafeVector::X() { 

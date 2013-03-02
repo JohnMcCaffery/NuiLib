@@ -613,7 +613,6 @@ Vector::Vector(string name, float x, float y, float z) : IVector(GetTypeName(), 
 void Vector::SetX(float x) { Update(x, Y(), Z()); }
 void Vector::SetY(float y) { Update(X(), y, Z()); }
 void Vector::SetZ(float z) { Update(X(), Y(), z); }
-void Vector::Set(float x, float y, float z) { Update(x, y, z); }
 */
 
 //------------------------ Joint Vector -----------------
@@ -930,16 +929,26 @@ cv::Point3f PlaneIntersectionVector::CalculateValue() {
 	if (!_output)
 		Setup();
 
-	if (**_denominator != 0)
+	if (**_denominator != 0) {
+		_pointDiff->Changed(_vector1);
+		_numerator->Changed(_vector1);
+		_denominator->Changed(_vector2);
+		_dirQuotient->Changed(_numerator);
+		_lineScaled->Changed(_dirQuotient);
+		_output->Changed(_denominator);
 		return cv::Point3f(_output->X(), _output->Y(), _output->Z());
-	else
+	} else
 		return _value;
 }
 
 void PlaneIntersectionVector::Setup() {
-	_numerator = dotP(difference(_vector1, _vector3), _vector2);
+	_pointDiff = difference(_vector1, _vector3);
+	_numerator = dotP(_pointDiff, _vector2);
 	_denominator = dotP(_vector4, _vector2);
-	_output = sum(_vector3, scaleP(_vector4, quotient(_numerator, _denominator)));
+	_dirQuotient = quotient(_numerator, _denominator);
+	_lineScaled = scaleP(_vector4, _dirQuotient);
+	_output = sum(_vector3, _lineScaled);
+	AddAsListener(NULL, _output);
 }
 
 

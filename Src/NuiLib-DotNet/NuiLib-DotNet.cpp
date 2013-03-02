@@ -6,127 +6,127 @@
 
 using namespace NuiLibDotNet;
 
-DotNetScalar ^DotNetScalar::operator+(DotNetScalar ^addend1, DotNetScalar ^addend2) {
+Scalar ^Scalar::operator+(Scalar ^addend1, Scalar ^addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), (addend2->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator-(DotNetScalar ^minuend, DotNetScalar ^subtrahend) {
+Scalar ^Scalar::operator-(Scalar ^minuend, Scalar ^subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), (subtrahend->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator*(DotNetScalar ^factor1, DotNetScalar ^factor2) {
+Scalar ^Scalar::operator*(Scalar ^factor1, Scalar ^factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), (factor2->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator/(DotNetScalar ^dividend, DotNetScalar ^divisor) {
+Scalar ^Scalar::operator/(Scalar ^dividend, Scalar ^divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), (divisor->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator+=(DotNetScalar ^addend1, DotNetScalar ^addend2) {
+Scalar ^Scalar::operator+=(Scalar ^addend1, Scalar ^addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), (addend2->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator-=(DotNetScalar ^minuend, DotNetScalar ^subtrahend) {
+Scalar ^Scalar::operator-=(Scalar ^minuend, Scalar ^subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), (subtrahend->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator*=(DotNetScalar ^factor1, DotNetScalar ^factor2) {
+Scalar ^Scalar::operator*=(Scalar ^factor1, Scalar ^factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), (factor2->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator/=(DotNetScalar ^dividend, DotNetScalar ^divisor) {
+Scalar ^Scalar::operator/=(Scalar ^dividend, Scalar ^divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), (divisor->_ps)));
 }
 
 
-DotNetScalar ^DotNetScalar::operator+(DotNetScalar ^addend1, float addend2) {
+Scalar ^Scalar::operator+(Scalar ^addend1, float addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), addend2));
 }
-DotNetScalar ^DotNetScalar::operator-(DotNetScalar ^minuend, float subtrahend) {
+Scalar ^Scalar::operator-(Scalar ^minuend, float subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), subtrahend));
 }
-DotNetScalar ^DotNetScalar::operator*(DotNetScalar ^factor1, float factor2) {
+Scalar ^Scalar::operator*(Scalar ^factor1, float factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), factor2));
 }
-DotNetScalar ^DotNetScalar::operator/(DotNetScalar ^dividend, float divisor) {
+Scalar ^Scalar::operator/(Scalar ^dividend, float divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), divisor));
 }
-DotNetScalar ^DotNetScalar::operator+=(DotNetScalar ^addend1, float addend2) {
+Scalar ^Scalar::operator+=(Scalar ^addend1, float addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), addend2));
 }
-DotNetScalar ^DotNetScalar::operator-=(DotNetScalar ^minuend, float subtrahend) {
+Scalar ^Scalar::operator-=(Scalar ^minuend, float subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), subtrahend));
 }
-DotNetScalar ^DotNetScalar::operator*=(DotNetScalar ^factor1, float factor2) {
+Scalar ^Scalar::operator*=(Scalar ^factor1, float factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), factor2));
 }
-DotNetScalar ^DotNetScalar::operator/=(DotNetScalar ^dividend, float divisor) {
+Scalar ^Scalar::operator/=(Scalar ^dividend, float divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), divisor));
 }
 
-DotNetScalar ^DotNetScalar::operator+(float addend1, DotNetScalar ^addend2) {
+Scalar ^Scalar::operator+(float addend1, Scalar ^addend2) {
 	return Create(NuiLibSafe::sum(addend1, (addend2->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator-(float minuend, DotNetScalar ^subtrahend) {
+Scalar ^Scalar::operator-(float minuend, Scalar ^subtrahend) {
 	return Create(NuiLibSafe::difference(minuend, (subtrahend->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator*(float factor1, DotNetScalar ^factor2) {
+Scalar ^Scalar::operator*(float factor1, Scalar ^factor2) {
 	return Create(NuiLibSafe::product(factor1, (factor2->_ps)));
 }
-DotNetScalar ^DotNetScalar::operator/(float dividend, DotNetScalar ^divisor) {
+Scalar ^Scalar::operator/(float dividend, Scalar ^divisor) {
 	return Create(NuiLibSafe::quotient(dividend, (divisor->_ps)));
 }
 
 ///
-/// The x value for the given DotNetVector.
+/// The x value for the given Vector.
 /// @param vector The vector to take the x value of.
 ///
-DotNetScalar ^Nui::x(DotNetVector ^vector) {
-	return DotNetScalar::Create(NuiLibSafe::x(vector->_ps));
+Scalar ^Nui::x(Vector ^vector) {
+	return Scalar::Create(NuiLibSafe::x(vector->_ps));
 }
 ///
-/// The y value for the given DotNetVector.
+/// The y value for the given Vector.
 /// @param vector The vector to take the y value of.
 ///
-DotNetScalar ^Nui::y(DotNetVector ^vector) {
-	return DotNetScalar::Create(NuiLibSafe::y(vector->_ps));
+Scalar ^Nui::y(Vector ^vector) {
+	return Scalar::Create(NuiLibSafe::y(vector->_ps));
 }
 ///
-/// The z value for the given DotNetVector.
+/// The z value for the given Vector.
 /// @param vector The vector to take the z value of.
 ///
-DotNetScalar ^Nui::z(DotNetVector ^vector) {
-	return DotNetScalar::Create(NuiLibSafe::z(vector->_ps));
+Scalar ^Nui::z(Vector ^vector) {
+	return Scalar::Create(NuiLibSafe::z(vector->_ps));
 }
 ///
-/// The magnitude value of the given DotNetVector.
+/// The magnitude value of the given Vector.
 ///
-DotNetScalar ^Nui::magnitude(DotNetVector ^vector) {
-	return DotNetScalar::Create(NuiLibSafe::magnitude(vector->_ps));
+Scalar ^Nui::magnitude(Vector ^vector) {
+	return Scalar::Create(NuiLibSafe::magnitude(vector->_ps));
 }
 ///
 /// The dot product of two vectors
 /// @param a The first vector.
 /// @param b The second vector.
 ///
-DotNetScalar ^Nui::dot(DotNetVector ^a, DotNetVector ^b) {
-	return DotNetScalar::Create(NuiLibSafe::dot(a->_ps, b->_ps));
+Scalar ^Nui::dot(Vector ^a, Vector ^b) {
+	return Scalar::Create(NuiLibSafe::dot(a->_ps, b->_ps));
 }
 ///
 /// Normalize the value of a scalar against the maximum value it has ever been.
 /// @param scalar The scalar to normalize.
 ///
-DotNetScalar ^Nui::normalize(DotNetScalar ^scalar) {
-	return DotNetScalar::Create(NuiLibSafe::normalizeScalar(scalar->_ps));
+Scalar ^Nui::normalize(Scalar ^scalar) {
+	return Scalar::Create(NuiLibSafe::normalizeScalar(scalar->_ps));
 }
 ///
 /// Normalize the value of a scalar against a specified maximum value.
 /// @param scalar The scalar to normalize.
 /// @param max The maximum value to normalize against.
 ///
-DotNetScalar ^Nui::normalize(DotNetScalar ^scalar, float max) {
-	return DotNetScalar::Create(NuiLibSafe::normalize(scalar->_ps, max));
+Scalar ^Nui::normalize(Scalar ^scalar, float max) {
+	return Scalar::Create(NuiLibSafe::normalize(scalar->_ps, max));
 }
 ///
 /// Normalize the value of a scalar against a specified maximum value.
 /// @param scalar The scalar to normalize.
 /// @param max The maximum value to normalize against.
 ///
-DotNetScalar ^Nui::normalize(DotNetScalar ^scalar, DotNetScalar ^max) {
-	return DotNetScalar::Create(NuiLibSafe::normalize(scalar->_ps, max->_ps));
+Scalar ^Nui::normalize(Scalar ^scalar, Scalar ^max) {
+	return Scalar::Create(NuiLibSafe::normalize(scalar->_ps, max->_ps));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -141,8 +141,8 @@ DotNetScalar ^Nui::normalize(DotNetScalar ^scalar, DotNetScalar ^max) {
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, float range, float grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range, grace, mirror));
+Scalar ^Nui::constrain(Scalar ^input, float deadzone, float range, float grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range, grace, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -157,8 +157,8 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, float range, f
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, float range, DotNetScalar ^grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range, grace->_ps, mirror));
+Scalar ^Nui::constrain(Scalar ^input, float deadzone, float range, Scalar ^grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range, grace->_ps, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -173,8 +173,8 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, float range, D
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, DotNetScalar ^range, float grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range->_ps, grace, mirror));
+Scalar ^Nui::constrain(Scalar ^input, float deadzone, Scalar ^range, float grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range->_ps, grace, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -189,8 +189,8 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, DotNetScalar ^
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, DotNetScalar ^range, DotNetScalar^ grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range->_ps, grace->_ps, mirror));
+Scalar ^Nui::constrain(Scalar ^input, float deadzone, Scalar ^range, Scalar^ grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone, range->_ps, grace->_ps, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -205,8 +205,8 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, float deadzone, DotNetScalar ^
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, float range, float grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range, grace, mirror));
+Scalar ^Nui::constrain(Scalar ^input, Scalar^ deadzone, float range, float grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range, grace, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -221,8 +221,8 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, float 
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, float range, DotNetScalar^ grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range, grace->_ps, mirror));
+Scalar ^Nui::constrain(Scalar ^input, Scalar^ deadzone, float range, Scalar^ grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range, grace->_ps, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -237,8 +237,8 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, float 
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, DotNetScalar ^range, float grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range->_ps, grace, mirror));
+Scalar ^Nui::constrain(Scalar ^input, Scalar^ deadzone, Scalar ^range, float grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range->_ps, grace, mirror));
 }
 ///
 /// Constrain a scalar to a specific range.
@@ -253,22 +253,22 @@ DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, DotNet
 /// @param grace The grace period past the end of the range where the value stays 1.f. If *input < deadzome + range + grace Value == 1.f.
 /// @param mirror Whether to mirror the constraints. If true calculations are done against the absolute value if *input.
 ///
-DotNetScalar ^Nui::constrain(DotNetScalar ^input, DotNetScalar^ deadzone, DotNetScalar ^range, DotNetScalar^ grace, bool mirror) {
-	return DotNetScalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range->_ps, grace->_ps, mirror));
+Scalar ^Nui::constrain(Scalar ^input, Scalar^ deadzone, Scalar ^range, Scalar^ grace, bool mirror) {
+	return Scalar::Create(NuiLibSafe::constrain(input->_ps, deadzone->_ps, range->_ps, grace->_ps, mirror));
 }
 ///
 /// Take the absolute value of a scalar.
 /// @param input The scalar to take the absolute value of.
 ///
-DotNetScalar ^Nui::abs(DotNetScalar ^input) {
-	return DotNetScalar::Create(NuiLibSafe::abs(input->_ps));
+Scalar ^Nui::abs(Scalar ^input) {
+	return Scalar::Create(NuiLibSafe::abs(input->_ps));
 }
 ///
 /// Take the arc cosine of a scalar.
 /// @param input The scalar to take the arc cosine of.
 ///
-DotNetScalar ^Nui::acos(DotNetScalar ^input) {
-	return DotNetScalar::Create(NuiLibSafe::acos(input->_ps));
+Scalar ^Nui::acos(Scalar ^input) {
+	return Scalar::Create(NuiLibSafe::acos(input->_ps));
 }
 ///
 /// -1 or 1 depending on a condition.
@@ -276,16 +276,16 @@ DotNetScalar ^Nui::acos(DotNetScalar ^input) {
 /// Used to invert other values depending on a condition.
 /// @param input The condition which dictates Value.
 ///
-DotNetScalar ^Nui::invert(DotNetCondition ^input) {
-	return DotNetScalar::Create(NuiLibSafe::invert(input->_ps));
+Scalar ^Nui::invert(Condition ^input) {
+	return Scalar::Create(NuiLibSafe::invert(input->_ps));
 }
 ///
 /// The change in a scalar since the last update.
 /// Will give the first derivitive of a scalar.
 /// @param input The scalar to track changes in.
 ///
-DotNetScalar ^Nui::delta(DotNetScalar ^input) {
-	return DotNetScalar::Create(NuiLibSafe::deltaScalar(input->_ps));
+Scalar ^Nui::delta(Scalar ^input) {
+	return Scalar::Create(NuiLibSafe::deltaScalar(input->_ps));
 }
 ///
 /// The scalar projection of one vector onto another.
@@ -293,48 +293,48 @@ DotNetScalar ^Nui::delta(DotNetScalar ^input) {
 /// @param a The projecting vector.
 /// @param b The vector being projected on.
 ///
-DotNetScalar ^Nui::project(DotNetVector ^a, DotNetVector ^b) {
-	return DotNetScalar::Create(NuiLibSafe::project(a->_ps, b->_ps));
+Scalar ^Nui::project(Vector ^a, Vector ^b) {
+	return Scalar::Create(NuiLibSafe::project(a->_ps, b->_ps));
 }
 ///
 /// Value is one of two inputs depending on a condition.
 /// Value = *condition ? t : f);
-/// @param condition DotNetCondition up which the output is dependant.
+/// @param condition Condition up which the output is dependant.
 /// @param t Value == t if condition is true.
 /// @param f Value == f if condition is false.
 ///
-DotNetScalar ^Nui::ifScalar(DotNetCondition ^condition, float t, float f) {
-	return DotNetScalar::Create(NuiLibSafe::ifScalar(condition->_ps, t, f));
+Scalar ^Nui::ifScalar(Condition ^condition, float t, float f) {
+	return Scalar::Create(NuiLibSafe::ifScalar(condition->_ps, t, f));
 }
 ///
 /// Value is one of two inputs depending on a condition.
 /// Value = *condition ? t : f);
-/// @param condition DotNetCondition up which the output is dependant.
+/// @param condition Condition up which the output is dependant.
 /// @param t Value == t if condition is true.
 /// @param f Value == f if condition is false.
 ///
-DotNetScalar ^Nui::ifScalar(DotNetCondition ^condition, float t, DotNetScalar ^f) {
-	return DotNetScalar::Create(NuiLibSafe::ifScalar(condition->_ps, t, f->_ps));
+Scalar ^Nui::ifScalar(Condition ^condition, float t, Scalar ^f) {
+	return Scalar::Create(NuiLibSafe::ifScalar(condition->_ps, t, f->_ps));
 }
 ///
 /// Value is one of two inputs depending on a condition.
 /// Value = *condition ? a : b);
-/// @param condition DotNetCondition up which the output is dependant.
+/// @param condition Condition up which the output is dependant.
 /// @param a Value == a if condition is true.
 /// @param b Value == b if condition is false.
 ///
-DotNetScalar ^Nui::ifScalar(DotNetCondition ^condition, DotNetScalar ^t, float f) {
-	return DotNetScalar::Create(NuiLibSafe::ifScalar(condition->_ps, t->_ps, f));
+Scalar ^Nui::ifScalar(Condition ^condition, Scalar ^t, float f) {
+	return Scalar::Create(NuiLibSafe::ifScalar(condition->_ps, t->_ps, f));
 }
 ///
 /// Value is one of two inputs depending on a condition.
 /// Value = *condition ? a : b);
-/// @param condition DotNetCondition up which the output is dependant.
+/// @param condition Condition up which the output is dependant.
 /// @param a Value == a if condition is true.
 /// @param b Value == b if condition is false.
 ///
-DotNetScalar ^Nui::ifScalar(DotNetCondition ^condition, DotNetScalar ^t, DotNetScalar ^f) {
-	return DotNetScalar::Create(NuiLibSafe::ifScalar(condition->_ps, t->_ps, f->_ps));
+Scalar ^Nui::ifScalar(Condition ^condition, Scalar ^t, Scalar ^f) {
+	return Scalar::Create(NuiLibSafe::ifScalar(condition->_ps, t->_ps, f->_ps));
 }
 ///
 /// Value is set by an opencv track bar.
@@ -344,8 +344,8 @@ DotNetScalar ^Nui::ifScalar(DotNetCondition ^condition, DotNetScalar ^t, DotNetS
 /// @param min The minumum value the track bar can have.
 /// @param value The initial value of the track bar.
 ///
-DotNetScalar ^Nui::tracker(String ^title, float max, float min, float value) {
-	return DotNetScalar::Create(new SafeScalar(value));
+Scalar ^Nui::tracker(String ^title, float max, float min, float value) {
+	return Scalar::Create(new SafeScalar(value));
 }
 
 
@@ -356,67 +356,67 @@ DotNetScalar ^Nui::tracker(String ^title, float max, float min, float value) {
 
 
 
-DotNetVector ^DotNetVector::operator+(DotNetVector ^addend1, DotNetVector ^addend2) {
+Vector ^Vector::operator+(Vector ^addend1, Vector ^addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), (addend2->_ps)));
 }
-DotNetVector ^DotNetVector::operator-(DotNetVector ^minuend, DotNetVector ^subtrahend) {
+Vector ^Vector::operator-(Vector ^minuend, Vector ^subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), (subtrahend->_ps)));
 }
-DotNetVector ^DotNetVector::operator*(DotNetVector ^factor1, DotNetVector ^factor2) {
+Vector ^Vector::operator*(Vector ^factor1, Vector ^factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), (factor2->_ps)));
 }
-DotNetVector ^DotNetVector::operator/(DotNetVector ^dividend, DotNetVector ^divisor) {
+Vector ^Vector::operator/(Vector ^dividend, Vector ^divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), (divisor->_ps)));
 }
-DotNetVector ^DotNetVector::operator+=(DotNetVector ^addend1, DotNetVector ^addend2) {
+Vector ^Vector::operator+=(Vector ^addend1, Vector ^addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), (addend2->_ps)));
 }
-DotNetVector ^DotNetVector::operator-=(DotNetVector ^minuend, DotNetVector ^subtrahend) {
+Vector ^Vector::operator-=(Vector ^minuend, Vector ^subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), (subtrahend->_ps)));
 }
-DotNetVector ^DotNetVector::operator*=(DotNetVector ^factor1, DotNetVector ^factor2) {
+Vector ^Vector::operator*=(Vector ^factor1, Vector ^factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), (factor2->_ps)));
 }
-DotNetVector ^DotNetVector::operator/=(DotNetVector ^dividend, DotNetVector ^divisor) {
+Vector ^Vector::operator/=(Vector ^dividend, Vector ^divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), (divisor->_ps)));
 }
 
 
-DotNetVector ^DotNetVector::operator+(DotNetVector ^addend1, float addend2) {
+Vector ^Vector::operator+(Vector ^addend1, float addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), addend2));
 }
-DotNetVector ^DotNetVector::operator-(DotNetVector ^minuend, float subtrahend) {
+Vector ^Vector::operator-(Vector ^minuend, float subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), subtrahend));
 }
-DotNetVector ^DotNetVector::operator*(DotNetVector ^factor1, float factor2) {
+Vector ^Vector::operator*(Vector ^factor1, float factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), factor2));
 }
-DotNetVector ^DotNetVector::operator/(DotNetVector ^dividend, float divisor) {
+Vector ^Vector::operator/(Vector ^dividend, float divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), divisor));
 }
-DotNetVector ^DotNetVector::operator+=(DotNetVector ^addend1, float addend2) {
+Vector ^Vector::operator+=(Vector ^addend1, float addend2) {
 	return Create(NuiLibSafe::sum((addend1->_ps), addend2));
 }
-DotNetVector ^DotNetVector::operator-=(DotNetVector ^minuend, float subtrahend) {
+Vector ^Vector::operator-=(Vector ^minuend, float subtrahend) {
 	return Create(NuiLibSafe::difference((minuend->_ps), subtrahend));
 }
-DotNetVector ^DotNetVector::operator*=(DotNetVector ^factor1, float factor2) {
+Vector ^Vector::operator*=(Vector ^factor1, float factor2) {
 	return Create(NuiLibSafe::product((factor1->_ps), factor2));
 }
-DotNetVector ^DotNetVector::operator/=(DotNetVector ^dividend, float divisor) {
+Vector ^Vector::operator/=(Vector ^dividend, float divisor) {
 	return Create(NuiLibSafe::quotient((dividend->_ps), divisor));
 }
 
-DotNetVector ^DotNetVector::operator+(float addend1, DotNetVector ^addend2) {
+Vector ^Vector::operator+(float addend1, Vector ^addend2) {
 	return Create(NuiLibSafe::sum(addend1, (addend2->_ps)));
 }
-DotNetVector ^DotNetVector::operator-(float minuend, DotNetVector ^subtrahend) {
+Vector ^Vector::operator-(float minuend, Vector ^subtrahend) {
 	return Create(NuiLibSafe::difference(minuend, (subtrahend->_ps)));
 }
-DotNetVector ^DotNetVector::operator*(float factor1, DotNetVector ^factor2) {
+Vector ^Vector::operator*(float factor1, Vector ^factor2) {
 	return Create(NuiLibSafe::product(factor1, (factor2->_ps)));
 }
-DotNetVector ^DotNetVector::operator/(float dividend, DotNetVector ^divisor) {
+Vector ^Vector::operator/(float dividend, Vector ^divisor) {
 	return Create(NuiLibSafe::quotient(dividend, (divisor->_ps)));
 }
 
@@ -426,16 +426,16 @@ DotNetVector ^DotNetVector::operator/(float dividend, DotNetVector ^divisor) {
 /// @param vector The SafeVector to normalize.
 /// @param max The maximum value to normalize against.
 ///
-DotNetVector ^Nui::normalize(DotNetVector ^vector) {
-	return DotNetVector::Create(NuiLibSafe::normalize(vector->_ps));
+Vector ^Nui::normalize(Vector ^vector) {
+	return Vector::Create(NuiLibSafe::normalize(vector->_ps));
 }
 ///
 /// Get the cross product of two vectors.
 /// @param a The first vector.
 /// @param b The second vector.
 ///
-DotNetVector ^Nui::cross(DotNetVector ^a, DotNetVector ^b) {
-	return DotNetVector::Create(NuiLibSafe::cross(a->_ps, b->_ps));
+Vector ^Nui::cross(Vector ^a, Vector ^b) {
+	return Vector::Create(NuiLibSafe::cross(a->_ps, b->_ps));
 }
 ///
 /// Take only specified axes from a vector.
@@ -444,24 +444,24 @@ DotNetVector ^Nui::cross(DotNetVector ^a, DotNetVector ^b) {
 /// @param y Whether to take the y axis.
 /// @param z Whether to take the z axis.
 ///
-DotNetVector ^Nui::limit(DotNetVector ^input, bool x, bool y, bool z) {
-	return DotNetVector::Create(NuiLibSafe::limit(input->_ps, x, y, z));
+Vector ^Nui::limit(Vector ^input, bool x, bool y, bool z) {
+	return Vector::Create(NuiLibSafe::limit(input->_ps, x, y, z));
 }
 ///
 /// The change in a vector since the last update.
 /// Will give the first derivitive of a vector in all three axes.
 /// @param input The vector to track changes in.
 ///
-DotNetVector ^Nui::delta(DotNetVector ^input) {
-	return DotNetVector::Create(NuiLibSafe::delta(input->_ps));
+Vector ^Nui::delta(Vector ^input) {
+	return Vector::Create(NuiLibSafe::delta(input->_ps));
 }
 ///
 /// Take a snapshot of a vector whenever a condition becomes true.
 /// Every time *condition == true Value is set to vector.
 /// @param vector The vector to take snapshots of.
 /// @param condition Every time this becomes true a snapshot is taken.
-DotNetVector ^Nui::snapshot(DotNetVector ^input, DotNetCondition ^condition) {
-	return DotNetVector::Create(NuiLibSafe::snapshot(input->_ps, condition->_ps));
+Vector ^Nui::snapshot(Vector ^input, Condition ^condition) {
+	return Vector::Create(NuiLibSafe::snapshot(input->_ps, condition->_ps));
 }
 ///
 /// Take the momenum of an input vector.
@@ -472,8 +472,8 @@ DotNetVector ^Nui::snapshot(DotNetVector ^input, DotNetCondition ^condition) {
 /// @param input The vector to take the momentum of.
 /// @param condition If true Value is input. Otherwise Value is taken from the momentum of the final position before condition became false.
 ///
-DotNetVector ^Nui::momentum(DotNetVector ^input, DotNetCondition ^condition) {
-	return DotNetVector::Create(NuiLibSafe::momentum(input->_ps, condition->_ps));
+Vector ^Nui::momentum(Vector ^input, Condition ^condition) {
+	return Vector::Create(NuiLibSafe::momentum(input->_ps, condition->_ps));
 }
 ///
 /// Take the momenum of an input vector.
@@ -487,24 +487,24 @@ DotNetVector ^Nui::momentum(DotNetVector ^input, DotNetCondition ^condition) {
 /// @param decrement Whilst applying momentum the delta is reduced by this much each iteration.
 /// @param threshold Momentum stops being applied when the magnitude of the delta is less than this.
 ///
-DotNetVector ^Nui::momentum(DotNetVector ^input, DotNetCondition ^condition, float decrement, float threshold) {
-	return DotNetVector::Create(NuiLibSafe::momentum(input->_ps, condition->_ps, decrement, threshold));
+Vector ^Nui::momentum(Vector ^input, Condition ^condition, float decrement, float threshold) {
+	return Vector::Create(NuiLibSafe::momentum(input->_ps, condition->_ps, decrement, threshold));
 }
 ///
 /// Scale a vector so that its magnitude is scale.
 /// @param input the vector to scale.
 /// @param scale The magnitude Value is to have in the direction of input.
 /// 
-DotNetVector ^Nui::scale(DotNetVector ^input, DotNetScalar ^scale) {
-	return DotNetVector::Create(NuiLibSafe::scale(input->_ps, scale->_ps));
+Vector ^Nui::scale(Vector ^input, Scalar ^scale) {
+	return Vector::Create(NuiLibSafe::scale(input->_ps, scale->_ps));
 }
 ///
 /// Scale a vector so that its magnitude is scale.
 /// @param input the vector to scale.
 /// @param scale The magnitude Value is to have in the direction of input.
 /// 
-DotNetVector ^Nui::scale(DotNetVector ^input, float scale) {
-	return DotNetVector::Create(NuiLibSafe::scale(input->_ps, scale));
+Vector ^Nui::scale(Vector ^input, float scale) {
+	return Vector::Create(NuiLibSafe::scale(input->_ps, scale));
 }
 ///
 /// Calculate the intersection of a line and a plane.
@@ -516,11 +516,11 @@ DotNetVector ^Nui::scale(DotNetVector ^input, float scale) {
 /// @param dirLine The direction of the line. Expected to be normalized.
 /// @return The point in 3D space where the line intersects the plane.
 ///
-DotNetVector ^Nui::intersect(DotNetVector ^pPlane, DotNetVector ^normalPlane, DotNetVector ^pLine, DotNetVector ^dirLine) {
-	return DotNetVector::Create(NuiLibSafe::intersect(pPlane->_ps, normalPlane->_ps, pLine->_ps, dirLine->_ps));
+Vector ^Nui::intersect(Vector ^pPlane, Vector ^normalPlane, Vector ^pLine, Vector ^dirLine) {
+	return Vector::Create(NuiLibSafe::intersect(pPlane->_ps, normalPlane->_ps, pLine->_ps, dirLine->_ps));
 }
-DotNetVector ^Nui::joint(const int joint) {
-	return DotNetVector::Create(NuiLibSafe::joint(joint));
+Vector ^Nui::joint(const int joint) {
+	return Vector::Create(NuiLibSafe::joint(joint));
 }
 
 
@@ -528,104 +528,122 @@ DotNetVector ^Nui::joint(const int joint) {
 
 
 
-DotNetCondition ^DotNetScalar::operator>(DotNetScalar ^operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Greater(operand1->_ps, operand2->_ps));
+Condition ^Scalar::operator>(Scalar ^operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::Greater(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator<(DotNetScalar ^operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Less(operand1->_ps, operand2->_ps));
+Condition ^Scalar::operator<(Scalar ^operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::Less(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator>=(DotNetScalar ^operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::GreaterEqual(operand1->_ps, operand2->_ps));
+Condition ^Scalar::operator>=(Scalar ^operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::GreaterEqual(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator<=(DotNetScalar ^operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::LessEqual(operand1->_ps, operand2->_ps));
+Condition ^Scalar::operator<=(Scalar ^operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::LessEqual(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator==(DotNetScalar ^operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Equal(operand1->_ps, operand2->_ps));
+Condition ^Scalar::operator==(Scalar ^operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::Equal(operand1->_ps, operand2->_ps));
 }
-//DotNetCondition ^DotNetVector::operator==(DotNetVector ^operand1, DotNetVector ^operand2) {
-	//return DotNetCondition::Create(NuiLibSafe::Equal(operand1->_ps, operand2->_ps));
+//Condition ^Vector::operator==(Vector ^operand1, Vector ^operand2) {
+	//return Condition::Create(NuiLibSafe::Equal(operand1->_ps, operand2->_ps));
 //}
-DotNetCondition ^DotNetScalar::operator!=(DotNetScalar ^operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2->_ps));
+Condition ^Scalar::operator!=(Scalar ^operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetVector::operator!=(DotNetVector ^operand1, DotNetVector ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2->_ps));
+Condition ^Vector::operator!=(Vector ^operand1, Vector ^operand2) {
+	return Condition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetCondition::operator&&(DotNetCondition ^operand1, DotNetCondition ^operand2) {
+Condition ^Condition::operator&&(Condition ^operand1, Condition ^operand2) {
 	return Create(NuiLibSafe::And(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetCondition::operator||(DotNetCondition ^operand1, DotNetCondition ^operand2) {
+Condition ^Condition::operator||(Condition ^operand1, Condition ^operand2) {
 	return Create(NuiLibSafe::Or(operand1->_ps, operand2->_ps));
 }
-DotNetCondition ^DotNetCondition::operator!(DotNetCondition ^operand) {
+Condition ^Condition::operator!(Condition ^operand) {
 	return Create(NuiLibSafe::Not(operand->_ps));
 }
+Condition ^Condition::And(Condition ^operand1, Condition ^operand2) {
+	return Create(NuiLibSafe::And(operand1->_ps, operand2->_ps));
+}
+Condition ^Condition::Or(Condition ^operand1, Condition ^operand2) {
+	return Create(NuiLibSafe::Or(operand1->_ps, operand2->_ps));
+}
 
-DotNetCondition ^DotNetScalar::operator>(DotNetScalar ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Greater(operand1->_ps, operand2));
+Condition ^Scalar::operator>(Scalar ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::Greater(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetScalar::operator<(DotNetScalar ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Less(operand1->_ps, operand2));
+Condition ^Scalar::operator<(Scalar ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::Less(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetScalar::operator>=(DotNetScalar ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::GreaterEqual(operand1->_ps, operand2));
+Condition ^Scalar::operator>=(Scalar ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::GreaterEqual(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetScalar::operator<=(DotNetScalar ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::LessEqual(operand1->_ps, operand2));
+Condition ^Scalar::operator<=(Scalar ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::LessEqual(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetScalar::operator==(DotNetScalar ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Equal(operand1->_ps, operand2));
+Condition ^Scalar::operator==(Scalar ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::Equal(operand1->_ps, operand2));
 }
-//DotNetCondition ^DotNetVector::operator==(DotNetVector ^operand1, float operand2) {
+//Condition ^Vector::operator==(Vector ^operand1, float operand2) {
 	//return Create(NuiLibSafe::Equal(operand1->_ps, operand2));
 //}
-//DotNetCondition ^DotNetVector::operator==(DotNetVector ^operand1, cv::Point3f) {
+//Condition ^Vector::operator==(Vector ^operand1, cv::Point3f) {
 	//return Create(NuiLibSafe::Equal(operand1->_ps, cv::Point3f));
 //}
-DotNetCondition ^DotNetScalar::operator!=(DotNetScalar ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2));
+Condition ^Scalar::operator!=(Scalar ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetVector::operator!=(DotNetVector ^operand1, float operand2) {
-	return DotNetCondition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2));
+Condition ^Vector::operator!=(Vector ^operand1, float operand2) {
+	return Condition::Create(NuiLibSafe::NotEqual(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetCondition::operator&&(DotNetCondition ^operand1, bool operand2) {
+Condition ^Condition::operator&&(Condition ^operand1, bool operand2) {
 	return Create(NuiLibSafe::And(operand1->_ps, operand2));
 }
-DotNetCondition ^DotNetCondition::operator||(DotNetCondition ^operand1, bool operand2) {
+Condition ^Condition::operator||(Condition ^operand1, bool operand2) {
+	return Create(NuiLibSafe::Or(operand1->_ps, operand2));
+}
+Condition ^Condition::And(Condition ^operand1, bool operand2) {
+	return Create(NuiLibSafe::And(operand1->_ps, operand2));
+}
+Condition ^Condition::Or(Condition ^operand1, bool operand2) {
 	return Create(NuiLibSafe::Or(operand1->_ps, operand2));
 }
 
-DotNetCondition ^DotNetScalar::operator>(float operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Greater(operand1, operand2->_ps));
+Condition ^Scalar::operator>(float operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::Greater(operand1, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator<(float operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Less(operand1, operand2->_ps));
+Condition ^Scalar::operator<(float operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::Less(operand1, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator>=(float operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::GreaterEqual(operand1, operand2->_ps));
+Condition ^Scalar::operator>=(float operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::GreaterEqual(operand1, operand2->_ps));
 }
-DotNetCondition ^DotNetScalar::operator<=(float operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::LessEqual(operand1, operand2->_ps));	
+Condition ^Scalar::operator<=(float operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::LessEqual(operand1, operand2->_ps));	
 }
-DotNetCondition ^DotNetScalar::operator==(float operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Equal(operand1, operand2->_ps));	
+Condition ^Scalar::operator==(float operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::Equal(operand1, operand2->_ps));	
 }
-//DotNetCondition ^DotNetVector::operator==(float operand1, DotNetVector ^operand2)  {
-	//return DotNetCondition::Create(NuiLibSafe::Equal(operand1, operand2->_ps) ){
+//Condition ^Vector::operator==(float operand1, Vector ^operand2)  {
+	//return Condition::Create(NuiLibSafe::Equal(operand1, operand2->_ps) ){
 //}
-//DotNetCondition ^DotNetVector::operator==(cv::Point3f operand1, DotNetVector ^operand2) {
-	//return DotNetCondition::Create(NuiLibSafe::Equal(cv::Point3f operand1, DotNetVector ^operand2));
+//Condition ^Vector::operator==(cv::Point3f operand1, Vector ^operand2) {
+	//return Condition::Create(NuiLibSafe::Equal(cv::Point3f operand1, Vector ^operand2));
 //}
-DotNetCondition ^DotNetScalar::operator!=(float operand1, DotNetScalar ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::NotEqual(operand1, operand2->_ps));	
+Condition ^Scalar::operator!=(float operand1, Scalar ^operand2) {
+	return Condition::Create(NuiLibSafe::NotEqual(operand1, operand2->_ps));	
 }
-DotNetCondition ^DotNetVector::operator!=(float operand1, DotNetVector ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::NotEqual(operand1, operand2->_ps));	
+Condition ^Vector::operator!=(float operand1, Vector ^operand2) {
+	return Condition::Create(NuiLibSafe::NotEqual(operand1, operand2->_ps));	
 }
-DotNetCondition ^DotNetCondition::operator&&(bool operand1, DotNetCondition ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::And(operand1, operand2->_ps));	
+Condition ^Condition::operator&&(bool operand1, Condition ^operand2) {
+	return Condition::Create(NuiLibSafe::And(operand1, operand2->_ps));	
 }
-DotNetCondition ^DotNetCondition::operator||(bool operand1, DotNetCondition ^operand2) {
-	return DotNetCondition::Create(NuiLibSafe::Or(operand1, operand2->_ps));	
+Condition ^Condition::operator||(bool operand1, Condition ^operand2) {
+	return Condition::Create(NuiLibSafe::Or(operand1, operand2->_ps));	
+}
+Condition ^Condition::And(bool operand1, Condition ^operand2) {
+	return Condition::Create(NuiLibSafe::And(operand1, operand2->_ps));	
+}
+Condition ^Condition::Or(bool operand1, Condition ^operand2) {
+	return Condition::Create(NuiLibSafe::Or(operand1, operand2->_ps));	
 }

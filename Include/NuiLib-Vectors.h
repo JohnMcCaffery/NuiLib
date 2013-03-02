@@ -316,6 +316,9 @@ namespace NuiLib {
 		IScalar *_numerator;
 		IScalar *_denominator;
 		IVector *_output;
+		IVector *_pointDiff;
+		IScalar *_dirQuotient;
+		IVector *_lineScaled;
 
 	public:
 		PlaneIntersectionVector();
@@ -325,7 +328,7 @@ namespace NuiLib {
 		void Setup();
 
 		inline static string GetName() { return "PlaneIntersectionVector"; }
-		static bool FactoryUpdated() { return true; }
+		static bool FactoryUpdated() { return false; }
 	};
 
 	class DLL MagnitudeScaledVector : public VectorWrappingVector {

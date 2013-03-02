@@ -52,8 +52,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Bin\x86\vc10\Microsoft.Kinect.dll</HintPath>
     </Reference>
+    <Reference Include="OpenMetaverseTypes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Chimera\Lib\OpenMetaverseTypes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -67,6 +73,22 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Chimera\Src\ChimeraGUILib\ChimeraGUILib.csproj">
+      <Project>{E30ACDAE-ACED-4D3A-BFA8-625F4C119E5F}</Project>
+      <Name>ChimeraGUILib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Chimera\Src\ChimeraLib\ChimeraLib.csproj">
+      <Project>{58E39BFE-20D5-4C8D-BCFC-6B5E641C2DFF}</Project>
+      <Name>ChimeraLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Chimera\Src\FlythroughLib\FlythroughLib.csproj">
+      <Project>{D0708045-6CCA-4764-B438-A2D6E8635978}</Project>
+      <Name>FlythroughLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Chimera\Src\KinectLib\KinectLib.csproj">
+      <Project>{D9D475BF-C0EE-4DF6-89A3-55199BB32ABE}</Project>
+      <Name>KinectLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NuiLib-DotNet\NuiLib-DotNet.vcxproj">
       <Project>{BA73FEEB-E175-4F32-A7B6-D80330C92B00}</Project>
       <Name>NuiLib-DotNet</Name>

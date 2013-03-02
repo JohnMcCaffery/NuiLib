@@ -27,11 +27,39 @@ int main (int argc, char **args) {
 	NuiLib::NuiFactory()->Init();
 
 	//Create the arm vector as the difference between the shoulder and the hand.
-	NuiLib::Vector arm = NuiLib::joint(NuiLib::HAND_RIGHT) - NuiLib::joint(NuiLib::SHOULDER_RIGHT);
+	//NuiLib::Vector arm = NuiLib::joint(NuiLib::HAND_RIGHT) - NuiLib::joint(NuiLib::SHOULDER_RIGHT);
 	//Add a listener so whenever the arm vector changes its new values are output.
-	arm.AddListener([&arm](NuiLib::IObservable *s) { cout << "Right Arm: " << arm.X() << ',' << arm.Y() << ',' << arm.Z() << '\n'; });
+	//arm.AddListener([&arm](NuiLib::IObservable *s) { cout << "Right Arm: " << arm.X() << ',' << arm.Y() << ',' << arm.Z() << '\n'; });
 	//Start the factory polling.
 	NuiLib::NuiFactory()->SetAutoPoll(true);
+
+
+	NuiLib::Vector planePoint = NuiLib::Vector("PlanePoint", 1.f, 1.f, 0.f);
+	NuiLib::Vector planeNormal = NuiLib::Vector("PlaneNormal", 0.f, 0.f, -1.f);
+	NuiLib::Vector linePoint = NuiLib::joint(NuiLib::SHOULDER_RIGHT);
+	NuiLib::Vector lineDir = NuiLib::joint(NuiLib::HAND_RIGHT);
+	NuiLib::Scalar mW = NuiLib::Scalar(20.f);
+	NuiLib::Scalar mH = NuiLib::Scalar(20.f);
+
+	NuiLib::Vector intersect = NuiLib::intersect(planePoint, planeNormal, linePoint, lineDir);
+
+	NuiLib::Vector vertical = NuiLib::Vector(0.f, 1.f, 0.f); // Vertical
+	//Calculate the intersection of the plane defined by the point mPlaneTopLeft and the normal mPlaneNormal and the line defined by the point mPointStart and the direction mPointDir.
+	NuiLib::Vector intersection = NuiLib::intersect(planePoint, planeNormal, linePoint, lineDir); 
+	//Calculate a vector that represents the orientation of the top of the window.
+	NuiLib::Vector top = NuiLib::scale(NuiLib::cross(vertical, planeNormal), mW);
+	//Calculate a vector that represents the orientation of the side of the window.
+	NuiLib::Vector side = NuiLib::scale(NuiLib::cross(planeNormal, top), mH);
+
+	//Calculate the vector (running along the plane) between the top left corner and the point of intersection.
+	NuiLib::Vector diff = intersection - planePoint;
+
+	//Project the diff line onto the top and side vectors to get x and y values.
+	NuiLib::Scalar mX = NuiLib::project(diff, top) / mW;
+	NuiLib::Scalar mY = NuiLib::project(diff, side) / mH;
+
+	NuiLib::NuiFactory()->AddListener([&mX, &mY] (NuiLib::IObservable *source) { cout << "X: " << (*mX) << ", Y: " << (*mY) << "\n"; });
+
 
 	//Wait for user input to stop the program.
 #ifdef VISUAL

@@ -696,8 +696,10 @@ DotScalar::DotScalar() :
 float DotScalar::CalculateValue() {
 	if (_vector1 == NULL || _vector2 == NULL)
 		return _value;
-	else 
+	else {
+		float dot = (**_vector1).dot(**_vector2);
 		return (**_vector1).dot(**_vector2);
+	}
 }
 
 //------------------------ Value Normalized Scalar -------------------------

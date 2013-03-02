@@ -1,3 +1,5 @@
+#include <NuiLib-API-Safe.h>
+
 #ifndef CLRSAFE_H
 #define CLRSAFE_H
 
@@ -9,8 +11,10 @@
 
 namespace NuiLibSafe {
 typedef DLL void (* CallbackFunction)();
+DLL void RegisterCallback(CallbackFunction callback);
 DLL bool Init();
 DLL void SetAutoPoll(bool val);
+DLL void Poll();
 DLL void Pause();
 
 	///
@@ -27,40 +31,43 @@ DLL void Pause();
 	/// They will be de-allocated by the factory.
 	/// 
 	class DLL SafeScalar {
-		public: 
-			void *_p;
+	private:
+		void *_listener;
 
-			///
-			/// Value = value
-			///
-			SafeScalar(float value);
-			///
-			/// Value = value
-			///
-			SafeScalar(const char *name, float value);
-			///
-			/// Value = value
-			///
-			SafeScalar(void *scalar);
+	public: 
+		void *_p;
 
-			///
-			/// Destructor
-			///
-			~SafeScalar();
+		///
+		/// Value = value
+		///
+		SafeScalar(float value);
+		///
+		/// Value = value
+		///
+		SafeScalar(const char *name, float value);
+		///
+		/// Value = value
+		///
+		SafeScalar(void *scalar);
 
-			void SetCallback(CallbackFunction callback);
+		///
+		/// Destructor
+		///
+		~SafeScalar();
 
-			///
-			/// Get the value of the scalar. 
-			/// The * operator calls this method.
-			/// This method can be overrided if necessary to provide extra behaviour.
-			///
-			float Get();
-			/// Set the value of this SafeScalar.
-			///
-			void Set(float);
+		void SetCallback(CallbackFunction callback);
 
-			const char *GetName();
+		///
+		/// Get the value of the scalar. 
+		/// The * operator calls this method.
+		/// This method can be overrided if necessary to provide extra behaviour.
+		///
+		float Get();
+		/// Set the value of this SafeScalar.
+		///
+		void Set(float);
+
+		const char *GetName();
 	};	
 
 
@@ -69,46 +76,49 @@ DLL void Pause();
 
 
 	class DLL SafeVector {
-		public: 
-			void *_p;
+	private:
+		void * _listener;
 
-			///
-			/// Value = value
-			///
-			SafeVector(float value);
-			///
-			/// Value = value
-			///
-			SafeVector(const char *name, float value);
-			///
-			/// Value = value
-			///
-			SafeVector(float x, float y, float z);
-			///
-			/// Value = value
-			///
-			SafeVector(const char *name, float x, float y, float z);
-			///
-			/// Value = value
-			///
-			SafeVector(void *scalar);
+	public: 
+		void *_p;
 
-			///
-			/// Destructor
-			///
-			~SafeVector();
+		///
+		/// Value = value
+		///
+		SafeVector(float value);
+		///
+		/// Value = value
+		///
+		SafeVector(const char *name, float value);
+		///
+		/// Value = value
+		///
+		SafeVector(float x, float y, float z);
+		///
+		/// Value = value
+		///
+		SafeVector(const char *name, float x, float y, float z);
+		///
+		/// Value = value
+		///
+		SafeVector(void *scalar);
 
-			void SetCallback(CallbackFunction callback);
+		///
+		/// Destructor
+		///
+		~SafeVector();
 
-			float X();
-			float Y();
-			float Z();
-			void SetX(float);
-			void SetY(float);
-			void SetZ(float);
-			void Set(float, float, float);
+		void SetCallback(CallbackFunction callback);
 
-			const char *GetName();
+		float X();
+		float Y();
+		float Z();
+		void SetX(float);
+		void SetY(float);
+		void SetZ(float);
+		void Set(float, float, float);
+
+		const char *GetName();
 	};
 
 
@@ -129,40 +139,43 @@ DLL void Pause();
 	/// They will be de-allocated by the factory.
 	/// 
 	class DLL SafeCondition {
-		public: 
-			void *_p;
+	private:
+		void * _listener;
 
-			///
-			/// Value = value
-			///
-			SafeCondition(bool value);
-			///
-			/// Value = value
-			///
-			SafeCondition(const char *name, bool value);
-			///
-			/// Value = value
-			///
-			SafeCondition(void *condition);
+	public: 
+		void *_p;
 
-			///
-			/// Destructor
-			///
-			~SafeCondition();
+		///
+		/// Value = value
+		///
+		SafeCondition(bool value);
+		///
+		/// Value = value
+		///
+		SafeCondition(const char *name, bool value);
+		///
+		/// Value = value
+		///
+		SafeCondition(void *condition);
 
-			void SetCallback(CallbackFunction callback);
+		///
+		/// Destructor
+		///
+		~SafeCondition();
 
-			///
-			/// Get the value of the scalar. 
-			/// The * operator calls this method.
-			/// This method can be overrided if necessary to provide extra behaviour.
-			///
-			bool Get();
-			/// Set the value of this SafeCondition.
-			///
-			void Set(bool);
+		void SetCallback(CallbackFunction callback);
 
-			const char *GetName();
+		///
+		/// Get the value of the scalar. 
+		/// The * operator calls this method.
+		/// This method can be overrided if necessary to provide extra behaviour.
+		///
+		bool Get();
+		/// Set the value of this SafeCondition.
+		///
+		void Set(bool);
+
+		const char *GetName();
 	};	
 
 

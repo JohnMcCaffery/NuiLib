@@ -25,6 +25,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 #include <map>
 #include <list>
 #include <set>
+#include <NuiLib-API-Safe.h>
 
 using namespace std;
 
@@ -459,6 +460,20 @@ namespace NuiLib {
 		/// @return The z value of the vector.
 		///
 		float Z();
+
+		///
+		/// Manually set the values of the vector.
+		/// @param x The x value to set
+		/// @param y The y value to set
+		/// @param z The z value to set
+		///
+		void Set(float x, float y, float z);
+
+		///
+		/// Manually set the values of the vector.
+		/// @param value The value to set, supplied as an OpenCV point.
+		///
+		void Set(cv::Point3f value);
 		
 		///
 		/// Add a listener that will called whenever the Vector updates.

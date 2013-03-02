@@ -70,7 +70,13 @@ void Condition::OnFalse(function<void(IObservable*)> listener) {
 bool Condition::operator*() { return Get(); }
 bool Condition::Get() { return _p ? **_p : false; }
 
-Vector::Vector() : _p(NULL) {}
+Vector::Vector() : _p(NULL) {
+	char name[50];
+	SPRINTF(name, 50, "0,0,0");
+	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
+	vector->Set(0.f, 0.f, 0.f);
+	_p = vector;
+}
 Vector::Vector(IVector *p) : _p(p) {}
 Vector::Vector(float value)  {
 	char name[50];
@@ -105,6 +111,9 @@ const float Vector::operator[](AXIS axis) { return _p ? (*_p)[axis] : 0.f; }
 void Vector::AddListener(function<void(IObservable*)> listener) {
 	_p->AddListener(listener);
 }
+
+void Vector::Set(cv::Point3f value) { _p->Set(value.x, value.y, value.z); }
+void Vector::Set(float x, float y, float z) { _p->Set(x, y, z); }
 
 //-------------------------------------------- IObserver ----------------------------
 
