@@ -49,21 +49,18 @@ namespace NuiLibDotNet {
 		SafeScalar *_ps;
 		OnChangeEvt^ _managedCallback;
 
-		~Scalar() { 
-			Console::WriteLine("Scalar destroyed: " + Name);
+		!Scalar() { 
 			delete _ps;
 		}
 
 		static Scalar ^Create(SafeScalar *safe) {
 			Scalar^ scalar = gcnew Scalar(safe);
 
-			/*
 			scalar->_managedCallback = gcnew OnChangeEvt(scalar, &ChangeListener);
 			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(scalar->_managedCallback);
 			GC::KeepAlive(scalar->_managedCallback);
 
 			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
-			*/
 
 			return scalar;
 		}
@@ -267,21 +264,18 @@ namespace NuiLibDotNet {
 		OnChangeEvt^ _managedCallback;
 		SafeVector *_ps;
 
-		~Vector() { 
-			Console::WriteLine("Vector destroyed: " + Name);
+		!Vector() { 
 			delete _ps;
 		}
 
 		static Vector ^Create(SafeVector *safe) {
 			Vector^ vector = gcnew Vector(safe);
 
-			/*
 			vector->_managedCallback = gcnew OnChangeEvt(vector, &ChangeListener);
 			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(vector->_managedCallback);
 			GC::KeepAlive(vector->_managedCallback);
 
 			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
-			*/
 
 			return vector;
 		}
@@ -447,21 +441,18 @@ namespace NuiLibDotNet {
 		SafeCondition *_ps;
 		OnChangeEvt^ _managedCallback;
 
-		~Condition() { 
-			Console::WriteLine("Condition destroyed: " + Name);
+		!Condition() { 
 			delete _ps;
 		}
 
 		static Condition ^Create(SafeCondition *safe) {
 			Condition^ condition = gcnew Condition(safe);
 
-			/*
 			condition->_managedCallback = gcnew OnChangeEvt(condition, &ChangeListener);
 			IntPtr unmanagedCallback = Marshal::GetFunctionPointerForDelegate(condition->_managedCallback);
 			GC::KeepAlive(condition->_managedCallback);
 
 			safe->SetCallback((CallbackFunction) (void*) unmanagedCallback);
-			*/
 
 			return condition;
 		}

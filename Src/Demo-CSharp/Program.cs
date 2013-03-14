@@ -66,6 +66,7 @@ namespace Demo_CSharp {
             Nui.Pause();
             //Console.ReadLine();
             */
+            /*
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -93,6 +94,20 @@ namespace Demo_CSharp {
             window.ScreenPosition = Vector3.Zero;
             window.RotationOffset.Yaw = 0f;
             kinectManager.AddWindow(window);
+             * */
+
+            Vector vector = Vector.Create(1f, 2f, 3f);
+            vector.OnChange += () => Console.WriteLine("Original vector changed.");
+            Scalar o = make(vector);
+            o.OnChange += () => Console.WriteLine("Output scalar changed.");
+            GC.Collect();
+            vector.Set(4f, 5f, 6f);
+            Nui.Poll();
+            Console.WriteLine("Completed.");
+        }
+
+        static Scalar make(Vector start) {
+            return Nui.x(Nui.normalize(start));
         }
 
         private static Vector make() {
