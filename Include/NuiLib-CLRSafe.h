@@ -42,6 +42,7 @@ DLL bool HasSkeleton();
 	class DLL SafeScalar {
 	private:
 		void *_listener;
+		static int _count;
 
 	public: 
 		void *_p;
@@ -87,6 +88,7 @@ DLL bool HasSkeleton();
 	class DLL SafeVector {
 	private:
 		void * _listener;
+		static int _count;
 
 	public: 
 		void *_p;
@@ -150,6 +152,7 @@ DLL bool HasSkeleton();
 	class DLL SafeCondition {
 	private:
 		void * _listener;
+		static int _count;
 
 	public: 
 		void *_p;

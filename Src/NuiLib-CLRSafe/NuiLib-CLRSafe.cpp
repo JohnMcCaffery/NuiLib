@@ -52,6 +52,9 @@ bool NuiLibSafe::HasSkeleton() {
 	return NuiLib::NuiFactory()->HasSkeleton();
 }
 
+
+int SafeScalar::_count = 1;
+
 ///
 /// Value = 0
 ///
@@ -62,7 +65,7 @@ SafeScalar::SafeScalar(void *p) : _listener(NULL), _p(p) { }
 ///
 SafeScalar::SafeScalar(float value) : _listener(NULL) {
 	char name[50];
-	SPRINTF(name, 50, "%.3f", value);
+	SPRINTF(name, 50, "Scalar%i", _count++);
 	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
 	scalar->Set(value);
 	_p = scalar;
@@ -109,9 +112,11 @@ void SafeScalar::Set(float value) {
 
 const char *SafeScalar::GetName() {
 	IScalar *p = (IScalar*) _p;
-	return p->GetName().c_str();
+	return p->GetCName();
 }
 
+
+int SafeCondition::_count = 1;
 
 ///
 /// Value = 0
@@ -122,7 +127,8 @@ SafeCondition::SafeCondition(void *p) : _listener(NULL), _p(p) { }
 /// Value = value
 ///
 SafeCondition::SafeCondition(bool value)  : _listener(NULL) {
-	char *name = value ? "True": "False";
+	char *name = new char[50];
+	SPRINTF(name, 50, "Condition%i", _count++);
 	ICondition * condition = ExtensionFactory()->Make<ICondition>(string(name));
 	condition->Set(value);
 	_p = condition;
@@ -166,22 +172,23 @@ void SafeCondition::Set(bool value) {
 }
 
 const char *SafeCondition::GetName() {
-	IScalar *p = (IScalar*) _p;
-	return p->GetName().c_str();
+	ICondition *p = (ICondition*) _p;
+	return p->GetCName();
 }
 
 
 
 
 //-------------------------------------------------------------------------
+int SafeVector::_count = 1;
 ///
 /// Value = 0
 ///
 SafeVector::SafeVector(void *p) : _listener(NULL), _p(p)  { }
 
 SafeVector::SafeVector(float value)  : _listener(NULL) {
-	char name[150];
-	SPRINTF(name, 150, "%.3f,%.3f,%.3f", value, value, value);
+	char name[50];
+	SPRINTF(name, 50, "Vector%i", _count++);
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(value, value, value);
 	_p = vector;
@@ -192,8 +199,8 @@ SafeVector::SafeVector(const char *name, float value)  : _listener(NULL) {
 	_p = vector;
 }
 SafeVector::SafeVector(float x, float y, float z)  : _listener(NULL) {
-	char name[150];
-	SPRINTF(name, 150, "%.3f,%.3f,%.3f", x, y, z);
+	char name[50];
+	SPRINTF(name, 50, "Vector%i", _count++);
 	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
 	vector->Set(x, y, z);
 	_p = vector;
@@ -251,8 +258,8 @@ void SafeVector::SetZ(float value) {
 }
 
 const const char *SafeVector::GetName() {
-	IScalar *p = (IScalar*) _p;
-	return p->GetName().c_str();
+	IVector *p = (IVector*) _p;
+	return p->GetCName();
 }
 
 //-------------------------------------------------------------------------

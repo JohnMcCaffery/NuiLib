@@ -92,14 +92,14 @@ MomentumVector *NuiLib::momentumP(IVector *wrappedVector, ICondition *condition,
 	return vector;
 }
 MagnitudeScaledVector *NuiLib::scaleP(IVector *wrappedVector, IScalar *scale) {
-	MagnitudeScaledVector *vector = ExtensionFactory()->Make<MagnitudeScaledVector>("scaled(" + wrappedVector->GetName() + ")");
+	MagnitudeScaledVector *vector = ExtensionFactory()->Make<MagnitudeScaledVector>("scaled(" + wrappedVector->GetName() + ", " + scale->GetName() + ")");
 	vector->SetVector(wrappedVector);
 	vector->SetScale(scale);
 	vector->Changed(wrappedVector);
 	return vector;
 }
 MagnitudeScaledVector *NuiLib::scaleP(IVector *wrappedVector, float scale) {
-	MagnitudeScaledVector *vector = ExtensionFactory()->Make<MagnitudeScaledVector>("scaled(" + wrappedVector->GetName() + ")");
+	MagnitudeScaledVector *vector = ExtensionFactory()->Make<MagnitudeScaledVector>("scaled(" + wrappedVector->GetName() + ", " + string("%f", scale) + ")");
 	vector->SetVector(wrappedVector);
 	vector->SetScale(scale);
 	vector->Changed(wrappedVector);
@@ -902,7 +902,10 @@ MagnitudeScaledVector::MagnitudeScaledVector(IVector *vector1, float scale) :
 VectorWrappingVector(GetTypeName(), vector1),
 	_scale(scale) { }
 
-void MagnitudeScaledVector::SetScale(IScalar *scale) { _scale.Set(scale); }
+void MagnitudeScaledVector::SetScale(IScalar *scale) { 
+	_scale.Set(scale);
+	AddAsListener(_scale.Observable(), scale);
+}
 void MagnitudeScaledVector::SetScale(float scale) { _scale.Set(scale); }
 
 cv::Point3f MagnitudeScaledVector::CalculateValue() {

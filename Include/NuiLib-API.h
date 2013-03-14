@@ -197,6 +197,11 @@ namespace NuiLib {
 		/// @return The value of the scalar.
 		///
 		float Get();
+		///
+		/// Set the value of the scalar.
+		/// @return The value of the scalar.
+		///
+		void Set(float value);
 		
 		///
 		/// Add a listener that will called whenever the Scalar updates.

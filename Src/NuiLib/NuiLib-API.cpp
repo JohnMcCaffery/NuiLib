@@ -45,6 +45,10 @@ Scalar::Scalar(string name, float value)  {
 
 float Scalar::operator*() { return Get(); }
 float Scalar::Get() { return _p ? **_p : 0.f; }
+void Scalar::Set(float value) { 
+	if (_p)
+		_p->Set(value);
+}
 
 Condition::Condition() : _p(NULL) {}
 Condition::Condition(ICondition *p) : _p(p) {}
