@@ -474,6 +474,23 @@ namespace NuiLib {
 		/// True if there is a new skelton frame.
 		///
 		virtual bool HasSkeleton() = 0;
+		///
+		/// Clear all resources associated with this factory.
+		///
+		virtual void Dispose() = 0;
+
+		///
+		/// Listener, triggered when the device goes from having no skeletons detected to one.
+		///
+		virtual void AddSkeletonFoundListener(function<void(int)> listener) = 0;
+		///
+		/// Listener, triggered when the device goes from having one or more skeletons detected to not having any.
+		///
+		virtual void AddSkeletonLostListener(function<void(int)> listener) = 0;
+		///
+		/// Listener, triggered when the device switches which skeleton it is tracking.
+		///
+		virtual void AddSkeletonSwitchedListener(function<void(int)> listener) = 0;
 
 		///
 		/// Get a component with a given name.
@@ -519,9 +536,6 @@ namespace NuiLib {
 				((IObserver *)item)->SetFactoryObserver(true);
 		}
 
-
-
-	public:
 		Scalar GetScalar(string name) {
 			return Scalar(Get<IScalar>(name));
 		}

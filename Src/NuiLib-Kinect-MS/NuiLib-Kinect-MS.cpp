@@ -77,6 +77,10 @@ INuiFactoryExtension("KinectFactory", "KinectFactory"),
 	RegisterCreator(JointVector::GetTypeName(), kinectJointCreator);
 }
 
+void KinectFactory::Dispose() {
+	//TODO do something here.
+}
+
 bool KinectFactory::Init() {
 	if (_initialised) {
 		cout << "NuiFactory already initialised. Ignored Init request.\n";
@@ -266,9 +270,19 @@ cv::Mat &KinectFactory::GetDebugFrame() {
 }
 #endif
 
+void KinectFactory::AddSkeletonFoundListener(function<void(int)> listener) {
+	_skeletonFoundListeners.push_back(listener);
+}
+void KinectFactory::AddSkeletonLostListener(function<void(int)> listener) {
+	_skeletonLostListeners.push_back(listener);
+}
+void KinectFactory::AddSkeletonSwitchedListener(function<void(int)> listener) {
+	_skeletonSwitchedListeners.push_back(listener);
+}
+
 bool KinectFactory::HasColour() { return false; }
 bool KinectFactory::HasDepth() { return false; }
-bool KinectFactory::HasSkeleton() { return false; }
+bool KinectFactory::HasSkeleton() { return _currentSkeleton > 0; }
 
 cv::Point KinectFactory::SkeletonToDepth(Vector point) {
 	//TODO - test this! / Error handling
@@ -391,32 +405,52 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 	_pNuiSensor->NuiTransformSmooth(&frame, NULL);
 	int index = -1;
+	//Iterate through every skeleton
 	for (int i = 0; i < NUI_SKELETON_COUNT; i++) {
+		//Check if the current skeleton is tracked
 		if (frame.SkeletonData[i].eTrackingState == NUI_SKELETON_TRACKED) {
+			//If this is the first tracked skeleton record it in index
 			if (index == -1)
 				index =  i;
 			DWORD id = frame.SkeletonData[i].dwTrackingID;
+			//If this skeleton is the currently tracked skeleton update it and return
 			if (id != 0 && id == _currentSkeleton) {
 				ProcessSkeleton(&frame.SkeletonData[i]);
 				return;
 			}
 		}
 	}
+	//If this point is reached either the previously tracked skeleton has been lost
+	//Or there wasn't a previously tracked skeleton
 	if (index != -1) {
-		if (skeletonLost) 
+		//If this point is reached a new skeleton has been found
+		if (skeletonLost) {
+			//If there previously hadn't been a skeleton
 			cout << "Skeleton found.\n";
+			for (auto i = _skeletonFoundListeners.begin(); i != _skeletonFoundListeners.end(); i++)
+				(*i)(index);
+		} else {
+			//If there was a skeleton before but that has been lost
+			cout << "Skeleton switched.\n";
+			for (auto i = _skeletonSwitchedListeners.begin(); i != _skeletonSwitchedListeners.end(); i++)
+				(*i)(index);
+		}
 		skeletonLost = false;
 
 		NUI_SKELETON_DATA *skeleton = &frame.SkeletonData[index];
 		_currentSkeleton = skeleton->dwTrackingID;
 		ProcessSkeleton(skeleton);
-	} else {
-		if (!skeletonLost) 
-			cout << "Skeleton lost.\n";
-		skeletonLost = true;
-
-		_currentSkeleton = 0;
+	} else if(!skeletonLost) {
+		//No skeleton was found and there had previously been a skeleton
+		cout << "Skeleton lost.\n";
+		for (auto i = _skeletonLostListeners.begin(); i != _skeletonLostListeners.end(); i++)
+			(*i)(index);
 		ProcessLostSkeleton();
+		skeletonLost = true;
+		_currentSkeleton = 0;
+	} else {
+		//No skeleton found, justl like the previous frame
+		//Do nothing
 	}
 }
 

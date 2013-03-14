@@ -11,11 +11,20 @@
 
 namespace NuiLibSafe {
 typedef DLL void (* CallbackFunction)();
-DLL void RegisterCallback(CallbackFunction callback);
+typedef DLL void (* SkeletonCallbackFunction)(int);
+
+DLL void RegisterCallbacks(
+	CallbackFunction tickCallback,
+	SkeletonCallbackFunction foundCallback,
+	SkeletonCallbackFunction lostCallback,
+	SkeletonCallbackFunction switchedCallback);
+
 DLL bool Init();
 DLL void SetAutoPoll(bool val);
 DLL void Poll();
 DLL void Pause();
+DLL void Close();
+DLL bool HasSkeleton();
 
 	///
 	/// Wrapper around a scalar value.

@@ -1362,6 +1362,10 @@ namespace NuiLib {
 		/// Initialise the factory. Any logic to do with starting up the factory should go here.
 		///
 		virtual bool Init() = 0;
+		///
+		/// Clear all resources associated with this factory.
+		///
+		virtual void Dispose() = 0;
 
 		///
 		/// Set whether the factory auto polls.
@@ -1450,6 +1454,32 @@ namespace NuiLib {
 		/// Depending on which factory implementation is linked the actual devices returned will be different.
 		///
 		virtual void **GetNuiDevices() = 0;
+
+		///
+		/// Listener, triggered when the device goes from having no skeletons detected to one.
+		///
+		virtual void AddSkeletonFoundListener(function<void(int)> listener) = 0;
+		///
+		/// Listener, triggered when the device goes from having one or more skeletons detected to not having any.
+		///
+		virtual void AddSkeletonLostListener(function<void(int)> listener) = 0;
+		///
+		/// Listener, triggered when the device switches which skeleton it is tracking.
+		///
+		virtual void AddSkeletonSwitchedListener(function<void(int)> listener) = 0;
+
+		///
+		/// True if there is a new colour frame.
+		///
+		virtual bool HasDepth() = 0;
+		///
+		/// True if there is a new colour frame.
+		///
+		virtual bool HasColour() = 0;
+		///
+		/// True if there is a new skelton frame.
+		///
+		virtual bool HasSkeleton() = 0;
 	};
 
 	///
