@@ -22,8 +22,16 @@ public:
 	}
 };
 
-void NuiLibSafe::RegisterCallback(CallbackFunction callback) {
-	NuiLib::NuiFactory()->AddListener([callback] (IObservable* src) { callback(); });
+void NuiLibSafe::RegisterCallbacks(
+		CallbackFunction tickCallback,
+		SkeletonCallbackFunction foundCallback,
+		SkeletonCallbackFunction lostCallback,
+		SkeletonCallbackFunction switchedCallback) {
+
+	NuiLib::NuiFactory()->AddListener([tickCallback] (IObservable* src) { tickCallback(); });
+	NuiLib::NuiFactory()->AddSkeletonFoundListener([foundCallback] (int id) { foundCallback(id); });
+	NuiLib::NuiFactory()->AddSkeletonLostListener([lostCallback] (int id) { lostCallback(id); });
+	NuiLib::NuiFactory()->AddSkeletonSwitchedListener([switchedCallback] (int id) { switchedCallback(id); });
 }
 bool NuiLibSafe::Init() {
 	return NuiLib::NuiFactory()->Init();
@@ -34,9 +42,14 @@ void NuiLibSafe::SetAutoPoll(bool value) {
 void NuiLibSafe::Poll() {
 	NuiLib::NuiFactory()->Poll();
 }
-
 void NuiLibSafe::Pause() {
 	cv::waitKey();
+}
+void NuiLibSafe::Close() {
+	NuiLib::NuiFactory()->Dispose();
+}
+bool NuiLibSafe::HasSkeleton() {
+	return NuiLib::NuiFactory()->HasSkeleton();
 }
 
 ///

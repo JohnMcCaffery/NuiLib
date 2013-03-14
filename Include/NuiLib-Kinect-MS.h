@@ -121,6 +121,10 @@ namespace NuiLib {
 			list<IListener<NUI_IMAGE_FRAME>*> _colourListeners;
 			list<IListener<NUI_IMAGE_FRAME>*> _depthListeners;
 
+			list<function<void(int)>> _skeletonFoundListeners;
+			list<function<void(int)>> _skeletonLostListeners;
+			list<function<void(int)>> _skeletonSwitchedListeners;
+
 			INuiSensor* _pNuiSensor;
 			HANDLE _pDepthStreamHandle;
 			HANDLE _pColourStreamHandle;
@@ -162,6 +166,23 @@ namespace NuiLib {
 			void AddColourListener(IListener<NUI_IMAGE_FRAME> *);
 			void AddDepthListener(IListener<NUI_IMAGE_FRAME> *);
 
+			///
+			/// Listener, triggered when the device goes from having no skeletons detected to one.
+			///
+			void AddSkeletonFoundListener(function<void(int)> listener);
+			///
+			/// Listener, triggered when the device goes from having one or more skeletons detected to not having any.
+			///
+			void AddSkeletonLostListener(function<void(int)> listener);
+			///
+			/// Listener, triggered when the device switches which skeleton it is tracking.
+			///
+			void AddSkeletonSwitchedListener(function<void(int)> listener);
+			///
+			/// Returns true if there is currently a skeleton being tracked. False otherwise.
+			///
+			bool TrackingSkeleton();
+
 			static DWORD WINAPI Nui_ProcessThread (LPVOID p);
 			DWORD WINAPI Nui_ProcessThread();
 
@@ -177,6 +198,8 @@ namespace NuiLib {
 			bool HasColour();
 			bool HasDepth();
 			bool HasSkeleton();
+
+			void Dispose();
 
 			cv::Point SkeletonToDepth(Vector point);
 			cv::Point SkeletonToColour(Vector point);

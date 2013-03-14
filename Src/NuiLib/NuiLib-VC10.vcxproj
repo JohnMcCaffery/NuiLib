@@ -124,7 +124,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
-    <IncludePath>C:\Users\Iain\Documents\John\opencv\build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
+    <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(SolutionDir)Lib\x86\vc10\;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
