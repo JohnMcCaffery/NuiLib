@@ -19,29 +19,33 @@ Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e0
 	hash=None, flags=None
 Assembly Microsoft.VisualC, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
 	hash=None, flags=None
-Class NuiLibDotNet.NuiFactory: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
-    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-Class NuiLibDotNet.OnChangeEvt: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+Class NuiLibDotNet.ChangeDelegate: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
   :System.MulticastDelegate
     Void .ctor(System.Object, IntPtr): PrivateScope, Public, SpecialName, RTSpecialName
   Methods:
     Invoke(): PrivateScope, Public, Final, Virtual, VtableLayoutMask
     BeginInvoke(AsyncCallback, Object): PrivateScope, Public, Final, Virtual, VtableLayoutMask
     EndInvoke(IAsyncResult): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+Class NuiLibDotNet.SkeletonTrackDelegate: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, SpecialName, RTSpecialName
+  Methods:
+    Invoke(Int32): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    BeginInvoke(Int32, AsyncCallback, Object): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Final, Virtual, VtableLayoutMask
 Class NuiLibDotNet.Observable: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Events:
-    NuiLibDotNet.OnChangeEvt OnChange: SpecialName
+    NuiLibDotNet.ChangeDelegate OnChange: SpecialName
   Methods:
-    add_OnChange(OnChangeEvt): PrivateScope, Public, HideBySig, SpecialName
-    remove_OnChange(OnChangeEvt): PrivateScope, Public, HideBySig, SpecialName
+    add_OnChange(ChangeDelegate): PrivateScope, Public, HideBySig, SpecialName
+    remove_OnChange(ChangeDelegate): PrivateScope, Public, HideBySig, SpecialName
     raise_OnChange(): PrivateScope, Public, HideBySig, SpecialName
-Class NuiLibDotNet.DotNetScalar: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+Class NuiLibDotNet.Scalar: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :NuiLibDotNet.Observable
-  Interfaces:
-    System.IDisposable
   Fields:
     NuiLibSafe.SafeScalar* _ps : Public
+    NuiLibDotNet.ChangeDelegate _managedCallback : Public
   Properties:
     Single Value 'get set' : 
     System.String Name 'get ' : 
@@ -52,50 +56,48 @@ Class NuiLibDotNet.DotNetScalar: AutoLayout, AnsiClass, Class, Public, BeforeFie
     get_Name(): PrivateScope, Public, HideBySig, SpecialName
     get_Value(): PrivateScope, Public, HideBySig, SpecialName
     set_Value(Single): PrivateScope, Public, HideBySig, SpecialName
-    op_Addition(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Addition(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Addition(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Subtraction(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Subtraction(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Subtraction(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Multiply(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Multiply(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Multiply(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Division(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Division(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Division(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_AdditionAssignment(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_AdditionAssignment(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_SubtractionAssignment(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_SubtractionAssignment(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_MultiplicationAssignment(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_MultiplicationAssignment(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_DivisionAssignment(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_DivisionAssignment(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Inequality(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Inequality(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Inequality(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Equality(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Equality(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Equality(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LessThanOrEqual(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LessThanOrEqual(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LessThanOrEqual(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_GreaterThan(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_GreaterThan(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_GreaterThan(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LessThan(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LessThan(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LessThan(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_GreaterThanOrEqual(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_GreaterThanOrEqual(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_GreaterThanOrEqual(Single, DotNetScalar): PrivateScope, Public, Static, HideBySig, SpecialName
-    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
-Class NuiLibDotNet.DotNetVector: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    op_Addition(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Addition(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Addition(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Subtraction(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Subtraction(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Subtraction(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Multiply(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Multiply(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Multiply(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Division(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Division(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Division(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_AdditionAssignment(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_AdditionAssignment(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_SubtractionAssignment(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_SubtractionAssignment(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_MultiplicationAssignment(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_MultiplicationAssignment(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_DivisionAssignment(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_DivisionAssignment(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Equality(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Equality(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Equality(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LessThanOrEqual(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LessThanOrEqual(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LessThanOrEqual(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_GreaterThan(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_GreaterThan(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_GreaterThan(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LessThan(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LessThan(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LessThan(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_GreaterThanOrEqual(Scalar, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_GreaterThanOrEqual(Scalar, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_GreaterThanOrEqual(Single, Scalar): PrivateScope, Public, Static, HideBySig, SpecialName
+Class NuiLibDotNet.Vector: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :NuiLibDotNet.Observable
-  Interfaces:
-    System.IDisposable
   Fields:
+    NuiLibDotNet.ChangeDelegate _managedCallback : Public
     NuiLibSafe.SafeVector* _ps : Public
   Properties:
     Single Z   'get set' : 
@@ -116,54 +118,57 @@ Class NuiLibDotNet.DotNetVector: AutoLayout, AnsiClass, Class, Public, BeforeFie
     get_Z(): PrivateScope, Public, HideBySig, SpecialName
     set_Z(Single): PrivateScope, Public, HideBySig, SpecialName
     Set(Single, Single, Single): PrivateScope, Public, HideBySig
-    op_Addition(Single, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Addition(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Addition(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Subtraction(Single, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Subtraction(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Subtraction(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Multiply(Single, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Multiply(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Multiply(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Division(Single, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Division(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Division(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_AdditionAssignment(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_AdditionAssignment(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_SubtractionAssignment(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_SubtractionAssignment(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_MultiplicationAssignment(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_MultiplicationAssignment(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_DivisionAssignment(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_DivisionAssignment(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Inequality(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Inequality(DotNetVector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_Inequality(Single, DotNetVector): PrivateScope, Public, Static, HideBySig, SpecialName
-    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
-Class NuiLibDotNet.DotNetCondition: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    op_Addition(Single, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Addition(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Addition(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Subtraction(Single, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Subtraction(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Subtraction(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Multiply(Single, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Multiply(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Multiply(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Division(Single, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Division(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Division(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_AdditionAssignment(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_AdditionAssignment(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_SubtractionAssignment(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_SubtractionAssignment(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_MultiplicationAssignment(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_MultiplicationAssignment(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_DivisionAssignment(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_DivisionAssignment(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(Vector, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(Vector, Single): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_Inequality(Single, Vector): PrivateScope, Public, Static, HideBySig, SpecialName
+Class NuiLibDotNet.Condition: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :NuiLibDotNet.Observable
-  Interfaces:
-    System.IDisposable
   Fields:
     NuiLibSafe.SafeCondition* _ps : Public
+    NuiLibDotNet.ChangeDelegate _managedCallback : Public
   Properties:
     Boolean Value 'get set' : 
-    System.String Condition 'get ' : 
+    System.String Name 'get ' : 
   Methods:
     Create(String, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
     Create(Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
     Create(SafeCondition*): PrivateScope, Public, Static, HideBySig
-    get_Condition(): PrivateScope, Public, HideBySig, SpecialName
+    get_Name(): PrivateScope, Public, HideBySig, SpecialName
     get_Value(): PrivateScope, Public, HideBySig, SpecialName
     set_Value(Boolean(HasFieldMarshal)): PrivateScope, Public, HideBySig, SpecialName
-    op_LogicalNot(DotNetCondition): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LogicalAnd(Boolean(HasFieldMarshal), DotNetCondition): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LogicalAnd(DotNetCondition, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LogicalAnd(DotNetCondition, DotNetCondition): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LogicalOr(Boolean(HasFieldMarshal), DotNetCondition): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LogicalOr(DotNetCondition, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig, SpecialName
-    op_LogicalOr(DotNetCondition, DotNetCondition): PrivateScope, Public, Static, HideBySig, SpecialName
-    Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
+    op_LogicalNot(Condition): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LogicalAnd(Boolean(HasFieldMarshal), Condition): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LogicalAnd(Condition, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LogicalAnd(Condition, Condition): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LogicalOr(Boolean(HasFieldMarshal), Condition): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LogicalOr(Condition, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig, SpecialName
+    op_LogicalOr(Condition, Condition): PrivateScope, Public, Static, HideBySig, SpecialName
+    And(Boolean(HasFieldMarshal), Condition): PrivateScope, Public, Static, HideBySig
+    And(Condition, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    And(Condition, Condition): PrivateScope, Public, Static, HideBySig
+    Or(Boolean(HasFieldMarshal), Condition): PrivateScope, Public, Static, HideBySig
+    Or(Condition, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    Or(Condition, Condition): PrivateScope, Public, Static, HideBySig
 Class NuiLibDotNet.Nui: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
@@ -187,44 +192,66 @@ Class NuiLibDotNet.Nui: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Int32 Knee_Right : Public, Static
     Int32 Ankle_Right : Public, Static
     Int32 Foot_Right : Public, Static
+  Properties:
+    Boolean HasSkeleton 'get ' : 
+  Events:
+    NuiLibDotNet.SkeletonTrackDelegate SkeletonSwitched: SpecialName
+    NuiLibDotNet.SkeletonTrackDelegate SkeletonLost: SpecialName
+    NuiLibDotNet.SkeletonTrackDelegate SkeletonFound: SpecialName
+    NuiLibDotNet.ChangeDelegate Tick: SpecialName
   Methods:
+    add_Tick(ChangeDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    remove_Tick(ChangeDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    raise_Tick(): PrivateScope, Public, Static, HideBySig, SpecialName
+    add_SkeletonFound(SkeletonTrackDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    remove_SkeletonFound(SkeletonTrackDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    raise_SkeletonFound(Int32): PrivateScope, Public, Static, HideBySig, SpecialName
+    add_SkeletonLost(SkeletonTrackDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    remove_SkeletonLost(SkeletonTrackDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    raise_SkeletonLost(Int32): PrivateScope, Public, Static, HideBySig, SpecialName
+    add_SkeletonSwitched(SkeletonTrackDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    remove_SkeletonSwitched(SkeletonTrackDelegate): PrivateScope, Public, Static, HideBySig, SpecialName
+    raise_SkeletonSwitched(Int32): PrivateScope, Public, Static, HideBySig, SpecialName
+    get_HasSkeleton(): PrivateScope, Public, Static, HideBySig, SpecialName
     Init(): PrivateScope, Public, Static, HideBySig
     Pause(): PrivateScope, Public, Static, HideBySig
     SetAutoPoll(Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    x(DotNetVector): PrivateScope, Public, Static, HideBySig
-    y(DotNetVector): PrivateScope, Public, Static, HideBySig
-    z(DotNetVector): PrivateScope, Public, Static, HideBySig
-    magnitude(DotNetVector): PrivateScope, Public, Static, HideBySig
-    dot(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig
-    normalize(DotNetVector): PrivateScope, Public, Static, HideBySig
-    normalize(DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig
-    normalize(DotNetScalar, Single): PrivateScope, Public, Static, HideBySig
-    normalize(DotNetScalar): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, DotNetScalar, DotNetScalar, DotNetScalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, DotNetScalar, DotNetScalar, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, DotNetScalar, Single, DotNetScalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, DotNetScalar, Single, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, Single, DotNetScalar, DotNetScalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, Single, DotNetScalar, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, Single, Single, DotNetScalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    constrain(DotNetScalar, Single, Single, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    abs(DotNetScalar): PrivateScope, Public, Static, HideBySig
-    acos(DotNetScalar): PrivateScope, Public, Static, HideBySig
-    invert(DotNetCondition): PrivateScope, Public, Static, HideBySig
-    delta(DotNetVector): PrivateScope, Public, Static, HideBySig
-    delta(DotNetScalar): PrivateScope, Public, Static, HideBySig
-    project(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig
-    ifScalar(DotNetCondition, DotNetScalar, DotNetScalar): PrivateScope, Public, Static, HideBySig
-    ifScalar(DotNetCondition, DotNetScalar, Single): PrivateScope, Public, Static, HideBySig
-    ifScalar(DotNetCondition, Single, DotNetScalar): PrivateScope, Public, Static, HideBySig
-    ifScalar(DotNetCondition, Single, Single): PrivateScope, Public, Static, HideBySig
+    Poll(): PrivateScope, Public, Static, HideBySig
+    Close(): PrivateScope, Public, Static, HideBySig
+    x(Vector): PrivateScope, Public, Static, HideBySig
+    y(Vector): PrivateScope, Public, Static, HideBySig
+    z(Vector): PrivateScope, Public, Static, HideBySig
+    magnitude(Vector): PrivateScope, Public, Static, HideBySig
+    dot(Vector, Vector): PrivateScope, Public, Static, HideBySig
+    normalize(Vector): PrivateScope, Public, Static, HideBySig
+    normalize(Scalar, Scalar): PrivateScope, Public, Static, HideBySig
+    normalize(Scalar, Single): PrivateScope, Public, Static, HideBySig
+    normalize(Scalar): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Scalar, Scalar, Scalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Scalar, Scalar, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Scalar, Single, Scalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Scalar, Single, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Single, Scalar, Scalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Single, Scalar, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Single, Single, Scalar, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    constrain(Scalar, Single, Single, Single, Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    abs(Scalar): PrivateScope, Public, Static, HideBySig
+    acos(Scalar): PrivateScope, Public, Static, HideBySig
+    invert(Condition): PrivateScope, Public, Static, HideBySig
+    delta(Vector): PrivateScope, Public, Static, HideBySig
+    delta(Scalar): PrivateScope, Public, Static, HideBySig
+    project(Vector, Vector): PrivateScope, Public, Static, HideBySig
+    ifScalar(Condition, Scalar, Scalar): PrivateScope, Public, Static, HideBySig
+    ifScalar(Condition, Scalar, Single): PrivateScope, Public, Static, HideBySig
+    ifScalar(Condition, Single, Scalar): PrivateScope, Public, Static, HideBySig
+    ifScalar(Condition, Single, Single): PrivateScope, Public, Static, HideBySig
     tracker(String, Single, Single, Single): PrivateScope, Public, Static, HideBySig
-    cross(DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig
-    limit(DotNetVector, Boolean(HasFieldMarshal), Boolean(HasFieldMarshal), Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
-    snapshot(DotNetVector, DotNetCondition): PrivateScope, Public, Static, HideBySig
-    momentum(DotNetVector, DotNetCondition, Single, Single): PrivateScope, Public, Static, HideBySig
-    momentum(DotNetVector, DotNetCondition): PrivateScope, Public, Static, HideBySig
-    scale(DotNetVector, Single): PrivateScope, Public, Static, HideBySig
-    scale(DotNetVector, DotNetScalar): PrivateScope, Public, Static, HideBySig
-    intersect(DotNetVector, DotNetVector, DotNetVector, DotNetVector): PrivateScope, Public, Static, HideBySig
+    cross(Vector, Vector): PrivateScope, Public, Static, HideBySig
+    limit(Vector, Boolean(HasFieldMarshal), Boolean(HasFieldMarshal), Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
+    snapshot(Vector, Condition): PrivateScope, Public, Static, HideBySig
+    momentum(Vector, Condition, Single, Single): PrivateScope, Public, Static, HideBySig
+    momentum(Vector, Condition): PrivateScope, Public, Static, HideBySig
+    scale(Vector, Single): PrivateScope, Public, Static, HideBySig
+    scale(Vector, Scalar): PrivateScope, Public, Static, HideBySig
+    intersect(Vector, Vector, Vector, Vector): PrivateScope, Public, Static, HideBySig
     joint(Int32 IsConst): PrivateScope, Public, Static, HideBySig
