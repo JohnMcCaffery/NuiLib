@@ -51,6 +51,7 @@ namespace NuiLibDotNet {
 		ChangeDelegate^ _managedCallback;
 
 		!Scalar() { 
+			Console::WriteLine("Scalar destroyed: " + Name);
 			delete _ps;
 		}
 
@@ -266,6 +267,7 @@ namespace NuiLibDotNet {
 		SafeVector *_ps;
 
 		!Vector() { 
+			Console::WriteLine("Vector destroyed: " + Name);
 			delete _ps;
 		}
 
@@ -443,6 +445,7 @@ namespace NuiLibDotNet {
 		ChangeDelegate^ _managedCallback;
 
 		!Condition() { 
+			Console::WriteLine("Condition destroyed: " + Name);
 			delete _ps;
 		}
 

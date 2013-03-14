@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using NuiLibDotNet;
 using System.Windows.Forms;
-using KinectLib;
 using System.Threading;
-using UtilLib;
-using FlythroughLib;
 using System.Net;
 using OpenMetaverse;
-using ChimeraLib;
 using System.Drawing;
 
 namespace Demo_CSharp {
@@ -21,6 +17,7 @@ namespace Demo_CSharp {
         /// <param name="args"></param>
         [STAThread]
         static void Main(string[] args) {
+            ChimeraOutput.RunChimera.Main();
             /*
             Scalar scalar = Scalar.Create(10f);
             Console.WriteLine("{0}", scalar.Value);
@@ -66,48 +63,6 @@ namespace Demo_CSharp {
             Nui.Pause();
             //Console.ReadLine();
             */
-            /*
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            KinectManager kinectManager = new KinectManager();
-            //kinectManager.Init(master, flythrough);
-            kinectManager.SurfaceAdded += surface => {
-                InputWindow frame = new InputWindow();
-                frame.Init(kinectManager, surface);
-                foreach (ActiveArea.Data area in kinectManager.ActiveAreas)
-                    frame.AddActiveArea(new ActiveArea(surface, area));
-
-                Thread t = new Thread(() => Application.Run(frame));
-                t.Name = "Frame Thread";
-                t.SetApartmentState(ApartmentState.STA);
-                t.Start();
-            };
-
-            Action evt = () => Console.WriteLine("Event triggered.");
-            kinectManager.AddActiveArea(new ActiveArea.Data("C:\\Users\\Iain\\Desktop\\Helmsdale Demo - 18-2-2013\\100_2345.JPG", new RectangleF(.1f, .1f, .3f, .3f), evt));
-            kinectManager.AddActiveArea(new ActiveArea.Data("C:\\Users\\Iain\\Desktop\\Helmsdale Demo - 18-2-2013\\100_2344.JPG", new RectangleF(.6f, .1f, .3f, .3f), evt));
-            kinectManager.AddActiveArea(new ActiveArea.Data("C:\\Users\\Iain\\Desktop\\Helmsdale Demo - 18-2-2013\\BroraSEW.jpg", new RectangleF(.1f, .6f, .3f, .3f), evt));
-            kinectManager.AddActiveArea(new ActiveArea.Data("C:\\Users\\Iain\\Desktop\\Helmsdale Demo - 18-2-2013\\s_BBB11_Aug-17-11_Brora-day 16 074.jpg", new RectangleF(.6f, .6f, .3f, .3f), evt));
-
-            Window window = new Window("Test Window");
-            window.ScreenPosition = Vector3.Zero;
-            window.RotationOffset.Yaw = 0f;
-            kinectManager.AddWindow(window);
-             * */
-
-            Vector vector = Vector.Create(1f, 2f, 3f);
-            vector.OnChange += () => Console.WriteLine("Original vector changed.");
-            Scalar o = make(vector);
-            o.OnChange += () => Console.WriteLine("Output scalar changed.");
-            GC.Collect();
-            vector.Set(4f, 5f, 6f);
-            Nui.Poll();
-            Console.WriteLine("Completed.");
-        }
-
-        static Scalar make(Vector start) {
-            return Nui.x(Nui.normalize(start));
         }
 
         private static Vector make() {

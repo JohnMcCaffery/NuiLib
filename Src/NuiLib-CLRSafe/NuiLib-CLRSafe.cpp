@@ -79,6 +79,7 @@ SafeScalar::~SafeScalar() {
 		Listener *listener = (Listener*) _listener;
 		IScalar *scalar = (IScalar*) _p;
 		listener->RemoveAsListener(scalar);
+		cout << "Removing listener";
 	}
 }
 
@@ -137,6 +138,7 @@ SafeCondition::~SafeCondition() {
 		Listener *listener = (Listener*) _listener;
 		IScalar *scalar = (IScalar*) _p;
 		listener->RemoveAsListener(scalar);
+		cout << "Removing listener";
 	}
 }
 
@@ -207,6 +209,7 @@ SafeVector::~SafeVector() {
 		Listener *listener = (Listener*) _listener;
 		IScalar *scalar = (IScalar*) _p;
 		listener->RemoveAsListener(scalar);
+		cout << "Removing listener";
 	}
 }
 
