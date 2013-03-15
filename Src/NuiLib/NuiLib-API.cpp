@@ -24,12 +24,14 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 using namespace NuiLib;
 
 
+int Scalar::_count = 1;
+
 Scalar::Scalar() : _p(NULL) { }
 Scalar::Scalar(IScalar *p) : _p(p) {}
 Scalar::Scalar(float value)  {
 	char name[50];
-	SPRINTF(name, 50, "%.3f", value);
-	IScalar * scalar = ExtensionFactory()->Make<IScalar>(string(name));
+	SPRINTF(name, 50, "Scalar%i", _count++);
+	IScalar * scalar = ExtensionFactory()->Make<IScalar>(name);
 	scalar->Set(value);
 	_p = scalar;
 }
@@ -39,21 +41,27 @@ Scalar::Scalar(string name, float value)  {
 	_p = scalar;
 }
 
-//void Scalar::AddListener(function<void(IObservable*)> listener) {
-	//_p->AddListener(listener);
-//}
+void Scalar::AddListener(function<void(IObservable*)> listener) {
+	_p->AddListener(listener);
+}
 
 float Scalar::operator*() { return Get(); }
 float Scalar::Get() { return _p ? **_p : 0.f; }
 void Scalar::Set(float value) { 
-	if (_p)
+	if (_p) {
 		_p->Set(value);
+		NuiFactory()->Poll();
+	}
 }
+
+int Condition::_count = 1;
 
 Condition::Condition() : _p(NULL) {}
 Condition::Condition(ICondition *p) : _p(p) {}
 Condition::Condition(bool value)  {
-	ICondition * condition = ExtensionFactory()->Make<ICondition>(value ? "true" : "false");
+	char *name = new char[50];
+	SPRINTF(name, 50, "Condition%i", _count++);
+	ICondition * condition = ExtensionFactory()->Make<ICondition>(name);
 	condition->Set(value);
 	_p = condition;
 }
@@ -73,26 +81,34 @@ void Condition::OnFalse(function<void(IObservable*)> listener) {
 }
 bool Condition::operator*() { return Get(); }
 bool Condition::Get() { return _p ? **_p : false; }
+void Condition::Set(bool value) { 
+	if (_p) {
+		_p->Set(value);
+		NuiFactory()->Poll();
+	}
+}
+
+int Vector::_count = 1;
 
 Vector::Vector() : _p(NULL) {
 	char name[50];
-	SPRINTF(name, 50, "0,0,0");
-	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
+	SPRINTF(name, 50, "Vector%i", _count++);
+	IVector * vector = ExtensionFactory()->Make<IVector>(name);
 	vector->Set(0.f, 0.f, 0.f);
 	_p = vector;
 }
 Vector::Vector(IVector *p) : _p(p) {}
 Vector::Vector(float value)  {
 	char name[50];
-	SPRINTF(name, 50, "%.3f,%.3f,%.3f", value, value, value);
-	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
+	SPRINTF(name, 50, "Vector%i", _count++);
+	IVector * vector = ExtensionFactory()->Make<IVector>(name);
 	vector->Set(value, value, value);
 	_p = vector;
 }
 Vector::Vector(cv::Point3f value)  {
 	char name[50];
-	SPRINTF(name, 50, "%.3f,%.3f,%.3f", value.x, value.y, value.z);
-	IVector * vector = ExtensionFactory()->Make<IVector>(string(name));
+	SPRINTF(name, 50, "Vector%i", _count++);
+	IVector * vector = ExtensionFactory()->Make<IVector>(name);
 	vector->Set(value.x, value.y, value.z);
 	_p = vector;
 }
@@ -116,8 +132,18 @@ void Vector::AddListener(function<void(IObservable*)> listener) {
 	_p->AddListener(listener);
 }
 
-void Vector::Set(cv::Point3f value) { _p->Set(value.x, value.y, value.z); }
-void Vector::Set(float x, float y, float z) { _p->Set(x, y, z); }
+void Vector::Set(cv::Point3f value) { 
+	if (_p) {
+		_p->Set(value.x, value.y, value.z);
+		NuiFactory()->Poll();
+	}
+}
+void Vector::Set(float x, float y, float z) { 
+	if (_p) {
+		_p->Set(x, y, z);
+		NuiFactory()->Poll();
+	}
+	}
 
 //-------------------------------------------- IObserver ----------------------------
 
@@ -191,11 +217,16 @@ void IObservable::Trigger() {
 }
 
 void IObservable::AddListener(IObserver* observer){
-	_observers.insert(observer);
+	auto position = _observers.end();
+	for (auto i = _observers.begin(); i != _observers.end(); i++)
+		if (observer == *i)
+			position = i;
+	if (position == _observers.end())
+		_observers.insert(observer);
 }
 
 void IObservable::RemoveListener(IObserver* observer) {
-	set<IObserver*>::iterator position = _observers.end();
+	auto position = _observers.end();
 	for (auto i = _observers.begin(); i != _observers.end(); i++)
 		if (observer == *i)
 			position = i;
@@ -205,6 +236,11 @@ void IObservable::RemoveListener(IObserver* observer) {
 
 void IObservable::AddListener(function<void(IObservable*)> listener) {
 	_listeners.push_back(listener);
+}
+
+void IObservable::RemoveAllListeners() {
+	_listeners.clear();
+	_observers.clear();
 }
 
 //-------------------------------------------- IComponent ---------------------------------------

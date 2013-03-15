@@ -28,11 +28,19 @@ void INuiFactoryExtension::UnregisterCreated(IComponent *component) {
 		_created.erase(component);
 }
 
+
+//----------------------------------- Protected -----------------------------
+void INuiFactoryExtension::Clear() {
+	list<IComponent*> togo;
+	for (auto it = _created.begin(); it != _created.end(); it++)
+		togo.push_back(*it);
+
+	for (auto it = togo.begin(); it != togo.end(); it++)
+		delete *it;
+}
+
 //----------------------------------- Public -----------------------------
 
 INuiFactoryExtension::~INuiFactoryExtension() {
-	_destroying = true;
-	for(auto it = _created.begin(); it != _created.end(); it++) {
-		delete *it;
-	}
+	Clear();
 }

@@ -130,6 +130,7 @@ namespace NuiLib {
 
 			void AddListener(IObserver *);
 			void RemoveListener(IObserver *);
+			void RemoveAllListeners();
 
 		protected: 
 			virtual ~IObservable();
@@ -146,6 +147,14 @@ namespace NuiLib {
 			/// Add a listener that will called whenever the observabled changes.
 			///
 			void AddListener(function<void(IObservable*)> listener);
+	};
+
+	class INuiListener {
+	public:
+		virtual void Tick() = 0;
+		virtual void SkeletonFound(int index) = 0;
+		virtual void SkeletonLost(int index) = 0;
+		virtual void SkeletonSwitched(int index) = 0;
 	};
 
 	enum AXIS { X_AXIS, Y_AXIS, Z_AXIS };
@@ -165,6 +174,10 @@ namespace NuiLib {
 	/// x._p->Set(1.f); // *z == 1.5f;
 	///
 	struct DLL Scalar {
+	private:
+		static int _count;
+
+	public:
 		///
 		/// Pointer to an object which is actually implementing the scalar.
 		///
@@ -222,6 +235,10 @@ namespace NuiLib {
 	/// x._p->Set(false); // *z == false;
 	///
 	struct DLL Condition {
+	private:
+		static int _count;
+
+	public:
 		///
 		/// Pointer to an object which is actually implementing the condition.
 		///
@@ -255,6 +272,11 @@ namespace NuiLib {
 		/// @return The value of the condition.
 		///
 		bool Get();
+		///
+		/// Set the value of the condition.
+		/// @value the value to set the condition to.
+		///
+		void Set(bool value);
 		
 		///
 		/// Add a listener that will called whenever the Condition changes.
@@ -284,6 +306,10 @@ namespace NuiLib {
 	/// x._p->Set(3.f, 2.f, 1.f); // z[X_AXIS] == 6.f, z[Y_AXIS] == 4.f, z[Z_AXIS] == 2.f
 	///
 	struct DLL Vector {
+	private:
+		static int _count;
+
+	public:
 		///
 		/// Pointer to an object which is actually implementing the vector.
 		///
@@ -1461,19 +1487,6 @@ namespace NuiLib {
 		virtual void **GetNuiDevices() = 0;
 
 		///
-		/// Listener, triggered when the device goes from having no skeletons detected to one.
-		///
-		virtual void AddSkeletonFoundListener(function<void(int)> listener) = 0;
-		///
-		/// Listener, triggered when the device goes from having one or more skeletons detected to not having any.
-		///
-		virtual void AddSkeletonLostListener(function<void(int)> listener) = 0;
-		///
-		/// Listener, triggered when the device switches which skeleton it is tracking.
-		///
-		virtual void AddSkeletonSwitchedListener(function<void(int)> listener) = 0;
-
-		///
 		/// True if there is a new colour frame.
 		///
 		virtual bool HasDepth() = 0;
@@ -1485,6 +1498,15 @@ namespace NuiLib {
 		/// True if there is a new skelton frame.
 		///
 		virtual bool HasSkeleton() = 0;
+
+		///
+		/// Add a listener that will be notified of NUI events (Tick, SkeletonFound, SkeletonLost, SkeletonSwitched).
+		///
+		virtual void AddNuiListener(INuiListener *listener) = 0;
+		///
+		/// Remove a listener that was being notified of NUI events.
+		///
+		virtual void RemoveNuiListener(INuiListener *listener) = 0;
 	};
 
 	///

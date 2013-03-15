@@ -278,6 +278,8 @@ namespace NuiLib {
 
 	class DLL ProjectionScalar : public TwoVectorWrappingScalar {
 	private:
+		IScalar *_dot;
+		IScalar *_magnitude;
 		IScalar *_output;
 
 	public:

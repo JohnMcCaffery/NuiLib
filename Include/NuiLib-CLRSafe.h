@@ -11,7 +11,7 @@
 
 namespace NuiLibSafe {
 typedef DLL void (* CallbackFunction)();
-typedef DLL void (* SkeletonCallbackFunction)(int);
+typedef DLL void (* SkeletonCallbackFunction)();
 
 DLL void RegisterCallbacks(
 	CallbackFunction tickCallback,
@@ -78,6 +78,7 @@ DLL bool HasSkeleton();
 		void Set(float);
 
 		const char *GetName();
+		void SetName(const char *name);
 	};	
 
 
@@ -130,6 +131,7 @@ DLL bool HasSkeleton();
 		void Set(float, float, float);
 
 		const char *GetName();
+		void SetName(const char *name);
 	};
 
 
@@ -188,6 +190,7 @@ DLL bool HasSkeleton();
 		void Set(bool);
 
 		const char *GetName();
+		void SetName(const char *name);
 	};	
 
 

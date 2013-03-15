@@ -78,7 +78,11 @@ INuiFactoryExtension("KinectFactory", "KinectFactory"),
 }
 
 void KinectFactory::Dispose() {
-	//TODO do something here.
+	//INuiFactoryExtension::Clear();
+	_polling = false;
+	if (_pNuiSensor != NULL) {
+		_pNuiSensor->Release();
+	}
 }
 
 bool KinectFactory::Init() {
@@ -270,14 +274,29 @@ cv::Mat &KinectFactory::GetDebugFrame() {
 }
 #endif
 
-void KinectFactory::AddSkeletonFoundListener(function<void(int)> listener) {
-	_skeletonFoundListeners.push_back(listener);
+void KinectFactory::AddNuiListener(INuiListener *listener) {
+	auto togo = _nuiListeners.end();
+	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++) {
+		if ((*i) == listener) {
+			togo = i;
+			break;
+		}
+	}
+
+	if (togo == _nuiListeners.end())
+		_nuiListeners.push_back(listener);
 }
-void KinectFactory::AddSkeletonLostListener(function<void(int)> listener) {
-	_skeletonLostListeners.push_back(listener);
-}
-void KinectFactory::AddSkeletonSwitchedListener(function<void(int)> listener) {
-	_skeletonSwitchedListeners.push_back(listener);
+void KinectFactory::RemoveNuiListener(INuiListener *listener) {
+	auto togo = _nuiListeners.end();
+	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++) {
+		if ((*i) == listener) {
+			togo = i;
+			break;
+		}
+	}
+
+	if (togo != _nuiListeners.end())
+		_nuiListeners.erase(togo);
 }
 
 bool KinectFactory::HasColour() { return false; }
@@ -325,13 +344,18 @@ void KinectFactory::SetAutoPoll(bool value){
 }
 
 bool newDebug = true;
-bool skeletonLost = false;
+bool skeletonLost = true;
 
 DWORD skeletonFrame;
 DWORD colourFrame;
 DWORD depthFrame;
 
 void KinectFactory::Poll() {
+	Poll(true);
+}
+void KinectFactory::Poll(bool fromExternal) {
+	if (fromExternal && _polling)
+		return;
 	WaitForMultipleObjects(_numEvents, _hEvents, false, 1000);
 
 	bool depthUpdated = false;
@@ -371,6 +395,8 @@ void KinectFactory::Poll() {
 	} 
 
 	Trigger();
+	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+		(*i)->Tick();
 
 #ifdef VISUAL
 	if (_enabledEvents[DEPTH]) {
@@ -395,7 +421,7 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 	cout << "\nThread running \n";
 
 	while (_polling) {
-		Poll();
+		Poll(false);
 		Sleep(5);
 	}
 	cout << "Thread stopped\n";
@@ -403,7 +429,12 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 }
 
 void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
-	_pNuiSensor->NuiTransformSmooth(&frame, NULL);
+	//http://msdn.microsoft.com/en-us/library/jj131024.aspx
+	//_pNuiSensor->NuiTransformSmooth(&frame, NULL);
+	const NUI_TRANSFORM_SMOOTH_PARAMETERS smooth = {
+		.8, .2, .2, .02, .05 
+	};
+	_pNuiSensor->NuiTransformSmooth(&frame, &smooth);
 	int index = -1;
 	//Iterate through every skeleton
 	for (int i = 0; i < NUI_SKELETON_COUNT; i++) {
@@ -427,13 +458,13 @@ void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 		if (skeletonLost) {
 			//If there previously hadn't been a skeleton
 			cout << "Skeleton found.\n";
-			for (auto i = _skeletonFoundListeners.begin(); i != _skeletonFoundListeners.end(); i++)
-				(*i)(index);
+			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+				(*i)->SkeletonFound(index);
 		} else {
 			//If there was a skeleton before but that has been lost
 			cout << "Skeleton switched.\n";
-			for (auto i = _skeletonSwitchedListeners.begin(); i != _skeletonSwitchedListeners.end(); i++)
-				(*i)(index);
+			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+				(*i)->SkeletonSwitched(index);
 		}
 		skeletonLost = false;
 
@@ -441,12 +472,12 @@ void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 		_currentSkeleton = skeleton->dwTrackingID;
 		ProcessSkeleton(skeleton);
 	} else if(!skeletonLost) {
+		skeletonLost = true;
 		//No skeleton was found and there had previously been a skeleton
 		cout << "Skeleton lost.\n";
-		for (auto i = _skeletonLostListeners.begin(); i != _skeletonLostListeners.end(); i++)
-			(*i)(index);
+		for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+			(*i)->SkeletonLost(_currentSkeleton);
 		ProcessLostSkeleton();
-		skeletonLost = true;
 		_currentSkeleton = 0;
 	} else {
 		//No skeleton found, justl like the previous frame

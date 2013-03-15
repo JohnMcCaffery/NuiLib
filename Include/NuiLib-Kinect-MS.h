@@ -121,9 +121,7 @@ namespace NuiLib {
 			list<IListener<NUI_IMAGE_FRAME>*> _colourListeners;
 			list<IListener<NUI_IMAGE_FRAME>*> _depthListeners;
 
-			list<function<void(int)>> _skeletonFoundListeners;
-			list<function<void(int)>> _skeletonLostListeners;
-			list<function<void(int)>> _skeletonSwitchedListeners;
+			list<INuiListener*> _nuiListeners;
 
 			INuiSensor* _pNuiSensor;
 			HANDLE _pDepthStreamHandle;
@@ -149,6 +147,7 @@ namespace NuiLib {
 			void EnableDepth(bool);
 			void EnableSkeleton(bool);
 
+			void Poll(bool fromExternal);
 
 		protected:
 			bool Triggers();
@@ -166,18 +165,13 @@ namespace NuiLib {
 			void AddColourListener(IListener<NUI_IMAGE_FRAME> *);
 			void AddDepthListener(IListener<NUI_IMAGE_FRAME> *);
 
+
 			///
-			/// Listener, triggered when the device goes from having no skeletons detected to one.
+			/// Add a listener that will be notified of NUI events (Tick, SkeletonFound, SkeletonLost, SkeletonSwitched).
 			///
-			void AddSkeletonFoundListener(function<void(int)> listener);
-			///
-			/// Listener, triggered when the device goes from having one or more skeletons detected to not having any.
-			///
-			void AddSkeletonLostListener(function<void(int)> listener);
-			///
-			/// Listener, triggered when the device switches which skeleton it is tracking.
-			///
-			void AddSkeletonSwitchedListener(function<void(int)> listener);
+			void AddNuiListener(INuiListener *listener);
+			void RemoveNuiListener(INuiListener *listener);
+
 			///
 			/// Returns true if there is currently a skeleton being tracked. False otherwise.
 			///

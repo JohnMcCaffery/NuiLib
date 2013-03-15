@@ -15,7 +15,7 @@ namespace NuiLibDotNet {
 	ref class Condition;
 
 	public delegate void ChangeDelegate();
-	public delegate void SkeletonTrackDelegate(int);
+	public delegate void SkeletonTrackDelegate();
 
 	public ref class Observable {
 	private:
@@ -51,7 +51,6 @@ namespace NuiLibDotNet {
 		ChangeDelegate^ _managedCallback;
 
 		!Scalar() { 
-			Console::WriteLine("Scalar destroyed: " + Name);
 			delete _ps;
 		}
 
@@ -76,6 +75,7 @@ namespace NuiLibDotNet {
 
 		property String ^Name {
 			String ^get() { return gcnew String(_ps->GetName()); }
+			void set (String ^value) { _ps->SetName(((const char*)Marshal::StringToHGlobalAnsi(value).ToPointer())); }
 		}
 
 		property float Value {
@@ -266,10 +266,7 @@ namespace NuiLibDotNet {
 		ChangeDelegate^ _managedCallback;
 		SafeVector *_ps;
 
-		!Vector() { 
-			Console::WriteLine("Vector destroyed: " + Name);
-			delete _ps;
-		}
+		!Vector() { delete _ps; }
 
 		static Vector ^Create(SafeVector *safe) {
 			Vector^ vector = gcnew Vector(safe);
@@ -299,6 +296,7 @@ namespace NuiLibDotNet {
 
 		property String ^Name {
 			String ^get() { return gcnew String(_ps->GetName()); }
+			void set (String ^value) { _ps->SetName(((const char*)Marshal::StringToHGlobalAnsi(value).ToPointer())); }
 		}
 
 		property float X {
@@ -444,10 +442,7 @@ namespace NuiLibDotNet {
 		SafeCondition *_ps;
 		ChangeDelegate^ _managedCallback;
 
-		!Condition() { 
-			Console::WriteLine("Condition destroyed: " + Name);
-			delete _ps;
-		}
+		!Condition() { delete _ps; }
 
 		static Condition ^Create(SafeCondition *safe) {
 			Condition^ condition = gcnew Condition(safe);
@@ -470,6 +465,7 @@ namespace NuiLibDotNet {
 
 		property String ^Name {
 			String ^get() { return gcnew String(_ps->GetName()); }
+			void set (String ^value) { _ps->SetName(((const char*)Marshal::StringToHGlobalAnsi(value).ToPointer())); }
 		}
 
 		property bool Value {
@@ -553,9 +549,9 @@ namespace NuiLibDotNet {
 			static SkeletonTrackDelegate^ _skeletonSwitched;
 
 			void TickListener() { Tick(); }
-			void SkeletonFoundListener(int arg) { SkeletonFound(arg); }
-			void SkeletonLostListener(int arg) { SkeletonLost(arg); }
-			void SkeletonSwitchedListener(int arg) { SkeletonSwitched(arg); }
+			void SkeletonFoundListener() { SkeletonFound(); }
+			void SkeletonLostListener() { SkeletonLost(); }
+			void SkeletonSwitchedListener() { SkeletonSwitched(); }
 
 			static void RegisterListeners() {
 				_nui = gcnew Nui();
@@ -604,10 +600,10 @@ namespace NuiLibDotNet {
 					_skeletonFound += listener; 
 				}
 				void remove (SkeletonTrackDelegate ^listener) { _skeletonFound -= listener; }
-				void raise(int arg) {
+				void raise() {
 					SkeletonTrackDelegate^ tmp = _skeletonFound;
 					if (tmp)
-						tmp->Invoke(arg);
+						tmp->Invoke();
 				}
 			}
 
@@ -619,10 +615,10 @@ namespace NuiLibDotNet {
 					_skeletonLost += listener; 
 				}
 				void remove (SkeletonTrackDelegate ^listener) { _skeletonLost -= listener; }
-				void raise(int arg) {
+				void raise() {
 					SkeletonTrackDelegate^ tmp = _skeletonLost;
 					if (tmp)
-						tmp->Invoke(arg);
+						tmp->Invoke();
 				}
 			}
 
@@ -634,10 +630,10 @@ namespace NuiLibDotNet {
 					_skeletonSwitched += listener; 
 				}
 				void remove (SkeletonTrackDelegate ^listener) { _skeletonSwitched -= listener; }
-				void raise(int arg) {
+				void raise() {
 					SkeletonTrackDelegate^ tmp = _skeletonSwitched;
 					if (tmp)
-						tmp->Invoke(arg);
+						tmp->Invoke();
 				}
 			}
 
@@ -663,6 +659,7 @@ namespace NuiLibDotNet {
 
 			!Nui() {
 				Console::WriteLine("Nui being destroyed");
+				NuiLibSafe::Close();
 			}
 
 

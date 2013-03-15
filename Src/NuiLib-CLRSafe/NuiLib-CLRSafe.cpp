@@ -22,16 +22,43 @@ public:
 	}
 };
 
+class NuiListener : public INuiListener {
+private:
+	CallbackFunction _tickCallback;
+	SkeletonCallbackFunction _foundCallback;
+	SkeletonCallbackFunction _lostCallback;
+	SkeletonCallbackFunction _switchedCallback;
+
+public:
+	NuiListener(
+		CallbackFunction tickCallback,
+		SkeletonCallbackFunction foundCallback,
+		SkeletonCallbackFunction lostCallback,
+		SkeletonCallbackFunction switchedCallback) :
+			_tickCallback(tickCallback), 
+			_foundCallback(foundCallback), 
+			_lostCallback(lostCallback), 
+			_switchedCallback(switchedCallback) {
+
+	}
+
+	void Tick() { _tickCallback(); }
+	void SkeletonFound(int index) { _foundCallback(); }
+	void SkeletonLost(int index) { _lostCallback(); }
+	void SkeletonSwitched(int index) { _switchedCallback(); }
+
+};
+
+NuiListener *listener;
+
 void NuiLibSafe::RegisterCallbacks(
 		CallbackFunction tickCallback,
 		SkeletonCallbackFunction foundCallback,
 		SkeletonCallbackFunction lostCallback,
 		SkeletonCallbackFunction switchedCallback) {
 
-	NuiLib::NuiFactory()->AddListener([tickCallback] (IObservable* src) { tickCallback(); });
-	NuiLib::NuiFactory()->AddSkeletonFoundListener([foundCallback] (int id) { foundCallback(id); });
-	NuiLib::NuiFactory()->AddSkeletonLostListener([lostCallback] (int id) { lostCallback(id); });
-	NuiLib::NuiFactory()->AddSkeletonSwitchedListener([switchedCallback] (int id) { switchedCallback(id); });
+	listener = new NuiListener(tickCallback, foundCallback, lostCallback, switchedCallback);
+	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
 bool NuiLibSafe::Init() {
 	return NuiLib::NuiFactory()->Init();
@@ -46,6 +73,9 @@ void NuiLibSafe::Pause() {
 	cv::waitKey();
 }
 void NuiLibSafe::Close() {
+	NuiLib::NuiFactory()->RemoveNuiListener(listener);
+	delete listener;
+
 	NuiLib::NuiFactory()->Dispose();
 }
 bool NuiLibSafe::HasSkeleton() {
@@ -82,7 +112,6 @@ SafeScalar::~SafeScalar() {
 		Listener *listener = (Listener*) _listener;
 		IScalar *scalar = (IScalar*) _p;
 		listener->RemoveAsListener(scalar);
-		cout << "Removing listener";
 	}
 }
 
@@ -92,7 +121,6 @@ void SafeScalar::SetCallback(CallbackFunction callback) {
 	listener->AddAsListener(NULL, scalar);
 	_listener = listener;
 }
-
 
 ///
 /// Get the value of the scalar. 
@@ -108,11 +136,17 @@ float SafeScalar::Get() {
 void SafeScalar::Set(float value) { 
 	IScalar *p = (IScalar*) _p;
 	p->Set(value);
+	NuiFactory()->Poll();
 }
 
 const char *SafeScalar::GetName() {
 	IScalar *p = (IScalar*) _p;
 	return p->GetCName();
+}
+
+void SafeScalar::SetName(const char *name) {
+	IScalar *p = (IScalar*) _p;
+	return p->SetName(name);
 }
 
 
@@ -144,7 +178,6 @@ SafeCondition::~SafeCondition() {
 		Listener *listener = (Listener*) _listener;
 		IScalar *scalar = (IScalar*) _p;
 		listener->RemoveAsListener(scalar);
-		cout << "Removing listener";
 	}
 }
 
@@ -169,11 +202,16 @@ bool SafeCondition::Get() {
 void SafeCondition::Set(bool value) { 
 	ICondition *p = (ICondition*) _p;
 	p->Set(value);
+	NuiFactory()->Poll();
 }
 
 const char *SafeCondition::GetName() {
 	ICondition *p = (ICondition*) _p;
 	return p->GetCName();
+}
+void SafeCondition::SetName(const char *name) {
+	ICondition *p = (ICondition*) _p;
+	return p->SetName(name);
 }
 
 
@@ -216,7 +254,6 @@ SafeVector::~SafeVector() {
 		Listener *listener = (Listener*) _listener;
 		IScalar *scalar = (IScalar*) _p;
 		listener->RemoveAsListener(scalar);
-		cout << "Removing listener";
 	}
 }
 
@@ -243,23 +280,31 @@ float SafeVector::Z() {
 void SafeVector::Set(float x, float y, float z) {
 	IVector *p = (IVector*) _p;
 	p->Set(x, y, z);
+	NuiFactory()->Poll();
 }
 void SafeVector::SetX(float value) { 
 	IVector *p = (IVector*) _p;
 	p->Set(value, p->Y(), p->Z());
+	NuiFactory()->Poll();
 }
 void SafeVector::SetY(float value) { 
 	IVector *p = (IVector*) _p;
 	p->Set(p->X(), value, p->Z());
+	NuiFactory()->Poll();
 }
 void SafeVector::SetZ(float value) { 
 	IVector *p = (IVector*) _p;
 	p->Set(p->X(), p->Y(), value);
+	NuiFactory()->Poll();
 }
 
 const const char *SafeVector::GetName() {
 	IVector *p = (IVector*) _p;
 	return p->GetCName();
+}
+void SafeVector::SetName(const const char *name) {
+	IVector *p = (IVector*) _p;
+	return p->SetName(name);
 }
 
 //-------------------------------------------------------------------------

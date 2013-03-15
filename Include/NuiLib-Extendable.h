@@ -448,6 +448,10 @@ namespace NuiLib {
 		template<typename T> void RegisterCreator(string type, function<T*()> creator) {
 			_componentCreators[type] = creator;
 		}
+		///
+		/// Delete all components this factory had created.
+		///
+		void Clear();
 
 	public:
 		///
@@ -480,17 +484,12 @@ namespace NuiLib {
 		virtual void Dispose() = 0;
 
 		///
-		/// Listener, triggered when the device goes from having no skeletons detected to one.
+		/// Add a listener that will be notified of NUI events (Tick, SkeletonFound, SkeletonLost, SkeletonSwitched).
 		///
-		virtual void AddSkeletonFoundListener(function<void(int)> listener) = 0;
+		virtual void AddNuiListener(INuiListener *listener) = 0;		///
+		/// Remove a listener that was being notified of NUI events.
 		///
-		/// Listener, triggered when the device goes from having one or more skeletons detected to not having any.
-		///
-		virtual void AddSkeletonLostListener(function<void(int)> listener) = 0;
-		///
-		/// Listener, triggered when the device switches which skeleton it is tracking.
-		///
-		virtual void AddSkeletonSwitchedListener(function<void(int)> listener) = 0;
+		virtual void RemoveNuiListener(INuiListener *listener) = 0;
 
 		///
 		/// Get a component with a given name.

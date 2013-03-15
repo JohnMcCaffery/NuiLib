@@ -771,9 +771,19 @@ ProjectionScalar::ProjectionScalar() :
 float ProjectionScalar::CalculateValue() {
 	if (!_vector1 || !_vector2)
 		return _value;
-	if (!_output)
-		_output = quotient(dotP(_vector1, _vector2), magnitudeP(_vector2));
-	return _vector2->Magnitude() == 0.f ? 0.f : **_output;
+	if (!_output) {
+		_dot = dotP(_vector1, _vector2);
+		_magnitude = magnitudeP(_vector2);
+		_output = quotient(_dot, _magnitude);
+	}
+	if (_vector2->Magnitude() == 0.f)
+		return 0.f;
+
+	_dot->Changed(_vector1);
+	_magnitude->Changed(_vector2);
+	_output->Changed(_dot);
+
+	return  **_output;
 }
 
 
