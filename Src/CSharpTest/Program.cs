@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NuiLibDotNet;
+using C = NuiLibDotNet.Condition;
 
 namespace CShartTest {
     class Program {
@@ -12,10 +13,58 @@ namespace CShartTest {
             Vector mPointStart = Vector.Create("PointStart", 0f, 0f, 0f);
             Vector mPointDir = Vector.Create("PointDir", 0f, 0f, 0f);
 
-			Nui.Init();
-            Nui.SetAutoPoll(true);
             Vector pointEnd = Nui.joint(Nui.Hand_Right);
             mPointStart = Nui.joint(Nui.Shoulder_Right);
+
+			//Nui.Init();
+            //Nui.SetAutoPoll(true);
+
+
+
+
+
+
+            bool test = true;
+            Vector mHandR = test ? Vector.Create("HandR", 0f, 0f, 0f) : Nui.joint(Nui.Hand_Right);
+            Vector mShoulderR = test ? Vector.Create("ShoulderR", 0f, 0f, 0f) : Nui.joint(Nui.Shoulder_Right);
+            Vector shoulderL = test ? Vector.Create("ShoulderL", -1f, 0f, 0f) : Nui.joint(Nui.Shoulder_Left);
+            Scalar shoulderW = Nui.magnitude(shoulderL - mShoulderR);
+
+            Scalar mWidthScale = Scalar.Create("Width Scale", 1.5f);
+            Scalar mHeightScale = Scalar.Create("Height Scale", 1.5f);
+
+            Scalar mLeftShift = Scalar.Create("Left Shift", .25f);
+            Scalar mUpShift = Scalar.Create("Up Shift", .75f);
+
+            Scalar mWidth = shoulderW * mWidthScale;
+            Scalar mHeight = shoulderW * mHeightScale;
+
+            Scalar mTopLeftX = Nui.x(mShoulderR) - (mWidth * mLeftShift);
+            Scalar mTopLeftY = Nui.y(mShoulderR) - (mHeight * mUpShift);
+
+            Scalar mRawX = Nui.x(mHandR) - mTopLeftX;
+            Scalar mRawY = Nui.y(mHandR) - mTopLeftY;
+
+
+            Condition xActive = C.And(mRawX >= 0f, mRawX <= mWidth);
+            Condition yActive = C.And(mRawY >= 0f, mRawY <= mHeight);
+
+            Scalar mConstrainedX = Nui.constrain(mRawX, .01f, mWidth, .10f, false);
+            Scalar mConstrainedY = Nui.constrain(mRawY, .01f, mHeight, .10f, false);
+
+            mLeftShift.Value = 1f;
+
+
+
+
+
+
+
+
+
+
+
+
             mPointDir = mPointStart - pointEnd;
 
 

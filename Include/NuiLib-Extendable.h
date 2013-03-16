@@ -486,7 +486,8 @@ namespace NuiLib {
 		///
 		/// Add a listener that will be notified of NUI events (Tick, SkeletonFound, SkeletonLost, SkeletonSwitched).
 		///
-		virtual void AddNuiListener(INuiListener *listener) = 0;		///
+		virtual void AddNuiListener(INuiListener *listener) = 0;
+		///
 		/// Remove a listener that was being notified of NUI events.
 		///
 		virtual void RemoveNuiListener(INuiListener *listener) = 0;

@@ -114,6 +114,13 @@ bool KinectFactory::Init() {
 	if (!hr) {
 		_initialised = true;
 		cout << "Nui Initialised.\n";
+
+		if (!_skeletonListeners.empty() > 0)
+			EnableSkeleton(true);
+		if (!_depthListeners.empty() > 0)
+			EnableDepth(true);
+		if (!_colourListeners.empty() > 0)
+			EnableColour(true);
 	} else
 		cout << "Unable to Initialise Sensor.\n";
 

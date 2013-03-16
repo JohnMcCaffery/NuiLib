@@ -613,7 +613,7 @@ float ArithmeticScalar::CalculateValue() {
 	return Value();
 }
 
-//--------------------------------------e----- ConstrainedScalar --------------------------------------
+//------------------------------------------- ConstrainedScalar --------------------------------------
 
 ConstrainedScalar::ConstrainedScalar() : 
 	ScalarWrappingScalar(GetTypeName()), 
