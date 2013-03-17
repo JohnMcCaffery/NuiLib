@@ -42,5 +42,5 @@ void INuiFactoryExtension::Clear() {
 //----------------------------------- Public -----------------------------
 
 INuiFactoryExtension::~INuiFactoryExtension() {
-	Clear();
+	//Clear();
 }
