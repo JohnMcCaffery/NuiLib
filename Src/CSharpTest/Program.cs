@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Chimera.Util;
+using Chimera.Launcher;
 using NuiLibDotNet;
-using C = NuiLibDotNet.Condition;
 
-namespace CShartTest {
-    class Program {
-        static void Main(string[] args) {
+namespace CSharpTest {
+    public static class Program {
+        [STAThread]
+        public static void Main(string[] args) {
+            //System.Net.Mime.MediaTypeNames.Application.SetCompatibleTextRenderingDefault(false);
+
+            SingleInstanceLauncher launcher = new SingleInstanceLauncher();
+
+            ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
+ 
+            /*
             //Test.Program.Main(args);
 
             Vector mPointStart = Vector.Create("PointStart", 0f, 0f, 0f);
@@ -53,8 +62,6 @@ namespace CShartTest {
             Scalar mConstrainedY = Nui.constrain(mRawY, .01f, mHeight, .10f, false);
 
             mLeftShift.Value = 1f;
-
-
 
 
 
@@ -116,6 +123,8 @@ namespace CShartTest {
             Nui.Pause();
 
             //Nui.Close();
+
+*/
         }
 
         private static Vector make() {
