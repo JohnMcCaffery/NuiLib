@@ -64,6 +64,7 @@ INuiFactoryExtension("KinectFactory", "KinectFactory"),
 	_pNuiSensor(NULL),
 	_currentSkeleton(0),
 	_debugFrame(YRES, XRES, CV_8UC1, cv::Scalar(0.)),
+	_colourFrame(YRES, XRES, CV_8UC4, cv::Scalar(0.)),
 	_depthFrame(YRES, XRES, CV_16UC1)
 {
 	function<IVector *()> kinectJointCreator = [this]() -> IVector* { 
@@ -401,9 +402,11 @@ void KinectFactory::Poll(bool fromExternal) {
 		}
 	} 
 
-	Trigger();
-	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
-		(*i)->Tick();
+	if (fromExternal || (!fromExternal && _polling)) {
+		Trigger();
+		for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+			(*i)->Tick();
+	}
 
 #ifdef VISUAL
 	if (_enabledEvents[DEPTH]) {

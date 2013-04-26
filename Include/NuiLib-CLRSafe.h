@@ -25,6 +25,17 @@ DLL void Poll();
 DLL void Pause();
 DLL void Close();
 DLL bool HasSkeleton();
+DLL unsigned char *GetColourBytes();
+DLL unsigned char *GetDepthBytes();
+DLL int GetColourWidth();
+DLL int GetColourHeight();
+DLL int GetColourStride();
+DLL int GetColourLength();
+DLL int GetDepthWidth();
+DLL int GetDepthHeight();
+DLL int GetDepthStride();
+DLL int GetDepthLength();
+//DLL uchar *GetDebugBytes();
 
 	///
 	/// Wrapper around a scalar value.

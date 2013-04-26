@@ -5,6 +5,8 @@ using System.Text;
 using Chimera.Util;
 using Chimera.Launcher;
 using NuiLibDotNet;
+using System.Windows.Forms;
+using CShartTest;
 
 namespace CSharpTest {
     public static class Program {
@@ -12,9 +14,16 @@ namespace CSharpTest {
         public static void Main(string[] args) {
             //System.Net.Mime.MediaTypeNames.Application.SetCompatibleTextRenderingDefault(false);
 
-            SingleInstanceLauncher launcher = new SingleInstanceLauncher();
+            //SingleInstanceLauncher launcher = new SingleInstanceLauncher();
+            //ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
 
-            ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
+            Nui.Init();
+            Nui.SetAutoPoll(true);
+
+            Application.EnableVisualStyles();
+            Application.Run(new TestForm());
+
+            //Nui.Poll();
  
             /*
             //Test.Program.Main(args);

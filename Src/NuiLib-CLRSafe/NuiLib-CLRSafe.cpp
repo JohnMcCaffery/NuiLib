@@ -82,6 +82,37 @@ bool NuiLibSafe::HasSkeleton() {
 	return NuiLib::NuiFactory()->HasSkeleton();
 }
 
+uchar *NuiLibSafe::GetColourBytes() {
+	return NuiLib::NuiFactory()->GetColour().data;
+}
+uchar *NuiLibSafe::GetDepthBytes() {
+	return NuiLib::NuiFactory()->GetDepth().data;
+}
+
+int NuiLibSafe::GetColourWidth() {
+	return NuiLib::NuiFactory()->GetColour().cols;
+}
+int NuiLibSafe::GetColourHeight() {
+	return NuiLib::NuiFactory()->GetColour().rows;
+}
+int NuiLibSafe::GetColourStride() {
+	return NuiLib::NuiFactory()->GetColour().elemSize1();
+}
+
+int NuiLibSafe::GetDepthWidth() {
+	return NuiLib::NuiFactory()->GetDepth().cols;
+}
+int NuiLibSafe::GetDepthHeight() {
+	return NuiLib::NuiFactory()->GetDepth().rows;
+}
+int NuiLibSafe::GetDepthStride() {
+	return NuiLib::NuiFactory()->GetDepth().elemSize1();
+}
+
+//uchar *NuiLibSafe::GetDebugBytes() {
+	//return NuiLib::NuiFactory()->GetDebi().data;
+//}
+
 
 int SafeScalar::_count = 1;
 

@@ -637,6 +637,33 @@ namespace NuiLibDotNet {
 				}
 			}
 
+			static property array<Byte> ^DepthBytes {
+				array<Byte> ^get() {
+					int w = NuiLibSafe::GetDepthWidth();
+					int h = NuiLibSafe::GetDepthHeight();
+					int s = NuiLibSafe::GetDepthStride();
+
+					array<Byte> ^ret = gcnew array<Byte>(w * h * s);
+
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetDepthBytes()), ret, 0, w * h * s);
+
+					return ret;
+				}
+			}
+			static property array<Byte> ^ColourBytes {
+				array<Byte> ^get() {
+					int w = NuiLibSafe::GetColourWidth();
+					int h = NuiLibSafe::GetColourHeight();
+					int s = NuiLibSafe::GetColourStride();
+
+					array<Byte> ^ret = gcnew array<Byte>(w * h * s);
+
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s);
+
+					return ret;
+				}
+			}
+
 			static property bool HasSkeleton {
 				bool get () { return NuiLibSafe::HasSkeleton(); }
 			}
