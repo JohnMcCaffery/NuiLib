@@ -61,6 +61,7 @@ void NuiLibSafe::RegisterCallbacks(
 	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
 bool NuiLibSafe::Init() {
+	cv::namedWindow("Test");
 	return NuiLib::NuiFactory()->Init();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {
@@ -82,11 +83,18 @@ bool NuiLibSafe::HasSkeleton() {
 	return NuiLib::NuiFactory()->HasSkeleton();
 }
 
+cv::Mat colour;
+
 uchar *NuiLibSafe::GetColourBytes() {
 	return NuiLib::NuiFactory()->GetColour().data;
 }
 uchar *NuiLibSafe::GetDepthBytes() {
-	return NuiLib::NuiFactory()->GetDepth().data;
+	cv::Mat in = NuiLib::NuiFactory()->GetDepth();
+	cv::imshow("Test", in);
+	const double DEPTH_SCALE_FACTOR = 255./65535.;
+	in.convertTo(colour, CV_8UC1, DEPTH_SCALE_FACTOR);
+	cv::cvtColor(colour, colour, CV_GRAY2RGB);
+	return colour.data;
 }
 
 int NuiLibSafe::GetColourWidth() {
@@ -106,7 +114,8 @@ int NuiLibSafe::GetDepthHeight() {
 	return NuiLib::NuiFactory()->GetDepth().rows;
 }
 int NuiLibSafe::GetDepthStride() {
-	return NuiLib::NuiFactory()->GetDepth().elemSize1();
+	return 1;
+	//return NuiLib::NuiFactory()->GetDepth().elemSize1();
 }
 
 //uchar *NuiLibSafe::GetDebugBytes() {

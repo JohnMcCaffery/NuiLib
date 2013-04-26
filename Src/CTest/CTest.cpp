@@ -49,7 +49,6 @@ int main(int argc, char** argv) {
 	NuiFactory()->AddListener([&mX, &mY] (IObservable *source) { 
 		cv::imshow("TestWindow", NuiFactory()->GetColour());
 		cv::imshow("TestDepth", NuiFactory()->GetDepth());
-		//cv::imshow("TestWindow", NuiFactory()->GetDepth());
 	});
 
 

@@ -118,10 +118,12 @@ bool KinectFactory::Init() {
 
 		if (!_skeletonListeners.empty() > 0)
 			EnableSkeleton(true);
-		if (!_depthListeners.empty() > 0)
-			EnableDepth(true);
 		if (!_colourListeners.empty() > 0)
 			EnableColour(true);
+#ifndef VISUAL
+		if (!_depthListeners.empty() > 0)
+#endif
+			EnableDepth(true);
 	} else
 		cout << "Unable to Initialise Sensor.\n";
 

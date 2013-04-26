@@ -642,10 +642,11 @@ namespace NuiLibDotNet {
 					int w = NuiLibSafe::GetDepthWidth();
 					int h = NuiLibSafe::GetDepthHeight();
 					int s = NuiLibSafe::GetDepthStride();
+					int l = w * h * s;
 
-					array<Byte> ^ret = gcnew array<Byte>(w * h * s);
+					array<Byte> ^ret = gcnew array<Byte>(l);
 
-					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetDepthBytes()), ret, 0, w * h * s);
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetDepthBytes()), ret, 0, l);
 
 					return ret;
 				}
@@ -656,9 +657,9 @@ namespace NuiLibDotNet {
 					int h = NuiLibSafe::GetColourHeight();
 					int s = NuiLibSafe::GetColourStride();
 
-					array<Byte> ^ret = gcnew array<Byte>(w * h * s);
+					array<Byte> ^ret = gcnew array<Byte>(w * h * s * 4);
 
-					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s);
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s * 4);
 
 					return ret;
 				}

@@ -18,13 +18,18 @@ namespace CShartTest {
         }
 
         void Nui_Tick() {
+            /*
+            byte[] bytes = Nui.ColourBytes;
+            Bitmap b = new Bitmap(640, 480, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            var x = b.LockBits(new Rectangle(0, 0, 640, 480), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            */
+
             byte[] bytes = Nui.DepthBytes;
             Bitmap b = new Bitmap(640, 480, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
             var x = b.LockBits(new Rectangle(0, 0, 640, 480), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
+
             Marshal.Copy(bytes, 0, x.Scan0, bytes.Length);
             b.UnlockBits(x);
-
-            b.Save("../Test.jpg");
 
             BeginInvoke(new Action(() => {
                 displayPanel.Image = b;
