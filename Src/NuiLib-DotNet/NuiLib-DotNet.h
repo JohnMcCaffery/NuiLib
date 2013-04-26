@@ -575,6 +575,34 @@ namespace NuiLibDotNet {
 					(SkeletonCallbackFunction) (void*) switchedCallback);
 			}
 
+			static System::Drawing::Bitmap ^MakeFrame(unsigned char *bytes, System::Drawing::Imaging::PixelFormat format) {
+					System::Drawing::Rectangle bounds = System::Drawing::Rectangle(0, 0, 640, 480);
+					System::Drawing::Imaging::ImageLockMode mode = System::Drawing::Imaging::ImageLockMode::WriteOnly;
+
+					System::Drawing::Bitmap ^b = gcnew System::Drawing::Bitmap(640, 480, format);
+					System::Drawing::Imaging::BitmapData ^x = b->LockBits(bounds, mode, format);
+
+					x->Scan0 = IntPtr( (void *) bytes);
+
+					b->UnlockBits(x);
+
+					return b;
+			}
+
+			static System::Drawing::Bitmap ^MakeFrame(array<Byte> ^bytes, System::Drawing::Imaging::PixelFormat format) {
+					System::Drawing::Rectangle bounds = System::Drawing::Rectangle(0, 0, 640, 480);
+					System::Drawing::Imaging::ImageLockMode mode = System::Drawing::Imaging::ImageLockMode::WriteOnly;
+
+					System::Drawing::Bitmap ^b = gcnew System::Drawing::Bitmap(640, 480, format);
+					System::Drawing::Imaging::BitmapData ^x = b->LockBits(bounds, mode, format);
+
+					System::Runtime::InteropServices::Marshal::Copy(bytes, 0, x->Scan0, bytes.Length);
+
+					b->UnlockBits(x);
+
+					return b;
+			}
+
 		public:
 
 			static event ChangeDelegate ^Tick {
@@ -637,6 +665,22 @@ namespace NuiLibDotNet {
 				}
 			}
 
+			static property System::Drawing::Bitmap ^ColourFrame {
+				System::Drawing::Bitmap ^get() {
+					System::Drawing::Imaging::PixelFormat format = System::Drawing::Imaging::PixelFormat::Format32bppRgb;
+					return MakeFrame(ColourBytes, format);
+					//return MakeFrame(NuiLibSafe::GetColourBytes(), format);
+				}
+			}
+
+			static property System::Drawing::Bitmap ^DepthFrame {
+				System::Drawing::Bitmap ^get() {
+					System::Drawing::Imaging::PixelFormat format = System::Drawing::Imaging::PixelFormat::Format24bppRgb;
+					return MakeFrame(DepthBytes, format);
+					//return MakeFrame(NuiLibSafe::GetDepthBytes(), format);
+				}
+			}
+
 			static property array<Byte> ^DepthBytes {
 				array<Byte> ^get() {
 					int w = NuiLibSafe::GetDepthWidth();
@@ -658,9 +702,9 @@ namespace NuiLibDotNet {
 					int h = NuiLibSafe::GetColourHeight();
 					int s = NuiLibSafe::GetColourStride();
 
-					array<Byte> ^ret = gcnew array<Byte>(w * h * s * 16);
+					array<Byte> ^ret = gcnew array<Byte>(w * h * s);
 
-					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s * 16);
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s);
 
 					return ret;
 				}

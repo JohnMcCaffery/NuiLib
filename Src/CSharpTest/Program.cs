@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Chimera.Util;
-using Chimera.Launcher;
 using NuiLibDotNet;
 using System.Windows.Forms;
 using CShartTest;

@@ -61,14 +61,13 @@ void NuiLibSafe::RegisterCallbacks(
 	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
 
-cv::Mat depth;
-cv::Mat empty(480, 640, CV_16UC1);
+bool one;
+cv::Mat depth1;
+cv::Mat depth2;
 std::vector<cv::Mat> inArray;
+const double DEPTH_SCALE_FACTOR = 255./65535.;
 
 bool NuiLibSafe::Init() {
-	cv::namedWindow("Test");
-	for (int i = 0; i < 2 * 640 * 480; i++)
-		empty.data[i] = 255;
 	return NuiLib::NuiFactory()->Init();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {
@@ -94,27 +93,19 @@ uchar *NuiLibSafe::GetColourBytes() {
 	return NuiLib::NuiFactory()->GetColour().data;
 }
 uchar *NuiLibSafe::GetDepthBytes() {
+	one = !one;
 	cv::Mat in = NuiLib::NuiFactory()->GetDepth();
-
-
-	//const double DEPTH_SCALE_FACTOR = 255./65535.;
-	//in.convertTo(depth, CV_8UC1, DEPTH_SCALE_FACTOR);
-	//depth.convertTo(depth, CV_8UC4);
 
 	inArray.clear();
 	inArray.push_back(in);
 	inArray.push_back(in);
 	inArray.push_back(in);
-	inArray.push_back(empty);
 
-	cv::merge(inArray, depth);
-	cv::imshow("Test", depth);
+	cv::merge(inArray, one ? depth1 : depth2);
 
+	(one ? depth1 : depth2).convertTo(one ? depth1 : depth2, CV_8UC3, DEPTH_SCALE_FACTOR);
 
-	//cv::cvtColor(in, depth, CV_GRAY2RGB);
-
-	//depth = in;
-	return depth.data;
+	return (one ? depth1 : depth2).data;
 }
 
 int NuiLibSafe::GetColourWidth() {
@@ -134,8 +125,7 @@ int NuiLibSafe::GetDepthHeight() {
 	return NuiLib::NuiFactory()->GetDepth().rows;
 }
 int NuiLibSafe::GetDepthStride() {
-	return 2;
-	//return NuiLib::NuiFactory()->GetDepth().elemSize1();
+	return 3;
 }
 
 //uchar *NuiLibSafe::GetDebugBytes() {
