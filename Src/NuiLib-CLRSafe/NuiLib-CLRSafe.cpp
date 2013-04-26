@@ -60,8 +60,15 @@ void NuiLibSafe::RegisterCallbacks(
 	listener = new NuiListener(tickCallback, foundCallback, lostCallback, switchedCallback);
 	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
+
+cv::Mat depth;
+cv::Mat empty(480, 640, CV_16UC1);
+std::vector<cv::Mat> inArray;
+
 bool NuiLibSafe::Init() {
 	cv::namedWindow("Test");
+	for (int i = 0; i < 2 * 640 * 480; i++)
+		empty.data[i] = 255;
 	return NuiLib::NuiFactory()->Init();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {
@@ -83,18 +90,31 @@ bool NuiLibSafe::HasSkeleton() {
 	return NuiLib::NuiFactory()->HasSkeleton();
 }
 
-cv::Mat colour;
-
 uchar *NuiLibSafe::GetColourBytes() {
 	return NuiLib::NuiFactory()->GetColour().data;
 }
 uchar *NuiLibSafe::GetDepthBytes() {
 	cv::Mat in = NuiLib::NuiFactory()->GetDepth();
-	cv::imshow("Test", in);
-	const double DEPTH_SCALE_FACTOR = 255./65535.;
-	in.convertTo(colour, CV_8UC1, DEPTH_SCALE_FACTOR);
-	cv::cvtColor(colour, colour, CV_GRAY2RGB);
-	return colour.data;
+
+
+	//const double DEPTH_SCALE_FACTOR = 255./65535.;
+	//in.convertTo(depth, CV_8UC1, DEPTH_SCALE_FACTOR);
+	//depth.convertTo(depth, CV_8UC4);
+
+	inArray.clear();
+	inArray.push_back(in);
+	inArray.push_back(in);
+	inArray.push_back(in);
+	inArray.push_back(empty);
+
+	cv::merge(inArray, depth);
+	cv::imshow("Test", depth);
+
+
+	//cv::cvtColor(in, depth, CV_GRAY2RGB);
+
+	//depth = in;
+	return depth.data;
 }
 
 int NuiLibSafe::GetColourWidth() {
@@ -104,7 +124,7 @@ int NuiLibSafe::GetColourHeight() {
 	return NuiLib::NuiFactory()->GetColour().rows;
 }
 int NuiLibSafe::GetColourStride() {
-	return NuiLib::NuiFactory()->GetColour().elemSize1();
+	return 4;
 }
 
 int NuiLibSafe::GetDepthWidth() {
@@ -114,7 +134,7 @@ int NuiLibSafe::GetDepthHeight() {
 	return NuiLib::NuiFactory()->GetDepth().rows;
 }
 int NuiLibSafe::GetDepthStride() {
-	return 1;
+	return 2;
 	//return NuiLib::NuiFactory()->GetDepth().elemSize1();
 }
 

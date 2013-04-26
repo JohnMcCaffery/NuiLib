@@ -650,16 +650,17 @@ namespace NuiLibDotNet {
 
 					return ret;
 				}
-			}
+			}
+
 			static property array<Byte> ^ColourBytes {
 				array<Byte> ^get() {
 					int w = NuiLibSafe::GetColourWidth();
 					int h = NuiLibSafe::GetColourHeight();
 					int s = NuiLibSafe::GetColourStride();
 
-					array<Byte> ^ret = gcnew array<Byte>(w * h * s * 4);
+					array<Byte> ^ret = gcnew array<Byte>(w * h * s * 16);
 
-					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s * 4);
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s * 16);
 
 					return ret;
 				}
