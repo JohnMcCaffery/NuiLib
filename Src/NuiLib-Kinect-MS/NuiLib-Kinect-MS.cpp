@@ -442,10 +442,10 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 	//http://msdn.microsoft.com/en-us/library/jj131024.aspx
 	//_pNuiSensor->NuiTransformSmooth(&frame, NULL);
-	const NUI_TRANSFORM_SMOOTH_PARAMETERS smooth = {
-		.8, .2, .2, .02, .05 
-	};
-	_pNuiSensor->NuiTransformSmooth(&frame, &smooth);
+	//const NUI_TRANSFORM_SMOOTH_PARAMETERS smooth = {
+		//.8, .2, .2, .02, .05 
+	//};
+	//_pNuiSensor->NuiTransformSmooth(&frame, &smooth);
 	int index = -1;
 	//Iterate through every skeleton
 	for (int i = 0; i < NUI_SKELETON_COUNT; i++) {
