@@ -352,6 +352,8 @@ namespace NuiLib {
 	DLL ConditionalScalar *ifScalarP(ICondition*, float, IScalar*);
 	DLL ConditionalScalar *ifScalarP(ICondition*, IScalar*, float);
 	DLL ConditionalScalar *ifScalarP(ICondition*, IScalar*, IScalar*);
+	DLL SmoothedScalar *smoothP(IScalar *toSmooth, IScalar *numFrames);
+	DLL SmoothedScalar *smoothP(IScalar *toSmooth, int numFrames);
 
 
 

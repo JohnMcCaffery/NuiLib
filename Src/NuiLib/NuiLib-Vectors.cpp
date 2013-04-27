@@ -183,7 +183,18 @@ ScalarVector *NuiLib::vectorP(IScalar *x, IScalar *y, IScalar *z) {
 	SPRINTF(name, 500, "(%s,%s,%s)", x->GetCName(), y->GetCName(), z->GetCName());
 	return vectorT(x, y, z, string(name));
 }
-
+SmoothedVector *NuiLib::smoothP(IVector *toSmooth, IScalar *numFrames) {
+	SmoothedVector *vector = ExtensionFactory()->Make<SmoothedVector>("smooth(" + toSmooth->GetName() + " by " + numFrames->GetName() + ")");
+	vector->SetVector(toSmooth);
+	vector->SetNumFrames(numFrames);
+	return vector;
+}
+SmoothedVector *NuiLib::smoothP(IVector *toSmooth, int numFrames) {
+	SmoothedVector *vector = ExtensionFactory()->Make<SmoothedVector>("smooth(" + toSmooth->GetName() + ")");
+	vector->SetVector(toSmooth);
+	vector->SetNumFrames((float) numFrames);
+	return vector;
+}
 
 
 
@@ -224,6 +235,12 @@ Vector NuiLib::scale(const Vector &wrappedVector, const float scale) {
 }
 Vector NuiLib::intersect(const Vector &pPlane, const Vector &planeNormal, const Vector &pLine, const Vector &lineDir) {
 	return Vector(intersectP(pPlane._p, planeNormal._p, pLine._p, lineDir._p));
+}
+Vector NuiLib::smooth(const Vector& toSmooth, const Scalar& numFrames) {
+	return smoothP(toSmooth._p, numFrames._p);
+}
+Vector NuiLib::smooth(const Vector& toSmooth, int numFrames) {
+	return smoothP(toSmooth._p, numFrames);
 }
 
 Vector::Vector(const Scalar &value) : _p(vectorP(value._p, value._p, value._p)) { }

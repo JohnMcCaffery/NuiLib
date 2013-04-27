@@ -18,6 +18,9 @@ namespace CSharpTest {
             Nui.Init();
             Nui.SetAutoPoll(true);
 
+            Vector v = Nui.smooth(Nui.joint(Nui.Hand_Right), 5);
+            Scalar s = Nui.smooth(Nui.x(Nui.joint(Nui.Hand_Right)), 5);
+
             Application.EnableVisualStyles();
             Application.Run(new TestForm());
 

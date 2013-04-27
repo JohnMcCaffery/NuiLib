@@ -984,9 +984,23 @@ namespace NuiLibDotNet {
 			/// <param name="scale"> The minumum value the track bar can have.</param>
 			/// <param name="value"> The initial value of the track bar.</param>
 			static Scalar ^tracker(String ^title, float max, float min, float value);
+			/// <summary>
+			/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is the current value of numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The scalar to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Scalar ^smooth(Scalar ^toSmooth, Scalar ^numFrames);
+			/// <summary>
+			/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The scalar to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Scalar ^smooth(Scalar ^toSmooth, int numFrames);
 
 
-			//----------------------------Scalars------------------------------
+			//----------------------------Vectors------------------------------
 
 
 			/// <summary>
@@ -1093,7 +1107,20 @@ namespace NuiLibDotNet {
 			/// </summary>
 			/// <param name="joint"> Which joint to track.</param>
 			static Vector ^joint(const int joint);
-
+			/// <summary>
+			/// Take a vector and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is the current value of numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The vector to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Vector ^smooth(Vector ^toSmooth, Scalar ^numFrames);
+			/// <summary>
+			/// Take a vector and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The vector to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Vector ^smooth(Vector ^toSmooth, int numFrames);
 
 
 			static int Hip_Centre=0;

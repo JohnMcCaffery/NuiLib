@@ -21,6 +21,8 @@ int main(int argc, char** argv) {
 	cv::namedWindow("TestWindow");
 	cv::namedWindow("TestDepth");
 
+	Vector scaledV = smooth(joint(HAND_RIGHT), 5);
+	Scalar scaledS = smooth(x(joint(HAND_RIGHT)), 5);
 
 	Vector pointEnd = joint(HAND_RIGHT);
 	Vector mPointStart = joint(SHOULDER_RIGHT);

@@ -409,6 +409,8 @@ namespace NuiLib {
 	DLL ScalarVector *vectorP(IScalar *, float, IScalar *);
 	DLL ScalarVector *vectorP(IScalar *, IScalar *, float);
 	DLL ScalarVector *vectorP(IScalar *, IScalar *, IScalar *);
+	DLL SmoothedVector *smoothP(IVector *toSmooth, IScalar *numFrames);
+	DLL SmoothedVector *smoothP(IVector *toSmooth, int numFrames);
 
 	DLL Vector normalize(Vector &);
 	DLL Vector planeDots(const Vector &, const Vector &);

@@ -402,6 +402,7 @@ SafeScalar *NuiLibSafe::product(float factor1, SafeScalar *factor2) {
 SafeScalar *NuiLibSafe::quotient(float dividend, SafeScalar *divisor) {
 	return new SafeScalar(NuiLib::quotient(dividend, ((IScalar*)divisor->_p)));
 }
+
 //-------------------------------------------------------------------------
 
 SafeScalar *NuiLibSafe::x(SafeVector *vector) {
@@ -478,6 +479,12 @@ SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, SafeScalar *ifTrue,
 }
 SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, SafeScalar *ifTrue, SafeScalar *ifFalse) {
 	return new SafeScalar(ifScalarP(((ICondition *)conditional->_p), ((IScalar *)ifTrue->_p), ((IScalar *)ifFalse->_p)));
+}
+SafeScalar *NuiLibSafe::smooth(SafeScalar *toSmooth, SafeScalar *numFrames) {
+	return new SafeScalar(NuiLib::smoothP((IScalar*)toSmooth->_p, (IScalar*)numFrames->_p));
+}
+SafeScalar *NuiLibSafe::smooth(SafeScalar *toSmooth, int numFrames) {
+	return new SafeScalar(NuiLib::smoothP((IScalar*)toSmooth->_p, numFrames));
 }
 
 //-------------------------------------------------------------------------
@@ -558,6 +565,12 @@ SafeVector *NuiLibSafe::intersect(SafeVector *pPlane, SafeVector *planeNormal, S
 }
 SafeVector *NuiLibSafe::joint(int joint) {
 	return new SafeVector(NuiLib::joint(joint)._p);
+}
+SafeVector *NuiLibSafe::smooth(SafeVector *toSmooth, SafeScalar *numFrames) {
+	return new SafeVector(NuiLib::smoothP((IVector*)toSmooth->_p, (IScalar*)numFrames->_p));
+}
+SafeVector *NuiLibSafe::smooth(SafeVector *toSmooth, int numFrames) {
+	return new SafeVector(NuiLib::smoothP((IVector*)toSmooth->_p, numFrames));
 }
 
 

@@ -501,7 +501,16 @@ DLL Point SkeletonToDepth(SafeVector *v);
 	/// @param value The initial value of the track bar.
 	///
 	//DLL SafeScalar *tracker(char* title, int max, float scale = 1.f, float shift = 0.f, int value = 0);
-
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is the current value of numFrames.
+	///
+	DLL SafeScalar *smooth(SafeScalar *toSmooth, SafeScalar *numFrames);
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is numFrames.
+	///
+	DLL SafeScalar *smooth(SafeScalar *toSmooth, int numFrames);
 
 
 
@@ -667,7 +676,16 @@ DLL Point SkeletonToDepth(SafeVector *v);
 	/// Foot Right: 19
 	///
 	DLL SafeVector *joint(int joint);	
-
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is the current value of numFrames.
+	///
+	DLL SafeVector *smooth(SafeVector *toSmooth, SafeScalar *numFrames);
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is numFrames.
+	///
+	DLL SafeVector *smooth(SafeVector *toSmooth, int numFrames);
 
 	//-------------------------------------------------------------------------
 

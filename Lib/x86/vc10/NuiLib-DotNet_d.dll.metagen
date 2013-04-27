@@ -261,6 +261,10 @@ Class NuiLibDotNet.Nui: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     ifScalar(Condition, Single, Scalar): PrivateScope, Public, Static, HideBySig
     ifScalar(Condition, Single, Single): PrivateScope, Public, Static, HideBySig
     tracker(String, Single, Single, Single): PrivateScope, Public, Static, HideBySig
+    smooth(Vector, Int32): PrivateScope, Public, Static, HideBySig
+    smooth(Vector, Scalar): PrivateScope, Public, Static, HideBySig
+    smooth(Scalar, Int32): PrivateScope, Public, Static, HideBySig
+    smooth(Scalar, Scalar): PrivateScope, Public, Static, HideBySig
     cross(Vector, Vector): PrivateScope, Public, Static, HideBySig
     limit(Vector, Boolean(HasFieldMarshal), Boolean(HasFieldMarshal), Boolean(HasFieldMarshal)): PrivateScope, Public, Static, HideBySig
     snapshot(Vector, Condition): PrivateScope, Public, Static, HideBySig
