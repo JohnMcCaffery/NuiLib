@@ -61,9 +61,7 @@ void NuiLibSafe::RegisterCallbacks(
 	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
 
-bool one;
-cv::Mat depth1;
-cv::Mat depth2;
+cv::Mat depth;
 std::vector<cv::Mat> inArray;
 const double DEPTH_SCALE_FACTOR = 255./65535.;
 
@@ -93,7 +91,6 @@ uchar *NuiLibSafe::GetColourBytes() {
 	return NuiLib::NuiFactory()->GetColour().data;
 }
 uchar *NuiLibSafe::GetDepthBytes() {
-	one = !one;
 	cv::Mat in = NuiLib::NuiFactory()->GetDepth();
 
 	inArray.clear();
@@ -101,11 +98,19 @@ uchar *NuiLibSafe::GetDepthBytes() {
 	inArray.push_back(in);
 	inArray.push_back(in);
 
-	cv::merge(inArray, one ? depth1 : depth2);
+	cv::merge(inArray, depth);
 
-	(one ? depth1 : depth2).convertTo(one ? depth1 : depth2, CV_8UC3, DEPTH_SCALE_FACTOR);
+	depth.convertTo(depth, CV_8UC3, DEPTH_SCALE_FACTOR);
 
-	return (one ? depth1 : depth2).data;
+	return (depth).data;
+}
+Point NuiLibSafe::SkeletonToColour(SafeVector *v) {
+	cv::Point p = NuiLib::NuiFactory()->SkeletonToColour(NuiLib::Vector((IVector *)v->_p));
+	return Point(p.x, p.y);
+}
+Point NuiLibSafe::SkeletonToDepth(SafeVector *v) {
+	cv::Point p = NuiLib::NuiFactory()->SkeletonToDepth(NuiLib::Vector((IVector *)v->_p));
+	return Point(p.x, p.y);
 }
 
 int NuiLibSafe::GetColourWidth() {

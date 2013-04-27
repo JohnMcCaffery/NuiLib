@@ -37,6 +37,22 @@ DLL int GetDepthStride();
 DLL int GetDepthLength();
 //DLL uchar *GetDebugBytes();
 
+DLL struct Point {
+	int X;
+	int Y;
+	Point(int x, int y) {
+		X = x;
+		Y = y;
+	}
+};
+
+class SafeScalar;
+class SafeVector;
+class SafeCondition;
+
+DLL Point SkeletonToColour(SafeVector *v);
+DLL Point SkeletonToDepth(SafeVector *v);
+
 	///
 	/// Wrapper around a scalar value.
 	/// The value is stored as a float.

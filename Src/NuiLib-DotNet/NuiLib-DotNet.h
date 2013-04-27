@@ -665,6 +665,11 @@ namespace NuiLibDotNet {
 				}
 			}
 
+			/// <summary>
+			/// The current frame from the Kinect's colour camera. Wrapped as a bitmap.
+			/// WARNING! NuiLib will create a new Bitmap object every time this property is called.
+			/// It will never dispose of these bitmap objects, so when you are done with a frame you need to call the Dispose method to clean up the memory allocated for the image.
+			/// </summary>
 			static property System::Drawing::Bitmap ^ColourFrame {
 				System::Drawing::Bitmap ^get() {
 					System::Drawing::Imaging::PixelFormat format = System::Drawing::Imaging::PixelFormat::Format32bppRgb;
@@ -673,12 +678,27 @@ namespace NuiLibDotNet {
 				}
 			}
 
+			/// <summary>
+			/// The current frame from the Kinect's depth camera. Wrapped as a bitmap.
+			/// WARNING! NuiLib will create a new Bitmap object every time this property is called.
+			/// It will never dispose of these bitmap objects, so when you are done with a frame you need to call the Dispose method to clean up the memory allocated for the image.
+			/// </summary>
 			static property System::Drawing::Bitmap ^DepthFrame {
 				System::Drawing::Bitmap ^get() {
 					System::Drawing::Imaging::PixelFormat format = System::Drawing::Imaging::PixelFormat::Format24bppRgb;
 					return MakeFrame(DepthBytes, format);
 					//return MakeFrame(NuiLibSafe::GetDepthBytes(), format);
 				}
+			}
+
+			static System::Drawing::Point SkeletonToColour(Vector ^v) {
+				NuiLibSafe::Point p = NuiLibSafe::SkeletonToColour((SafeVector *)v->_ps);
+				return System::Drawing::Point(p.X, p.Y);
+			}
+
+			static System::Drawing::Point SkeletonToDepth(Vector ^v) {
+				NuiLibSafe::Point p = NuiLibSafe::SkeletonToDepth((SafeVector *)v->_ps);
+				return System::Drawing::Point(p.X, p.Y);
 			}
 
 			static property array<Byte> ^DepthBytes {

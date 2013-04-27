@@ -146,7 +146,6 @@ void KinectFactory::InitEvents() {
 		if (event == _numEvents)
 			break;
 	}
-
 }
 
 void KinectFactory::EnableSkeleton(bool enable) {

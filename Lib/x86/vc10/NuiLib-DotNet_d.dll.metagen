@@ -223,6 +223,8 @@ Class NuiLibDotNet.Nui: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     raise_SkeletonSwitched(): PrivateScope, Public, Static, HideBySig, SpecialName
     get_ColourFrame(): PrivateScope, Public, Static, HideBySig, SpecialName
     get_DepthFrame(): PrivateScope, Public, Static, HideBySig, SpecialName
+    SkeletonToColour(Vector): PrivateScope, Public, Static, HideBySig
+    SkeletonToDepth(Vector): PrivateScope, Public, Static, HideBySig
     get_DepthBytes(): PrivateScope, Public, Static, HideBySig, SpecialName
     get_ColourBytes(): PrivateScope, Public, Static, HideBySig, SpecialName
     get_HasSkeleton(): PrivateScope, Public, Static, HideBySig, SpecialName
