@@ -20,6 +20,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 #include <NuiLib-API.h>
 #include <NuiLib-Operators.h>
 #include <NuiLib-Extendable.h>
+#include <queue>
 
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	/* pi */ 
@@ -307,6 +308,23 @@ namespace NuiLib {
 
 		float CalculateValue();
 		inline static string GetTypeName() { return "ConditionalScalar"; }
+	};
+
+
+	class DLL SmoothedScalar : public ScalarWrappingScalar {
+	private:
+		ScalarOperand _numFrames;
+		queue<float> _frames;
+
+	public:
+		SmoothedScalar();
+
+		void SetNumFrames(IScalar *value);
+		void SetNumFrames(float value);
+
+		float CalculateValue();
+		inline static string GetTypeName() { return "SmoothedScalar"; }
+		inline static bool FactoryUpdated() { return true; }
 	};
 
 	DLL VectorScalar *xP(IVector *);

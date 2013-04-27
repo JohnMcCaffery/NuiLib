@@ -809,3 +809,30 @@ void ConditionalScalar::SetCondition(bool value) { _condition = value; }
 float ConditionalScalar::CalculateValue() {
 	return *_condition ? *_scalar1 : *_scalar2;
 }
+
+
+//------------------------ SmoothedScalar -------------------------
+
+SmoothedScalar::SmoothedScalar() : 
+ScalarWrappingScalar(GetTypeName()) { 
+}
+
+void SmoothedScalar::SetNumFrames(IScalar *value) { _numFrames = value; }
+void SmoothedScalar::SetNumFrames(float value) { _numFrames = value; }
+
+float SmoothedScalar::CalculateValue() {
+	//Add the newest value to the queue
+	_frames.push(*_scalar);
+
+	//Remove all frames which are too old
+	while (_frames.size() > *_numFrames)
+		_frames.pop();
+
+	//Tally up all the frames stored
+	float value = 0.F;
+	for (auto it = _frames._Get_container().begin(); it != _frames._Get_container().end(); it++)
+		value += *it;
+
+	//Return the average of the frames stored
+	return value / _frames.size();
+}

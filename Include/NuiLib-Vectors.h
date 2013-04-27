@@ -21,6 +21,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 #include <NuiLib-API.h>
 #include <NuiLib-Operators.h>
 #include <NuiLib-Extendable.h>
+#include <queue>
 
 using namespace std;
 
@@ -369,6 +370,23 @@ namespace NuiLib {
 		cv::Point3f CalculateValue();
 		inline static string GetName() { return "ScalarVector"; }
 	};
+
+	class DLL SmoothedVector : public VectorWrappingVector {
+	private:
+		ScalarOperand _numFrames;
+		queue<cv::Point3f> _frames;
+
+	public:
+		SmoothedVector();
+
+		void SetNumFrames(IScalar *value);
+		void SetNumFrames(float value);
+
+		cv::Point3f CalculateValue();
+		inline static string GetTypeName() { return "SmoothedVector"; }
+		inline static bool FactoryUpdated() { return true; }
+	};
+
 
 	DLL NormalizedVector *normalizeP(IVector *);
 	DLL DotVector *planeDotsP(IVector *, IVector *);
