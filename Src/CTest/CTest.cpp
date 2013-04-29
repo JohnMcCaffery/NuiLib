@@ -1,6 +1,6 @@
 #include<NuiLib-API.h>
-#include<NuiLib-Extendable.h>
 #include<NuiLib-CLRSafe.h>
+#include<NuiLib-Extendable.h>
 #include<opencv\highgui.h>
 #include<iostream>
 

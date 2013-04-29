@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Chimera.Util;
-using Chimera.Launcher;
 using NuiLibDotNet;
+using C = NuiLibDotNet.Condition;
 
 namespace CSharpTest {
     public static class Program {
@@ -12,11 +11,12 @@ namespace CSharpTest {
         public static void Main(string[] args) {
             //System.Net.Mime.MediaTypeNames.Application.SetCompatibleTextRenderingDefault(false);
 
+            /*
             SingleInstanceLauncher launcher = new SingleInstanceLauncher();
 
             ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
+            */
  
-            /*
             //Test.Program.Main(args);
 
             Vector mPointStart = Vector.Create("PointStart", 0f, 0f, 0f);
@@ -124,7 +124,6 @@ namespace CSharpTest {
 
             //Nui.Close();
 
-*/
         }
 
         private static Vector make() {
