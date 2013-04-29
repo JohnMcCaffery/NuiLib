@@ -60,6 +60,11 @@ void NuiLibSafe::RegisterCallbacks(
 	listener = new NuiListener(tickCallback, foundCallback, lostCallback, switchedCallback);
 	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
+
+cv::Mat depth;
+std::vector<cv::Mat> inArray;
+const double DEPTH_SCALE_FACTOR = 255./65535.;
+
 bool NuiLibSafe::Init() {
 	return NuiLib::NuiFactory()->Init();
 }
@@ -81,6 +86,56 @@ void NuiLibSafe::Close() {
 bool NuiLibSafe::HasSkeleton() {
 	return NuiLib::NuiFactory()->HasSkeleton();
 }
+
+uchar *NuiLibSafe::GetColourBytes() {
+	return NuiLib::NuiFactory()->GetColour().data;
+}
+uchar *NuiLibSafe::GetDepthBytes() {
+	cv::Mat in = NuiLib::NuiFactory()->GetDepth();
+
+	inArray.clear();
+	inArray.push_back(in);
+	inArray.push_back(in);
+	inArray.push_back(in);
+
+	cv::merge(inArray, depth);
+
+	depth.convertTo(depth, CV_8UC3, DEPTH_SCALE_FACTOR);
+
+	return (depth).data;
+}
+Point NuiLibSafe::SkeletonToColour(SafeVector *v) {
+	cv::Point p = NuiLib::NuiFactory()->SkeletonToColour(NuiLib::Vector((IVector *)v->_p));
+	return Point(p.x, p.y);
+}
+Point NuiLibSafe::SkeletonToDepth(SafeVector *v) {
+	cv::Point p = NuiLib::NuiFactory()->SkeletonToDepth(NuiLib::Vector((IVector *)v->_p));
+	return Point(p.x, p.y);
+}
+
+int NuiLibSafe::GetColourWidth() {
+	return NuiLib::NuiFactory()->GetColour().cols;
+}
+int NuiLibSafe::GetColourHeight() {
+	return NuiLib::NuiFactory()->GetColour().rows;
+}
+int NuiLibSafe::GetColourStride() {
+	return 4;
+}
+
+int NuiLibSafe::GetDepthWidth() {
+	return NuiLib::NuiFactory()->GetDepth().cols;
+}
+int NuiLibSafe::GetDepthHeight() {
+	return NuiLib::NuiFactory()->GetDepth().rows;
+}
+int NuiLibSafe::GetDepthStride() {
+	return 3;
+}
+
+//uchar *NuiLibSafe::GetDebugBytes() {
+	//return NuiLib::NuiFactory()->GetDebi().data;
+//}
 
 
 int SafeScalar::_count = 1;
@@ -347,6 +402,7 @@ SafeScalar *NuiLibSafe::product(float factor1, SafeScalar *factor2) {
 SafeScalar *NuiLibSafe::quotient(float dividend, SafeScalar *divisor) {
 	return new SafeScalar(NuiLib::quotient(dividend, ((IScalar*)divisor->_p)));
 }
+
 //-------------------------------------------------------------------------
 
 SafeScalar *NuiLibSafe::x(SafeVector *vector) {
@@ -423,6 +479,12 @@ SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, SafeScalar *ifTrue,
 }
 SafeScalar *NuiLibSafe::ifScalar(SafeCondition *conditional, SafeScalar *ifTrue, SafeScalar *ifFalse) {
 	return new SafeScalar(ifScalarP(((ICondition *)conditional->_p), ((IScalar *)ifTrue->_p), ((IScalar *)ifFalse->_p)));
+}
+SafeScalar *NuiLibSafe::smooth(SafeScalar *toSmooth, SafeScalar *numFrames) {
+	return new SafeScalar(NuiLib::smoothP((IScalar*)toSmooth->_p, (IScalar*)numFrames->_p));
+}
+SafeScalar *NuiLibSafe::smooth(SafeScalar *toSmooth, int numFrames) {
+	return new SafeScalar(NuiLib::smoothP((IScalar*)toSmooth->_p, numFrames));
 }
 
 //-------------------------------------------------------------------------
@@ -503,6 +565,12 @@ SafeVector *NuiLibSafe::intersect(SafeVector *pPlane, SafeVector *planeNormal, S
 }
 SafeVector *NuiLibSafe::joint(int joint) {
 	return new SafeVector(NuiLib::joint(joint)._p);
+}
+SafeVector *NuiLibSafe::smooth(SafeVector *toSmooth, SafeScalar *numFrames) {
+	return new SafeVector(NuiLib::smoothP((IVector*)toSmooth->_p, (IScalar*)numFrames->_p));
+}
+SafeVector *NuiLibSafe::smooth(SafeVector *toSmooth, int numFrames) {
+	return new SafeVector(NuiLib::smoothP((IVector*)toSmooth->_p, numFrames));
 }
 
 

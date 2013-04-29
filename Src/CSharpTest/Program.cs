@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NuiLibDotNet;
-using C = NuiLibDotNet.Condition;
+using System.Windows.Forms;
+using CShartTest;
 
 namespace CSharpTest {
     public static class Program {
@@ -11,12 +12,21 @@ namespace CSharpTest {
         public static void Main(string[] args) {
             //System.Net.Mime.MediaTypeNames.Application.SetCompatibleTextRenderingDefault(false);
 
-            /*
-            SingleInstanceLauncher launcher = new SingleInstanceLauncher();
+            //SingleInstanceLauncher launcher = new SingleInstanceLauncher();
+            //ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
 
-            ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
-            */
+            Nui.Init();
+            Nui.SetAutoPoll(true);
+
+            Vector v = Nui.smooth(Nui.joint(Nui.Hand_Right), 5);
+            Scalar s = Nui.smooth(Nui.x(Nui.joint(Nui.Hand_Right)), 5);
+
+            Application.EnableVisualStyles();
+            Application.Run(new TestForm());
+
+            //Nui.Poll();
  
+            /*
             //Test.Program.Main(args);
 
             Vector mPointStart = Vector.Create("PointStart", 0f, 0f, 0f);
@@ -124,6 +134,7 @@ namespace CSharpTest {
 
             //Nui.Close();
 
+*/
         }
 
         private static Vector make() {

@@ -183,7 +183,18 @@ ScalarVector *NuiLib::vectorP(IScalar *x, IScalar *y, IScalar *z) {
 	SPRINTF(name, 500, "(%s,%s,%s)", x->GetCName(), y->GetCName(), z->GetCName());
 	return vectorT(x, y, z, string(name));
 }
-
+SmoothedVector *NuiLib::smoothP(IVector *toSmooth, IScalar *numFrames) {
+	SmoothedVector *vector = ExtensionFactory()->Make<SmoothedVector>("smooth(" + toSmooth->GetName() + " by " + numFrames->GetName() + ")");
+	vector->SetVector(toSmooth);
+	vector->SetNumFrames(numFrames);
+	return vector;
+}
+SmoothedVector *NuiLib::smoothP(IVector *toSmooth, int numFrames) {
+	SmoothedVector *vector = ExtensionFactory()->Make<SmoothedVector>("smooth(" + toSmooth->GetName() + ")");
+	vector->SetVector(toSmooth);
+	vector->SetNumFrames((float) numFrames);
+	return vector;
+}
 
 
 
@@ -224,6 +235,12 @@ Vector NuiLib::scale(const Vector &wrappedVector, const float scale) {
 }
 Vector NuiLib::intersect(const Vector &pPlane, const Vector &planeNormal, const Vector &pLine, const Vector &lineDir) {
 	return Vector(intersectP(pPlane._p, planeNormal._p, pLine._p, lineDir._p));
+}
+Vector NuiLib::smooth(const Vector& toSmooth, const Scalar& numFrames) {
+	return smoothP(toSmooth._p, numFrames._p);
+}
+Vector NuiLib::smooth(const Vector& toSmooth, int numFrames) {
+	return smoothP(toSmooth._p, numFrames);
 }
 
 Vector::Vector(const Scalar &value) : _p(vectorP(value._p, value._p, value._p)) { }
@@ -972,4 +989,32 @@ void ScalarVector::SetZ(float value) { _scalarZ.Set(value); }
 
 cv::Point3f ScalarVector::CalculateValue() {
 	return cv::Point3f(*_scalarX, *_scalarY, *_scalarZ);
+}
+
+
+//------------------------ SmoothedScalar -------------------------
+
+SmoothedVector::SmoothedVector() : 
+VectorWrappingVector(GetTypeName()) { 
+}
+
+void SmoothedVector::SetNumFrames(IScalar *value) { _numFrames = value; }
+void SmoothedVector::SetNumFrames(float value) { _numFrames = value; }
+
+cv::Point3f SmoothedVector::CalculateValue() {
+	//Add the newest value to the queue
+	_frames.push(**_vector);
+
+	//Remove all frames which are too old
+	while (_frames.size() > *_numFrames)
+		_frames.pop();
+
+	//Tally up all the frames stored
+	cv::Point3f value = 0.F;
+	for (auto it = _frames._Get_container().begin(); it != _frames._Get_container().end(); it++)
+		value += *it;
+
+	//Return the average of the frames stored
+	float s = (float) _frames.size();
+	return cv::Point3f(value.x / s, value.y / s, value.z / s);
 }

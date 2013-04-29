@@ -25,6 +25,33 @@ DLL void Poll();
 DLL void Pause();
 DLL void Close();
 DLL bool HasSkeleton();
+DLL unsigned char *GetColourBytes();
+DLL unsigned char *GetDepthBytes();
+DLL int GetColourWidth();
+DLL int GetColourHeight();
+DLL int GetColourStride();
+DLL int GetColourLength();
+DLL int GetDepthWidth();
+DLL int GetDepthHeight();
+DLL int GetDepthStride();
+DLL int GetDepthLength();
+//DLL uchar *GetDebugBytes();
+
+DLL struct Point {
+	int X;
+	int Y;
+	Point(int x, int y) {
+		X = x;
+		Y = y;
+	}
+};
+
+class SafeScalar;
+class SafeVector;
+class SafeCondition;
+
+DLL Point SkeletonToColour(SafeVector *v);
+DLL Point SkeletonToDepth(SafeVector *v);
 
 	///
 	/// Wrapper around a scalar value.
@@ -474,7 +501,16 @@ DLL bool HasSkeleton();
 	/// @param value The initial value of the track bar.
 	///
 	//DLL SafeScalar *tracker(char* title, int max, float scale = 1.f, float shift = 0.f, int value = 0);
-
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is the current value of numFrames.
+	///
+	DLL SafeScalar *smooth(SafeScalar *toSmooth, SafeScalar *numFrames);
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is numFrames.
+	///
+	DLL SafeScalar *smooth(SafeScalar *toSmooth, int numFrames);
 
 
 
@@ -640,7 +676,16 @@ DLL bool HasSkeleton();
 	/// Foot Right: 19
 	///
 	DLL SafeVector *joint(int joint);	
-
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is the current value of numFrames.
+	///
+	DLL SafeVector *smooth(SafeVector *toSmooth, SafeScalar *numFrames);
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is numFrames.
+	///
+	DLL SafeVector *smooth(SafeVector *toSmooth, int numFrames);
 
 	//-------------------------------------------------------------------------
 

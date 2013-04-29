@@ -894,7 +894,6 @@ namespace NuiLib {
 	/// True if operand is false.
 	///
 	DLL Condition operator!(const Condition &operand);
-
 	///
 	/// True if operand1 is greater than operand2.
 	///
@@ -1220,6 +1219,16 @@ namespace NuiLib {
 	/// @param value The initial value of the track bar.
 	///
 	DLL Scalar tracker(string title, const float max, float min = 0.f, float value = 0.f);
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is the current value of numFrames.
+	///
+	DLL Scalar smooth(const Scalar &toSmooth, const Scalar &numFrames);
+	///
+	/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is numFrames.
+	///
+	DLL Scalar smooth(const Scalar &toSmooth, int numFrames);
 
 
 	//-------------------------------------------------------------------------------------------------------------
@@ -1328,6 +1337,19 @@ namespace NuiLib {
 	/// Foot Right: 19
 	///
 	DLL Vector joint(const int joint);	
+	///
+	/// Take a vector and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is the current value of numFrames.
+	///
+	DLL Vector smooth(const Vector &toSmooth, const Scalar &numFrames);
+	///
+	/// Take a vector and smooth it. Smoothing is done by averaging the values of the last x frames.
+	/// x is numFrames.
+	///
+	DLL Vector smooth(const Vector &toSmooth, int numFrames);
+
+
+	//-------------------------------------------------------------------------------------------------------------
 	
 	///
 	/// True if all points are reasonable spread out.

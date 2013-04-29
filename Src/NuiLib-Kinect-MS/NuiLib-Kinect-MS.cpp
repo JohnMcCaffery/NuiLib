@@ -64,6 +64,7 @@ INuiFactoryExtension("KinectFactory", "KinectFactory"),
 	_pNuiSensor(NULL),
 	_currentSkeleton(0),
 	_debugFrame(YRES, XRES, CV_8UC1, cv::Scalar(0.)),
+	_colourFrame(YRES, XRES, CV_8UC4, cv::Scalar(0.)),
 	_depthFrame(YRES, XRES, CV_16UC1)
 {
 	function<IVector *()> kinectJointCreator = [this]() -> IVector* { 
@@ -117,10 +118,12 @@ bool KinectFactory::Init() {
 
 		if (!_skeletonListeners.empty() > 0)
 			EnableSkeleton(true);
-		if (!_depthListeners.empty() > 0)
-			EnableDepth(true);
 		if (!_colourListeners.empty() > 0)
 			EnableColour(true);
+#ifndef VISUAL
+		if (!_depthListeners.empty() > 0)
+#endif
+			EnableDepth(true);
 	} else
 		cout << "Unable to Initialise Sensor.\n";
 
@@ -143,7 +146,6 @@ void KinectFactory::InitEvents() {
 		if (event == _numEvents)
 			break;
 	}
-
 }
 
 void KinectFactory::EnableSkeleton(bool enable) {
@@ -401,9 +403,11 @@ void KinectFactory::Poll(bool fromExternal) {
 		}
 	} 
 
-	Trigger();
-	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
-		(*i)->Tick();
+	if (fromExternal || (!fromExternal && _polling)) {
+		Trigger();
+		for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+			(*i)->Tick();
+	}
 
 #ifdef VISUAL
 	if (_enabledEvents[DEPTH]) {
@@ -438,10 +442,10 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 	//http://msdn.microsoft.com/en-us/library/jj131024.aspx
 	//_pNuiSensor->NuiTransformSmooth(&frame, NULL);
-	const NUI_TRANSFORM_SMOOTH_PARAMETERS smooth = {
-		.8, .2, .2, .02, .05 
-	};
-	_pNuiSensor->NuiTransformSmooth(&frame, &smooth);
+	//const NUI_TRANSFORM_SMOOTH_PARAMETERS smooth = {
+		//.8, .2, .2, .02, .05 
+	//};
+	//_pNuiSensor->NuiTransformSmooth(&frame, &smooth);
 	int index = -1;
 	//Iterate through every skeleton
 	for (int i = 0; i < NUI_SKELETON_COUNT; i++) {

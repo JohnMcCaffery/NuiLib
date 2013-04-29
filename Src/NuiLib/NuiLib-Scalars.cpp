@@ -178,6 +178,19 @@ ConditionalScalar *NuiLib::ifScalarP(ICondition* conditional, IScalar *ifTrue, I
 	SPRINTF(name, 500, "(%s ? %s : %s)", conditional, ifTrue, ifFalse);
 	return ifT(conditional, ifTrue, ifFalse, string(name));
 }
+SmoothedScalar *NuiLib::smoothP(IScalar *toSmooth, IScalar *numFrames) {
+	SmoothedScalar *vector = ExtensionFactory()->Make<SmoothedScalar>("smooth(" + toSmooth->GetName() + " by " + numFrames->GetName() + ")");
+	vector->SetScalar(toSmooth);
+	vector->SetNumFrames(numFrames);
+	return vector;
+}
+SmoothedScalar *NuiLib::smoothP(IScalar *toSmooth, int numFrames) {
+	SmoothedScalar *vector = ExtensionFactory()->Make<SmoothedScalar>("smooth(" + toSmooth->GetName() + ")");
+	vector->SetScalar(toSmooth);
+	vector->SetNumFrames((float) numFrames);
+	return vector;
+}
+
 
 
 
@@ -269,6 +282,12 @@ Scalar NuiLib::ifScalar(const Condition& conditional, const Scalar &ifTrue, floa
 }
 Scalar NuiLib::ifScalar(const Condition& conditional, const Scalar &ifTrue, const Scalar &ifFalse) {
 	return ifScalarP(conditional._p, ifTrue._p, ifFalse._p);
+}
+Scalar NuiLib::smooth(const Scalar& toSmooth, const Scalar& numFrames) {
+	return smoothP(toSmooth._p, numFrames._p);
+}
+Scalar NuiLib::smooth(const Scalar& toSmooth, int numFrames) {
+	return smoothP(toSmooth._p, numFrames);
 }
 
 
@@ -808,4 +827,31 @@ void ConditionalScalar::SetCondition(bool value) { _condition = value; }
 
 float ConditionalScalar::CalculateValue() {
 	return *_condition ? *_scalar1 : *_scalar2;
+}
+
+
+//------------------------ SmoothedScalar -------------------------
+
+SmoothedScalar::SmoothedScalar() : 
+ScalarWrappingScalar(GetTypeName()) { 
+}
+
+void SmoothedScalar::SetNumFrames(IScalar *value) { _numFrames = value; }
+void SmoothedScalar::SetNumFrames(float value) { _numFrames = value; }
+
+float SmoothedScalar::CalculateValue() {
+	//Add the newest value to the queue
+	_frames.push(*_scalar);
+
+	//Remove all frames which are too old
+	while (_frames.size() > *_numFrames)
+		_frames.pop();
+
+	//Tally up all the frames stored
+	float value = 0.F;
+	for (auto it = _frames._Get_container().begin(); it != _frames._Get_container().end(); it++)
+		value += *it;
+
+	//Return the average of the frames stored
+	return value / _frames.size();
 }

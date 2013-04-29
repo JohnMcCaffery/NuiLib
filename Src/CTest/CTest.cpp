@@ -18,6 +18,12 @@ int main(int argc, char** argv) {
 	NuiFactory()->Init();
 	NuiFactory()->SetAutoPoll(true);
 
+	cv::namedWindow("TestWindow");
+	cv::namedWindow("TestDepth");
+
+	Vector scaledV = smooth(joint(HAND_RIGHT), 5);
+	Scalar scaledS = smooth(x(joint(HAND_RIGHT)), 5);
+
 	Vector pointEnd = joint(HAND_RIGHT);
 	Vector mPointStart = joint(SHOULDER_RIGHT);
 	Vector mPointDir = mPointStart - pointEnd;
@@ -43,8 +49,8 @@ int main(int argc, char** argv) {
 
 
 	NuiFactory()->AddListener([&mX, &mY] (IObservable *source) { 
-		if (NuiFactory()->HasSkeleton())
-			cout << "X: " << (*mX) << ", Y: " << (*mY) << "\n"; 
+		cv::imshow("TestWindow", NuiFactory()->GetColour());
+		cv::imshow("TestDepth", NuiFactory()->GetDepth());
 	});
 
 

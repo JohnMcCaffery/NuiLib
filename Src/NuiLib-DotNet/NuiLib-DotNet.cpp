@@ -347,6 +347,12 @@ Scalar ^Nui::ifScalar(Condition ^condition, Scalar ^t, Scalar ^f) {
 Scalar ^Nui::tracker(String ^title, float max, float min, float value) {
 	return Scalar::Create(new SafeScalar(value));
 }
+Scalar ^Nui::smooth(Scalar ^toSmooth, Scalar ^numFrames) {
+	return Scalar::Create(NuiLibSafe::smooth(toSmooth->_ps, numFrames->_ps));
+}
+Scalar ^Nui::smooth(Scalar ^toSmooth, int numFrames) {
+	return Scalar::Create(NuiLibSafe::smooth(toSmooth->_ps, numFrames));
+}
 
 
 
@@ -522,7 +528,12 @@ Vector ^Nui::intersect(Vector ^pPlane, Vector ^normalPlane, Vector ^pLine, Vecto
 Vector ^Nui::joint(const int joint) {
 	return Vector::Create(NuiLibSafe::joint(joint));
 }
-
+Vector ^Nui::smooth(Vector ^toSmooth, Scalar ^numFrames) {
+	return Vector::Create(NuiLibSafe::smooth(toSmooth->_ps, numFrames->_ps));
+}
+Vector ^Nui::smooth(Vector ^toSmooth, int numFrames) {
+	return Vector::Create(NuiLibSafe::smooth(toSmooth->_ps, numFrames));
+}
 
 
 

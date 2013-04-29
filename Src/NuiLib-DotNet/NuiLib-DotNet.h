@@ -575,6 +575,34 @@ namespace NuiLibDotNet {
 					(SkeletonCallbackFunction) (void*) switchedCallback);
 			}
 
+			static System::Drawing::Bitmap ^MakeFrame(unsigned char *bytes, System::Drawing::Imaging::PixelFormat format) {
+					System::Drawing::Rectangle bounds = System::Drawing::Rectangle(0, 0, 640, 480);
+					System::Drawing::Imaging::ImageLockMode mode = System::Drawing::Imaging::ImageLockMode::WriteOnly;
+
+					System::Drawing::Bitmap ^b = gcnew System::Drawing::Bitmap(640, 480, format);
+					System::Drawing::Imaging::BitmapData ^x = b->LockBits(bounds, mode, format);
+
+					x->Scan0 = IntPtr( (void *) bytes);
+
+					b->UnlockBits(x);
+
+					return b;
+			}
+
+			static System::Drawing::Bitmap ^MakeFrame(array<Byte> ^bytes, System::Drawing::Imaging::PixelFormat format) {
+					System::Drawing::Rectangle bounds = System::Drawing::Rectangle(0, 0, 640, 480);
+					System::Drawing::Imaging::ImageLockMode mode = System::Drawing::Imaging::ImageLockMode::WriteOnly;
+
+					System::Drawing::Bitmap ^b = gcnew System::Drawing::Bitmap(640, 480, format);
+					System::Drawing::Imaging::BitmapData ^x = b->LockBits(bounds, mode, format);
+
+					System::Runtime::InteropServices::Marshal::Copy(bytes, 0, x->Scan0, bytes.Length);
+
+					b->UnlockBits(x);
+
+					return b;
+			}
+
 		public:
 
 			static event ChangeDelegate ^Tick {
@@ -634,6 +662,71 @@ namespace NuiLibDotNet {
 					SkeletonTrackDelegate^ tmp = _skeletonSwitched;
 					if (tmp)
 						tmp->Invoke();
+				}
+			}
+
+			/// <summary>
+			/// The current frame from the Kinect's colour camera. Wrapped as a bitmap.
+			/// WARNING! NuiLib will create a new Bitmap object every time this property is called.
+			/// It will never dispose of these bitmap objects, so when you are done with a frame you need to call the Dispose method to clean up the memory allocated for the image.
+			/// </summary>
+			static property System::Drawing::Bitmap ^ColourFrame {
+				System::Drawing::Bitmap ^get() {
+					System::Drawing::Imaging::PixelFormat format = System::Drawing::Imaging::PixelFormat::Format32bppRgb;
+					return MakeFrame(ColourBytes, format);
+					//return MakeFrame(NuiLibSafe::GetColourBytes(), format);
+				}
+			}
+
+			/// <summary>
+			/// The current frame from the Kinect's depth camera. Wrapped as a bitmap.
+			/// WARNING! NuiLib will create a new Bitmap object every time this property is called.
+			/// It will never dispose of these bitmap objects, so when you are done with a frame you need to call the Dispose method to clean up the memory allocated for the image.
+			/// </summary>
+			static property System::Drawing::Bitmap ^DepthFrame {
+				System::Drawing::Bitmap ^get() {
+					System::Drawing::Imaging::PixelFormat format = System::Drawing::Imaging::PixelFormat::Format24bppRgb;
+					return MakeFrame(DepthBytes, format);
+					//return MakeFrame(NuiLibSafe::GetDepthBytes(), format);
+				}
+			}
+
+			static System::Drawing::Point SkeletonToColour(Vector ^v) {
+				NuiLibSafe::Point p = NuiLibSafe::SkeletonToColour((SafeVector *)v->_ps);
+				return System::Drawing::Point(p.X, p.Y);
+			}
+
+			static System::Drawing::Point SkeletonToDepth(Vector ^v) {
+				NuiLibSafe::Point p = NuiLibSafe::SkeletonToDepth((SafeVector *)v->_ps);
+				return System::Drawing::Point(p.X, p.Y);
+			}
+
+			static property array<Byte> ^DepthBytes {
+				array<Byte> ^get() {
+					int w = NuiLibSafe::GetDepthWidth();
+					int h = NuiLibSafe::GetDepthHeight();
+					int s = NuiLibSafe::GetDepthStride();
+					int l = w * h * s;
+
+					array<Byte> ^ret = gcnew array<Byte>(l);
+
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetDepthBytes()), ret, 0, l);
+
+					return ret;
+				}
+			}
+
+			static property array<Byte> ^ColourBytes {
+				array<Byte> ^get() {
+					int w = NuiLibSafe::GetColourWidth();
+					int h = NuiLibSafe::GetColourHeight();
+					int s = NuiLibSafe::GetColourStride();
+
+					array<Byte> ^ret = gcnew array<Byte>(w * h * s);
+
+					System::Runtime::InteropServices::Marshal::Copy( IntPtr( (void * ) NuiLibSafe::GetColourBytes()), ret, 0, w * h * s);
+
+					return ret;
 				}
 			}
 
@@ -891,9 +984,23 @@ namespace NuiLibDotNet {
 			/// <param name="scale"> The minumum value the track bar can have.</param>
 			/// <param name="value"> The initial value of the track bar.</param>
 			static Scalar ^tracker(String ^title, float max, float min, float value);
+			/// <summary>
+			/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is the current value of numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The scalar to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Scalar ^smooth(Scalar ^toSmooth, Scalar ^numFrames);
+			/// <summary>
+			/// Take a scalar and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The scalar to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Scalar ^smooth(Scalar ^toSmooth, int numFrames);
 
 
-			//----------------------------Scalars------------------------------
+			//----------------------------Vectors------------------------------
 
 
 			/// <summary>
@@ -1000,7 +1107,20 @@ namespace NuiLibDotNet {
 			/// </summary>
 			/// <param name="joint"> Which joint to track.</param>
 			static Vector ^joint(const int joint);
-
+			/// <summary>
+			/// Take a vector and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is the current value of numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The vector to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Vector ^smooth(Vector ^toSmooth, Scalar ^numFrames);
+			/// <summary>
+			/// Take a vector and smooth it. Smoothing is done by averaging the values of the last x frames.
+			/// x is numFrames.
+			/// </summary>
+			/// <param name="toSmooth">The vector to smooth.</param>
+			/// <param name="numFrames">How many frames to average together to get the smoothing.</param>
+			static Vector ^smooth(Vector ^toSmooth, int numFrames);
 
 
 			static int Hip_Centre=0;
