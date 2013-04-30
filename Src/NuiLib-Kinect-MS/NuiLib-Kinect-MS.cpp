@@ -16,7 +16,7 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
-#include <NuiLib-Kinect-MS.h>
+#include "NuiLib-Kinect-MS-API.h"
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 
@@ -33,6 +33,7 @@ using namespace NuiLib;
 
 KinectFactory _factory;
 
+/*
 INuiFactoryExtension *NuiLib::ExtensionFactory() { 
 	return &_factory;
 }
@@ -40,8 +41,13 @@ INuiFactoryExtension *NuiLib::ExtensionFactory() {
 INuiFactory *NuiLib::NuiFactory() { 
 	return &_factory;
 }
+*/
 
-Vector NuiLib::joint(const int index) {
+void NuiLib::InitKinectMS() {
+	SetFactory(&_factory);
+}
+
+Vector makeJoint(const int index) {
 	KinectJoint *joint = ExtensionFactory()->Make<KinectJoint>(KinectJoint::NameFromIndex((NUI_SKELETON_POSITION_INDEX)index));
 	joint->SetIndex((NUI_SKELETON_POSITION_INDEX) index);
 	return Vector(joint);
@@ -546,6 +552,10 @@ string KinectFactory::ToXML() { return ""; }
 void KinectFactory::LoadXML(string xml) { }
 
 void **KinectFactory::GetNuiDevices() { return (void **) (&_pNuiSensor); }
+
+Vector KinectFactory::joint(const int joint) {
+	return makeJoint(joint);
+}
 
 //----------------------- KinectJoint -------------------------------
 

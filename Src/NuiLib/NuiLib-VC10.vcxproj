@@ -346,14 +346,12 @@
     <ClInclude Include="..\..\Include\NuiLib-API.h" />
     <ClInclude Include="..\..\Include\NuiLib-Conditions.h" />
     <ClInclude Include="..\..\Include\NuiLib-Extendable.h" />
-    <ClInclude Include="..\..\Include\NuiLib-Kinect-MS.h" />
     <ClInclude Include="..\..\Include\NuiLib-Operators.h" />
     <ClInclude Include="..\..\Include\NuiLib-HandProcessing.h" />
     <ClInclude Include="..\..\Include\NuiLib-Scalars.h" />
     <ClInclude Include="..\..\Include\NuiLib-Vectors.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\NuiLib-Kinect-MS\NuiLib-Kinect-MS.cpp" />
     <ClCompile Include="NuiLib-API.cpp" />
     <ClCompile Include="NuiLib-Conditions.cpp" />
     <ClCompile Include="NuiLib-Extendable.cpp" />

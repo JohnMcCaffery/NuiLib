@@ -3,6 +3,7 @@
 #include <NuiLib-Scalars.h>
 #include <NuiLib-Vectors.h>
 #include <NuiLib-Conditions.h>
+#include <NuiLib-Kinect-MS.h>
 #include <opencv/highgui.h>
 
 
@@ -66,6 +67,7 @@ std::vector<cv::Mat> inArray;
 const double DEPTH_SCALE_FACTOR = 255./65535.;
 
 bool NuiLibSafe::Init() {
+	NuiLib::InitKinectMS();
 	return NuiLib::NuiFactory()->Init();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {

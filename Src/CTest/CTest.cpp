@@ -1,6 +1,7 @@
 #include<NuiLib-API.h>
 #include<NuiLib-Extendable.h>
 #include<NuiLib-CLRSafe.h>
+#include<NuiLib-Kinect-MS.h>
 #include<opencv\highgui.h>
 #include<iostream>
 
@@ -15,6 +16,7 @@ int main(int argc, char** argv) {
 	Vector planePoint = Vector("PlanePoint", 1.f, 1.f, 0.f);
 	Vector planeNormal = Vector("PlaneNormal", 0.f, 0.f, -1.f);
 
+	InitKinectMS();
 	NuiFactory()->Init();
 	NuiFactory()->SetAutoPoll(true);
 

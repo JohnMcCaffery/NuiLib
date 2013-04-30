@@ -43,7 +43,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
@@ -125,8 +125,9 @@
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
-    <IncludePath>$(KINECTSDK10_DIR)inc;C:\Users\Iain\Documents\John\opencv\build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath>$(OPENCV_DIR)build/include/;$(KINECTSDK10_DIR)inc;$(SolutionDir)Include;$(WindowsSdkDir)\Include;$(WindowsSdkDir)\Include\gl;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(SolutionDir)Lib\x86\vc10\;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -190,13 +191,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>opencv_core244d.lib;opencv_objdetect244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;kinect10.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -323,10 +323,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Include\NuiLib-Kinect-MS.h" />
+    <ProjectReference Include="..\NuiLib\NuiLib-VC10.vcxproj">
+      <Project>{7726434f-1330-45d9-aa09-7949c3cb3e58}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NuiLib-Kinect-MS.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NuiLib-Kinect-MS-API.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
