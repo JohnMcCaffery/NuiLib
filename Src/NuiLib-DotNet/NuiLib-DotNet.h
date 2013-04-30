@@ -1,4 +1,3 @@
-// NuiLib-.h
 #include <NuiLib-CLRSafe.h>
 #include <cstring>
 #include <list>
