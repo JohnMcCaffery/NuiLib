@@ -548,7 +548,38 @@ namespace NuiLib {
 
 		string ToXML() { return ""; }
 		void LoadXML(string xml) { }
+
+		///
+		/// The cartesian coordinates of a joint in the current user's skelton relative to the NUI device.
+		/// @param joint Which joint to track.
+		/// Hip Centre: 0
+		/// Spine: 1
+		/// Shoulder Centre: 2
+		/// Head: 3
+		/// Shoulder Left: 4
+		/// Elbow Left: 5
+		/// Wrist Left: 6
+		/// Hand Left: 7
+		/// Shoulder Right: 8
+		/// Elbow Right: 9
+		/// Wrist Right: 10
+		/// Hand Right: 11
+		/// Hip Left: 12
+		/// Knee Left: 13
+		/// Ankle Left: 14
+		/// Foot Left: 15
+		/// Hip Right: 16
+		/// Knee Right: 17
+		/// Ankle Right: 18
+		/// Foot Right: 19
+		///
+		virtual Vector joint(const int joint) = 0;	
 	};
+
+	///
+	/// Specify the factory that is to be used by NuiLib.
+	///
+	DLL void SetFactory(INuiFactoryExtension *factory);
 
 	///
 	/// Get the factory which can be used to interact with the NUI device.

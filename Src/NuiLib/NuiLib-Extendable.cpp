@@ -44,3 +44,22 @@ void INuiFactoryExtension::Clear() {
 INuiFactoryExtension::~INuiFactoryExtension() {
 	//Clear();
 }
+
+
+INuiFactoryExtension *_factory;
+
+void NuiLib::SetFactory(INuiFactoryExtension *factory) {
+	_factory = factory;
+}
+
+INuiFactoryExtension *NuiLib::ExtensionFactory() { 
+	return _factory;
+}
+
+INuiFactory *NuiLib::NuiFactory() { 
+	return _factory;
+}
+
+Vector NuiLib::joint(const int index) {
+	return ExtensionFactory()->joint(index);
+}
