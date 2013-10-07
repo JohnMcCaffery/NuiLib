@@ -20,6 +20,7 @@ set /P cv="Enter the root directory for your OpenCV installation: "
 set fslash=/
 set bslash=\
 set cvDir=CVDIR
+set cvVer=246
 
 if not defined OPENCV_DIR (
 	if %cv:~-1% == %fslash% (
@@ -42,14 +43,14 @@ if not exist Bin\x86 md Bin\x86
 if not exist Bin\x86\vc10 md Bin\x86\vc10
 
 @echo Moving VC10 OpenCV libraries to Bin
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core244.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core244d.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui244.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui244d.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc244.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc244d.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect244.dll" Bin\x86\vc10\
-copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect244d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core"%cvVer%".dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_core"%cvVer%"d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui"%cvVer%".dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_highgui"%cvVer%"d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc"%cvVer%".dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_imgproc"%cvVer%"d.dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect"%cvVer%".dll" Bin\x86\vc10\
+copy "%cvDir:/=\%build\x86\vc10\bin\opencv_objdetect"%cvVer%"d.dll" Bin\x86\vc10\
 copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb.dll" Bin\x86\vc10\
 copy "%cvDir:/=\%build\common\tbb\ia32\vc10\tbb_debug.dll" Bin\x86\vc10\
 
