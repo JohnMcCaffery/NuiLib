@@ -18,6 +18,8 @@ int main(int argc, char** argv) {
 	NuiFactory()->Init();
 	NuiFactory()->SetAutoPoll(true);
 
+	fist(true);
+
 	cv::namedWindow("TestWindow");
 	cv::namedWindow("TestDepth");
 

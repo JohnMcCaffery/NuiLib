@@ -49,7 +49,7 @@
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -61,7 +61,7 @@
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -74,7 +74,7 @@
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -133,9 +133,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(KINECTSDK10_DIR)\lib\x86;$(KINECTSDK10_DIR)\Assemblies;C:\Program Files\Microsoft SDKs\Kinect\v1.0\Assemblies;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(SolutionDir)Lib\x86\vc10\;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
     <TargetName>$(ProjectName)_d</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'">
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
@@ -151,7 +152,7 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_dv</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
@@ -163,9 +164,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(KINECTSDK10_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(KINECTSDK10_DIR)\lib\x86;$(KINECTSDK10_DIR)\Assemblies;C:\Program Files\Microsoft SDKs\Kinect\v1.0\Assemblies;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
     <TargetName>$(ProjectName)</TargetName>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
   </PropertyGroup>
