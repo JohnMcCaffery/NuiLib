@@ -316,7 +316,14 @@ namespace NuiLib {
 		IVector *_p;
 		///
 		/// Value = 0
+		///
 		Vector();
+		///
+		/// Value = 0
+		/// Initialise the vector without registering it. Only use this if you are later going to reassign the vector.
+		///
+		Vector(int x);
+		///
 		///
 		/// X = value
 		/// Y = value

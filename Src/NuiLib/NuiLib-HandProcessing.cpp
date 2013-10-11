@@ -70,7 +70,7 @@ SkeletonPoint::SkeletonPoint(long X, long Y, ushort Z) : x(X), y(Y), z(Z) { }
 
 bool hand = false;
 
-HandProcessor::HandProcessor() : _initialised(false) { }
+HandProcessor::HandProcessor() : _initialised(false), _vHand(-1), _vHip(-1) { }
 
 void HandProcessor::Init(bool isRight) {
 	_found = false; 

@@ -90,6 +90,9 @@ void Condition::Set(bool value) {
 
 int Vector::_count = 1;
 
+Vector::Vector(int x) : _p(NULL) {
+
+}
 Vector::Vector() : _p(NULL) {
 	char name[50];
 	SPRINTF(name, 50, "Vector%i", _count++);
