@@ -228,7 +228,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>NuiLib_dv.lib;NuiLib-Kinect-MS_dv.lib;Kinect10.lib;opencv_core241d.lib;opencv_highgui241d.lib;opencv_imgproc241d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib_dv.lib;NuiLib-Kinect-MS_dv.lib;Kinect10.lib;opencv_core244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -245,7 +245,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>NuiLib.lib;NuiLib-Kinect-MS.lib;Kinect10.lib;opencv_core241.lib;opencv_highgui241.lib;opencv_imgproc241.lib;opencv_objdetect241.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib.lib;NuiLib-Kinect-MS.lib;Kinect10.lib;opencv_core244.lib;opencv_highgui244.lib;opencv_imgproc244.lib;opencv_objdetect244.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -262,7 +262,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>NuiLib.lib;NuiLib-Kinect-MS.lib;Kinect10.lib;opencv_core241.lib;opencv_highgui241.lib;opencv_imgproc241.lib;opencv_objdetect241.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib.lib;NuiLib-Kinect-MS.lib;Kinect10.lib;opencv_core244.lib;opencv_highgui244.lib;opencv_imgproc244.lib;opencv_objdetect244.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'">
@@ -279,7 +279,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>NuiLib_v.lib;NuiLib-Kinect-MS_v.lib;Kinect10.lib;opencv_core241.lib;opencv_highgui241.lib;opencv_imgproc241.lib;opencv_objdetect241.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib_v.lib;NuiLib-Kinect-MS_v.lib;Kinect10.lib;opencv_core244.lib;opencv_highgui244.lib;opencv_imgproc244.lib;opencv_objdetect244.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'">
@@ -296,7 +296,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>NuiLib_v.lib;NuiLib-Kinect-MS_v.lib;Kinect10.lib;opencv_core241.lib;opencv_highgui241.lib;opencv_imgproc241.lib;opencv_objdetect241.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>NuiLib_v.lib;NuiLib-Kinect-MS_v.lib;Kinect10.lib;opencv_core244.lib;opencv_highgui244.lib;opencv_imgproc244.lib;opencv_objdetect244.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

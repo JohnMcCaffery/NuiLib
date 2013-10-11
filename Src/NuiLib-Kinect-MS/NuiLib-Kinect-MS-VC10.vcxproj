@@ -55,7 +55,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
@@ -81,9 +81,9 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'" Label="Configuration">
@@ -142,9 +142,9 @@
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Lib\x86\vc10\</OutDir>
     <TargetName>$(ProjectName)_dv</TargetName>
-    <IncludePath>$(KINECTSDK10_DIR)inc;$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
-    <TargetExt>.lib</TargetExt>
+    <IncludePath>$(OPENCV_DIR)build\include;$(KINECTSDK10_DIR)inc;$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugVisual|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -178,7 +178,8 @@
     <IncludePath>$(KINECTSDK10_DIR)inc;$(OPENCV_DIR)build\include;$(SolutionDir)Include;$(IncludePath)</IncludePath>
     <IntDir>$(ProjectDir)$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_v</TargetName>
-    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <LibraryPath>$(KINECTSDK10_DIR)lib/x86/;$(OPENCV_DIR)build\x86\vc10\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -229,8 +230,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>opencv_core244d.lib;opencv_objdetect244d.lib;opencv_highgui244d.lib;opencv_imgproc244d.lib;kinect10.lib;</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
@@ -288,13 +288,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseVisual|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VISUAL;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILD;VISUAL;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>opencv_core244.lib;opencv_objdetect244.lib;opencv_highgui244.lib;opencv_imgproc244.lib;kinect10.lib;</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>
