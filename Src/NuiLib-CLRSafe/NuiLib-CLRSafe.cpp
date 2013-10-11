@@ -67,7 +67,7 @@ std::vector<cv::Mat> inArray;
 const double DEPTH_SCALE_FACTOR = 255./65535.;
 
 bool NuiLibSafe::Init() {
-	NuiLib::InitKinectMS();
+	NuiLib::RegisterFactory();
 	return NuiLib::NuiFactory()->Init();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {

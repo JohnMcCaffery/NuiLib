@@ -23,6 +23,6 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 #define KINECT_MS_H
 
 namespace NuiLib {
-	DLL void InitKinectMS();
+	DLL void RegisterFactory();
 }
 #endif

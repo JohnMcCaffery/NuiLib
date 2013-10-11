@@ -19,11 +19,14 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
 #include <NuiLib-API.h>
+#include <NuiLib-Kinect-MS.h>
 #include<NuiLib-CLRSafe.h>
 //Needed for waitKey
 #include <opencv\highgui.h>
 
 int main (int argc, char **args) {
+	//Register the Microsoft Kinect factory as the factory to use
+	NuiLib::RegisterFactory();
 	//Initialise the factory.
 	NuiLib::NuiFactory()->Init();
 
@@ -33,7 +36,6 @@ int main (int argc, char **args) {
 	arm.AddListener([&arm](NuiLib::IObservable *s) { cout << "Right Arm: " << arm.X() << ',' << arm.Y() << ',' << arm.Z() << '\n'; });
 	//Start the factory polling.
 	NuiLib::NuiFactory()->SetAutoPoll(true);
-
 
 	//Wait for user input to stop the program.
 #ifdef VISUAL

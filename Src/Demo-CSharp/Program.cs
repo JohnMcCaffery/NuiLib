@@ -35,6 +35,7 @@ namespace Demo_CSharp {
             };
             vector.Set(20f, 15, 12f);
 
+            */
 
             Nui.Init();
             Nui.SetAutoPoll(true);
@@ -59,12 +60,15 @@ namespace Demo_CSharp {
 
             hand.OnChange += () => Console.WriteLine("{0} - {1} = {2}", x.Value, y.Value, diff.Value);
 
-            Nui.Pause();
+            Pause();
             Nui.SetAutoPoll(false);
             Console.WriteLine("{0} - {1} = {2}", x.Value, y.Value, diff.Value);
-            Nui.Pause();
-            //Console.ReadLine();
-            */
+            Pause();
+        }
+
+        private static void Pause() {
+            //Nui.Pause();
+            Console.ReadLine();
         }
     }
 }

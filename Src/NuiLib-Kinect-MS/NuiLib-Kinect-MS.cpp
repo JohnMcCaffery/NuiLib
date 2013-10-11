@@ -43,7 +43,7 @@ INuiFactory *NuiLib::NuiFactory() {
 }
 */
 
-void NuiLib::InitKinectMS() {
+void NuiLib::RegisterFactory() {
 	SetFactory(&_factory);
 }
 

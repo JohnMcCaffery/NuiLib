@@ -1,4 +1,5 @@
 #include<NuiLib-API.h>
+#include<NuiLib-Kinect-MS.h>
 #include<NuiLib-CLRSafe.h>
 #include<NuiLib-Extendable.h>
 #include<opencv\highgui.h>
@@ -8,6 +9,8 @@ using namespace std;
 using namespace NuiLib;
 
 int main(int argc, char** argv) {
+	//Register the Microsoft Kinect factory as the factory to use
+	NuiLib::RegisterFactory();
 
 	NuiLibSafe::SafeVector *s = new NuiLibSafe::SafeVector(0.f, 0.f, 0.f);
 	const char *cname = s->GetName();

@@ -165,9 +165,9 @@ Listener *InitSecondary() {
 	mTranslateL = fistL && !fistR;
 	mTranslateR = fistR && !fistL;
 	Vector deltaL = shoulderL - handL;
-	Scalar xDelta = constrain(x(deltaL), tracker("X-D", 10, .1f, 0.f, 5), tracker("X-R", 10, .1f, 0.f, 5), tracker("X-G", 10, .1f, 0.f, 5), true);
-	Scalar yDelta = constrain(y(deltaL), tracker("Y-D", 10, .1f, 0.f, 5), tracker("Y-R", 10, .1f, 0.f, 5), tracker("Y-G", 10, .1f, 0.f, 5), true);
-	Scalar zDelta = constrain(z(deltaL) - tracker("Z-O", 10, .1f, 0.f, 5), tracker("Z-D", 10, .1f, 0.f, 5), tracker("Z-R", 10, .1f, 0.f, 5), tracker("Z-G", 10, .1f, 0.f, 5), true);
+	Scalar xDelta = constrain(x(deltaL), tracker("X-D", 10, .1f, 0.f), tracker("X-R", 10, .1f, 0.f), tracker("X-G", 10, .1f, 0.f), true);
+	Scalar yDelta = constrain(y(deltaL), tracker("Y-D", 10, .1f, 0.f), tracker("Y-R", 10, .1f, 0.f), tracker("Y-G", 10, .1f, 0.f), true);
+	Scalar zDelta = constrain(z(deltaL) - tracker("Z-O", 10, .1f, 0.f), tracker("Z-D", 10, .1f, 0.f), tracker("Z-R", 10, .1f, 0.f), tracker("Z-G", 10, .1f, 0.f), true);
 	//Scalar xDelta = constrain(x(deltaL), .5f, .5f, .5f, true);
 	//Scalar yDelta = constrain(y(deltaL), .5f, .5f, .5f, true);
 	//Scalar zDelta = constrain(z(deltaL) - .5f, .5f, .5f, .5f, true);

@@ -19,10 +19,13 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
 #include <NuiLib-API.h>
+#include <NuiLib-Kinect-MS.h>
 //Needed for waitKey
 #include <opencv\highgui.h>
 
 int main (int argc, char **args) {
+	//Register the Microsoft Kinect factory as the factory to use
+	NuiLib::RegisterFactory();
 	//Initialise the factory.
 	NuiLib::NuiFactory()->Init();
 
