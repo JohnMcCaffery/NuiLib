@@ -329,6 +329,7 @@ IScalar(name, value),
 			windowCreated = true;
 			namedWindow("TrackerWindow", CV_WINDOW_NORMAL);
 		}
+		_value = (value * _scale) + _shift;
 		createTrackbar(name, "TrackerWindow", &_value, _ticks, NuiLib::OnTracker, this);
 #endif
 }
