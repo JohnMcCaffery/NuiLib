@@ -113,6 +113,8 @@ namespace NuiLib {
 			bool _polling;
 			bool _initialised;
 
+			char *_state;
+
 			int _numEvents;
 			HANDLE *_hEvents;
 			HANDLE _eventHandles[3];
@@ -158,6 +160,7 @@ namespace NuiLib {
 			virtual ~KinectFactory();
 
 			bool Init();
+			char *GetState();
 			bool GetAutoPoll();
 			void SetAutoPoll(bool);
 			void Poll();
@@ -165,7 +168,6 @@ namespace NuiLib {
 			void AddSkeletonListener(IListener<NUI_SKELETON_DATA> *);
 			void AddColourListener(IListener<NUI_IMAGE_FRAME> *);
 			void AddDepthListener(IListener<NUI_IMAGE_FRAME> *);
-
 
 			///
 			/// Add a listener that will be notified of NUI events (Tick, SkeletonFound, SkeletonLost, SkeletonSwitched).
@@ -210,6 +212,9 @@ namespace NuiLib {
 			void Init(void *item);
 
 			Vector joint(const int joint);	
+
+			void NotifyKinectConnected();
+			void NotifyKinectDisconnected();
 	};
 }
 #endif

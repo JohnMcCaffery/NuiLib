@@ -152,6 +152,8 @@ namespace NuiLib {
 	class INuiListener {
 	public:
 		virtual void Tick() = 0;
+		virtual void DeviceConnected() = 0;
+		virtual void DeviceDisconnected() = 0;
 		virtual void SkeletonFound(int index) = 0;
 		virtual void SkeletonLost(int index) = 0;
 		virtual void SkeletonSwitched(int index) = 0;
@@ -1546,6 +1548,10 @@ namespace NuiLib {
 		/// Remove a listener that was being notified of NUI events.
 		///
 		virtual void RemoveNuiListener(INuiListener *listener) = 0;
+		///
+		/// Get a string representing the current state of the factory. May change after any interaction.
+		///
+		virtual char *GetState() = 0;
 	};
 
 	///

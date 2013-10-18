@@ -538,16 +538,22 @@ namespace NuiLibDotNet {
 		private:
 			static Nui ^_nui;
 			static ChangeDelegate^ _tickCallback;
+			static ChangeDelegate^ _connectedCallback;
+			static ChangeDelegate^ _disconnectedCallback;
 			static SkeletonTrackDelegate^ _skeletonFoundCallback;
 			static SkeletonTrackDelegate^ _skeletonLostCallback;
 			static SkeletonTrackDelegate^ _skeletonSwitchedCallback;
 
 			static ChangeDelegate^ _tick;
+			static ChangeDelegate^ _connected;
+			static ChangeDelegate^ _disconnected;
 			static SkeletonTrackDelegate^ _skeletonFound;
 			static SkeletonTrackDelegate^ _skeletonLost;
 			static SkeletonTrackDelegate^ _skeletonSwitched;
 
 			void TickListener() { Tick(); }
+			void ConnectedListener() { DeviceConnected(); }
+			void DisconnectedListener() { DeviceDisconnected(); }
 			void SkeletonFoundListener() { SkeletonFound(); }
 			void SkeletonLostListener() { SkeletonLost(); }
 			void SkeletonSwitchedListener() { SkeletonSwitched(); }
@@ -557,6 +563,12 @@ namespace NuiLibDotNet {
 
 				_tickCallback = gcnew ChangeDelegate(_nui, &TickListener);
 				IntPtr tickCallback = Marshal::GetFunctionPointerForDelegate(_tickCallback);
+
+				_connectedCallback = gcnew ChangeDelegate(_nui, &ConnectedListener);
+				IntPtr connectedCallback = Marshal::GetFunctionPointerForDelegate(_connectedCallback);
+
+				_disconnectedCallback = gcnew ChangeDelegate(_nui, &DisconnectedListener);
+				IntPtr disconnectedCallback = Marshal::GetFunctionPointerForDelegate(_disconnectedCallback);
 
 				_skeletonFoundCallback = gcnew SkeletonTrackDelegate(_nui, &SkeletonFoundListener);
 				IntPtr foundCallback = Marshal::GetFunctionPointerForDelegate(_skeletonFoundCallback);
@@ -569,6 +581,8 @@ namespace NuiLibDotNet {
 
 				NuiLibSafe::RegisterCallbacks(
 					(CallbackFunction) (void*) tickCallback,
+					(CallbackFunction) (void*) connectedCallback,
+					(CallbackFunction) (void*) disconnectedCallback,
 					(SkeletonCallbackFunction) (void*) foundCallback,
 					(SkeletonCallbackFunction) (void*) lostCallback,
 					(SkeletonCallbackFunction) (void*) switchedCallback);
@@ -618,6 +632,36 @@ namespace NuiLibDotNet {
 						tmp->Invoke();
 				}
 			}	
+
+			static event ChangeDelegate ^DeviceConnected {
+				void add (ChangeDelegate ^listener) {
+					if (_connectedCallback == nullptr)
+						RegisterListeners();
+
+					_connected += listener; 
+				}
+				void remove (ChangeDelegate ^listener) { _connected -= listener; }
+				void raise() {
+					ChangeDelegate^ tmp = _connected;
+					if (tmp)
+						tmp->Invoke();
+				}
+			}
+
+			static event ChangeDelegate ^DeviceDisconnected {
+				void add (ChangeDelegate ^listener) {
+					if (_disconnectedCallback == nullptr)
+						RegisterListeners();
+
+					_disconnected += listener; 
+				}
+				void remove (ChangeDelegate ^listener) { _disconnected -= listener; }
+				void raise() {
+					ChangeDelegate^ tmp = _disconnected;
+					if (tmp)
+						tmp->Invoke();
+				}
+			}
 
 			static event SkeletonTrackDelegate ^SkeletonFound {
 				void add (SkeletonTrackDelegate ^listener) {
@@ -731,6 +775,9 @@ namespace NuiLibDotNet {
 
 			static property bool HasSkeleton {
 				bool get () { return NuiLibSafe::HasSkeleton(); }
+			}
+			static property System::String ^State {
+				System::String ^get () { return gcnew System::String(NuiLibSafe::GetState()); }
 			}
 
 			static bool Init() {

@@ -310,6 +310,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NuiLib-Kinect-MS\NuiLib-Kinect-MS-VC10.vcxproj">
+      <Project>{5842f85e-1326-4edb-918b-9edff9f0621e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\NuiLib\NuiLib-VC10.vcxproj">
       <Project>{7726434f-1330-45d9-aa09-7949c3cb3e58}</Project>
     </ProjectReference>

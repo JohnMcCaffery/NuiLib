@@ -25,4 +25,9 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 namespace NuiLib {
 	DLL void RegisterFactory();
 }
+
+namespace NuiLibKinectMS {
+	DLL void RegisterKinectMSFactory();
+}
+
 #endif

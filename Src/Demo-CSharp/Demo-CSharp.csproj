@@ -83,8 +83,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /d /y $(SolutionDir)Lib\x86\vc10\NuiLib-CLRSafe_dv.dll $(SolutionDir)Bin\x86\vc10
-xcopy /d /y $(SolutionDir)Lib\x86\vc10\NuiLib_dv.dll $(SolutionDir)Bin\x86\vc10</PostBuildEvent>
+    <PostBuildEvent>xcopy /d /y $(SolutionDir)Lib\x86\vc10\NuiLib-CLRSafe_d.dll $(SolutionDir)Bin\x86\vc10
+xcopy /d /y $(SolutionDir)Lib\x86\vc10\NuiLib_d.dll $(SolutionDir)Bin\x86\vc10</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
