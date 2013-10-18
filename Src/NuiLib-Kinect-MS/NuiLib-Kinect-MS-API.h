@@ -160,6 +160,7 @@ namespace NuiLib {
 			virtual ~KinectFactory();
 
 			bool Init();
+			bool IsInitialised();
 			char *GetState();
 			bool GetAutoPoll();
 			void SetAutoPoll(bool);
@@ -214,7 +215,7 @@ namespace NuiLib {
 			Vector joint(const int joint);	
 
 			void NotifyKinectConnected();
-			void NotifyKinectDisconnected();
+			void NotifyKinectDisconnected(const OLECHAR* uniqueDeviceName);
 	};
 }
 #endif

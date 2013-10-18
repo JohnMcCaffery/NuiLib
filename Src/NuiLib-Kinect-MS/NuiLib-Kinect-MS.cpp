@@ -100,7 +100,7 @@ void CALLBACK StatusProc( HRESULT hrStatus, const OLECHAR* instanceName, const O
 	if (SUCCEEDED (hrStatus) ){
 		_factory.NotifyKinectConnected();
 	} else {
-		_factory.NotifyKinectDisconnected();
+		_factory.NotifyKinectDisconnected(instanceName);
 	}
 }
 
@@ -112,7 +112,12 @@ void KinectFactory::NotifyKinectConnected() {
 		(*i)->DeviceConnected();
 }
 
-void KinectFactory::NotifyKinectDisconnected() {
+void KinectFactory::NotifyKinectDisconnected(const OLECHAR* instanceName) {
+	//TODO make sure that the system can handle what happens if 2 kinects are connected. System is using kinect A and then kinect B gets disconnected. Shouldn't cause problems. Currently will.
+	//BSTR uniqueId = _pNuiSensor->NuiUniqueId();
+	//if (_pNuiSensor->NuiUniqueId() == instanceName)
+		_initialised = false;
+
 	//cout << "Kinect disconnected.\n";
 	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
 		(*i)->DeviceDisconnected();
@@ -200,6 +205,10 @@ bool KinectFactory::Init() {
 
 	return _initialised;
 
+}
+
+bool KinectFactory::IsInitialised() {
+	return _initialised;
 }
 
 char *KinectFactory::GetState() {

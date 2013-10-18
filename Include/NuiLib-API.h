@@ -1440,6 +1440,11 @@ namespace NuiLib {
 		virtual void Dispose() = 0;
 
 		///
+		/// Whether or not the factory has been initialised successfully.
+		///
+		virtual bool IsInitialised() = 0;
+
+		///
 		/// Set whether the factory auto polls.
 		/// If true the factory will automatically update all entities it has created whenever the Nui device sends and update or only update them when the Poll method is called.
 		/// @param value True to auto poll. False to only poll when the method is called.

@@ -776,6 +776,9 @@ namespace NuiLibDotNet {
 			static property bool HasSkeleton {
 				bool get () { return NuiLibSafe::HasSkeleton(); }
 			}
+			static property bool Initialised {
+				bool get () { return NuiLibSafe::IsInitialised(); }
+			}
 			static property System::String ^State {
 				System::String ^get () { return gcnew System::String(NuiLibSafe::GetState()); }
 			}

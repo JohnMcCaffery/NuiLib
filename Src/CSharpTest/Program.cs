@@ -21,7 +21,7 @@ namespace CSharpTest {
             };
 
             Nui.DeviceDisconnected += () => {
-                Console.WriteLine("Device disconnected.");
+                Console.WriteLine("Device disconnected. - " + Nui.Initialised);
             };
 
             int attempt = 1;

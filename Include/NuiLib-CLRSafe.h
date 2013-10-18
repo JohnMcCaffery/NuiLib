@@ -22,6 +22,7 @@ DLL void RegisterCallbacks(
 	SkeletonCallbackFunction switchedCallback);
 
 DLL bool Init();
+DLL bool IsInitialised();
 DLL char*GetState();
 DLL void SetAutoPoll(bool val);
 DLL void Poll();
