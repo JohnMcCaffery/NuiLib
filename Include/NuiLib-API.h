@@ -186,6 +186,11 @@ namespace NuiLib {
 		/// Value = 0
 		Scalar();
 		///
+		/// Value = 0
+		/// Initialise the scalar without registering it. Only use this if you are later going to reassign the vector.
+		///
+		Scalar(int x);
+		///
 		/// Value = value
 		///
 		Scalar(float value);		
@@ -246,6 +251,11 @@ namespace NuiLib {
 		///
 		/// Value = 0
 		Condition();
+		///
+		/// Value = 0
+		/// Initialise the condition without registering it. Only use this if you are later going to reassign the vector.
+		///
+		Condition(int x);
 		///
 		/// Value = value
 		/// @param name The name to identify this Condition by.
