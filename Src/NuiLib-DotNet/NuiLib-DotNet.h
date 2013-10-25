@@ -786,6 +786,9 @@ namespace NuiLibDotNet {
 			static bool Init() {
 				return NuiLibSafe::Init();
 			}
+			static void Uninitialise () {
+				return NuiLibSafe::Uninitialise();
+			}
 			static void Pause() {
 				return NuiLibSafe::Pause();
 			}

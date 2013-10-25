@@ -24,6 +24,9 @@ namespace CSharpTest {
                 Console.WriteLine("Device disconnected. - " + Nui.Initialised);
             };
 
+            Nui.SetAutoPoll(true);
+
+            /*
             int attempt = 1;
             int wait = 2000;
             while (!Nui.Init()) {
@@ -43,6 +46,8 @@ namespace CSharpTest {
 
             Vector v = Nui.smooth(Nui.joint(Nui.Hand_Right), 5);
             Scalar s = Nui.smooth(Nui.x(Nui.joint(Nui.Hand_Right)), 5);
+
+             */
 
             Application.EnableVisualStyles();
             Application.Run(new TestForm());

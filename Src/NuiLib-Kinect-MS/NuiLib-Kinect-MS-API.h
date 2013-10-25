@@ -160,6 +160,7 @@ namespace NuiLib {
 			virtual ~KinectFactory();
 
 			bool Init();
+			void Uninitialise();
 			bool IsInitialised();
 			char *GetState();
 			bool GetAutoPoll();

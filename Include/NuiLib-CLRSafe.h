@@ -23,6 +23,7 @@ DLL void RegisterCallbacks(
 
 DLL bool Init();
 DLL bool IsInitialised();
+DLL void Uninitialise();
 DLL char*GetState();
 DLL void SetAutoPoll(bool val);
 DLL void Poll();

@@ -35,5 +35,19 @@ namespace CShartTest {
                 displayPanel.Image = Nui.ColourFrame;
             }));
         }
+
+        private void initialiseButton_Click(object sender, EventArgs e) {
+            if (Nui.Initialised) {
+                initialiseButton.Text = "Initialise";
+                Nui.Uninitialise();
+                Console.WriteLine(Nui.State);
+            } else {
+                initialiseButton.Text = "Uninitialise";
+                if (Nui.Init())
+                    Console.WriteLine("Device initialised");
+                else
+                    Console.WriteLine("Problem initialising: " + Nui.State);
+            }
+        }
     }
 }

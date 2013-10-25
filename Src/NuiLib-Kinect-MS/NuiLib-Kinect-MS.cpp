@@ -118,9 +118,13 @@ void KinectFactory::NotifyKinectDisconnected(const OLECHAR* instanceName) {
 	//if (_pNuiSensor->NuiUniqueId() == instanceName)
 		_initialised = false;
 
-	//cout << "Kinect disconnected.\n";
-	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+	_state = "Kinect disconnected.";
+	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++) {
+		if (HasSkeleton())
+			(*i)->SkeletonLost(_currentSkeleton);
 		(*i)->DeviceDisconnected();
+	}
+	_currentSkeleton = 0;
 }
 
 bool KinectFactory::Init() {
@@ -215,6 +219,18 @@ char *KinectFactory::GetState() {
 	return _state; 
 }
 
+void KinectFactory::Uninitialise() {
+	if (_initialised) {
+		_initialised = false;
+		_pNuiSensor->Release();
+		_pNuiSensor = NULL;
+		_state = "Device Released.";
+		if (HasSkeleton())
+			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+				(*i)->SkeletonLost(_currentSkeleton);
+	}
+}
+
 void KinectFactory::InitEvents() {
 	delete _hEvents;
 	_hEvents = new HANDLE[_numEvents];
@@ -237,16 +253,16 @@ void KinectFactory::EnableSkeleton(bool enable) {
 			_numEvents++;
 			InitEvents();
 
-			_state = "Nui tracking skeletons\n";
+			_state = "Nui tracking skeletons.";
 		} else
-			_state = "Nui not tracking skeletons\n";
+			_state = "Nui not tracking skeletons.";
 	} else if (_enabledEvents[SKELETON]) {
 		HRESULT hr = _pNuiSensor->NuiSkeletonTrackingDisable();
 		_numEvents--;
 		if (!hr) 
-			_state = "Nui disabled tracking skeletons\n";
+			_state = "Nui disabled tracking skeletons.";
 		else
-			_state = "Nui failed to disable tracking skeletons\n";
+			_state = "Nui failed to disable tracking skeletons.";
 	}
 }
 
@@ -303,7 +319,7 @@ void KinectFactory::EnableDepth(bool enable) {
 }
 
 void KinectFactory::Start() {
-	if (_initialised)
+	//if (_initialised)
 		CreateThread(NULL, 0,Nui_ProcessThread, this, 0, NULL);
 }
 
@@ -442,7 +458,7 @@ void KinectFactory::Poll() {
 	Poll(true);
 }
 void KinectFactory::Poll(bool fromExternal) {
-	if (fromExternal && _polling)
+	if (fromExternal && _polling && _initialised)
 		return;
 	WaitForMultipleObjects(_numEvents, _hEvents, false, 1000);
 

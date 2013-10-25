@@ -86,6 +86,9 @@ bool NuiLibSafe::Init() {
 bool NuiLibSafe::IsInitialised() {
 	return NuiLib::NuiFactory()->IsInitialised();
 }
+void NuiLibSafe::Uninitialise() {
+	NuiLib::NuiFactory()->Uninitialise();
+}
 char *NuiLibSafe::GetState() {
 	return NuiLib::NuiFactory()->GetState();
 }

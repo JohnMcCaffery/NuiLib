@@ -1443,6 +1443,10 @@ namespace NuiLib {
 		/// Whether or not the factory has been initialised successfully.
 		///
 		virtual bool IsInitialised() = 0;
+		///
+		/// If initialised release the NUI device.
+		///
+		virtual void Uninitialise() = 0;
 
 		///
 		/// Set whether the factory auto polls.
