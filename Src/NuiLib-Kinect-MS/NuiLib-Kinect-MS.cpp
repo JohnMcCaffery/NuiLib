@@ -47,6 +47,10 @@ void NuiLib::RegisterFactory() {
 	SetFactory(&_factory);
 }
 
+void NuiLibKinectMS::RegisterKinectMSFactory() {
+	SetFactory(&_factory);
+}
+
 Vector makeJoint(const int index) {
 	KinectJoint *joint = ExtensionFactory()->Make<KinectJoint>(KinectJoint::NameFromIndex((NUI_SKELETON_POSITION_INDEX)index));
 	joint->SetIndex((NUI_SKELETON_POSITION_INDEX) index);
@@ -92,18 +96,64 @@ void KinectFactory::Dispose() {
 	}
 }
 
+void CALLBACK StatusProc( HRESULT hrStatus, const OLECHAR* instanceName, const OLECHAR* uniqueDeviceName, void *pUserData) {
+	if (SUCCEEDED (hrStatus) ){
+		_factory.NotifyKinectConnected();
+	} else {
+		_factory.NotifyKinectDisconnected(instanceName);
+	}
+}
+
+bool pgCallbackSet;
+
+void KinectFactory::NotifyKinectConnected() {
+	//cout << "New Kinect connected.\n";
+	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+		(*i)->DeviceConnected();
+}
+
+void KinectFactory::NotifyKinectDisconnected(const OLECHAR* instanceName) {
+	//TODO make sure that the system can handle what happens if 2 kinects are connected. System is using kinect A and then kinect B gets disconnected. Shouldn't cause problems. Currently will.
+	//BSTR uniqueId = _pNuiSensor->NuiUniqueId();
+	//if (_pNuiSensor->NuiUniqueId() == instanceName)
+		_initialised = false;
+
+	_state = "Kinect disconnected.";
+	for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++) {
+		if (HasSkeleton())
+			(*i)->SkeletonLost(_currentSkeleton);
+		(*i)->DeviceDisconnected();
+	}
+	_currentSkeleton = 0;
+}
+
 bool KinectFactory::Init() {
+	if (!pgCallbackSet) {
+		NuiSetDeviceStatusCallback( &StatusProc, &_factory);
+		pgCallbackSet = true;
+	}
 	if (_initialised) {
-		cout << "NuiFactory already initialised. Ignored Init request.\n";
-		return false;
+		return true;
 	}
 	for (int i = 0; i < 3; i++) 
 		_enabledEvents[i] = false;
 
-	HRESULT hr = NuiCreateSensorByIndex(0, &_pNuiSensor);
+
+	HRESULT hr;
+
+	int pCount;
+	hr = NuiGetSensorCount(&pCount);
+	
+	hr = NuiCreateSensorByIndex(0, &_pNuiSensor);
 
 	if (_pNuiSensor == NULL || hr) {
-		cout << "Unable to get sensor.\n";
+		if (hr == E_OUTOFMEMORY)
+			_state = "Unable to get sensor. The allocation failed.";
+		else if (hr == E_POINTER)
+			_state = "Unable to get sensor. The hNextFrameEvent parameter is an invalid handle.";
+		else
+			_state = "Unable to get sensor.";
+
 		return false;
 	}
 
@@ -120,7 +170,7 @@ bool KinectFactory::Init() {
 
 	if (!hr) {
 		_initialised = true;
-		cout << "Nui Initialised.\n";
+		_state = "Nui Initialised.";
 
 		if (!_skeletonListeners.empty() > 0)
 			EnableSkeleton(true);
@@ -130,8 +180,27 @@ bool KinectFactory::Init() {
 		if (!_depthListeners.empty() > 0)
 #endif
 			EnableDepth(true);
-	} else
-		cout << "Unable to Initialise Sensor.\n";
+	} else {
+		switch (hr) {
+		case E_NUI_DEVICE_NOT_CONNECTED: _state = "Device not connected."; break;
+		case E_NUI_DEVICE_NOT_READY: _state = "Device not ready."; break;
+		case E_NUI_ALREADY_INITIALIZED:	_state = "Already initialised."; break;
+		case E_NUI_NO_MORE_ITEMS: _state = "No more items."; break;
+		case E_NUI_FRAME_NO_DATA: _state = "Frame no data."; break;
+		case E_NUI_STREAM_NOT_ENABLED: _state = "Stream not enabled."; break;
+		case E_NUI_IMAGE_STREAM_IN_USE:	_state = "Image stream in use." ; break;
+		case E_NUI_FRAME_LIMIT_EXCEEDED: _state = "Frame limit exceeded."; break;
+		case E_NUI_FEATURE_NOT_INITIALIZED:	_state = "Feature not initialised."; break;
+		case E_NUI_DATABASE_NOT_FOUND: _state = "Database not found."; break;
+		case E_NUI_DATABASE_VERSION_MISMATCH: _state = "Database version mismatch."; break;
+		case E_NUI_NOTCONNECTED: _state = "Not connected."; break;
+		case E_NUI_NOTREADY: _state = "Not ready."; break;
+		case E_NUI_SKELETAL_ENGINE_BUSY: _state = "Skeletal engine busy."; break;
+		case E_NUI_NOTPOWERED:	_state = "Not powered."; break;
+		case E_NUI_BADIINDEX: _state = "No sensor at index 0."; break;
+		default: break;
+		}
+	}
 
 #ifdef VISUAL
 	cv::namedWindow("Depth", CV_WINDOW_NORMAL);
@@ -140,6 +209,26 @@ bool KinectFactory::Init() {
 
 	return _initialised;
 
+}
+
+bool KinectFactory::IsInitialised() {
+	return _initialised;
+}
+
+char *KinectFactory::GetState() {
+	return _state; 
+}
+
+void KinectFactory::Uninitialise() {
+	if (_initialised) {
+		_initialised = false;
+		_pNuiSensor->Release();
+		_pNuiSensor = NULL;
+		_state = "Device Released.";
+		if (HasSkeleton())
+			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+				(*i)->SkeletonLost(_currentSkeleton);
+	}
 }
 
 void KinectFactory::InitEvents() {
@@ -164,16 +253,16 @@ void KinectFactory::EnableSkeleton(bool enable) {
 			_numEvents++;
 			InitEvents();
 
-			cout << "Nui tracking skeletons\n";
+			_state = "Nui tracking skeletons.";
 		} else
-			cout << "Nui not tracking skeletons\n";
+			_state = "Nui not tracking skeletons.";
 	} else if (_enabledEvents[SKELETON]) {
 		HRESULT hr = _pNuiSensor->NuiSkeletonTrackingDisable();
 		_numEvents--;
 		if (!hr) 
-			cout << "Nui disabled tracking skeletons\n";
+			_state = "Nui disabled tracking skeletons.";
 		else
-			cout << "Nui failed to disable tracking skeletons\n";
+			_state = "Nui failed to disable tracking skeletons.";
 	}
 }
 
@@ -194,12 +283,12 @@ void KinectFactory::EnableColour(bool enable) {
 			_numEvents++;
 			InitEvents();
 
-			cout << "Nui tracking colour\n";
+			_state = "Nui tracking colour.";
 		} else
-			cout << "Nui unable to track colour\n";
+			_state = "Nui unable to track colour.";
 	} else if (_enabledEvents[COLOUR]) {
 		_numEvents--;
-		cout << "Nui failed to disable tracking colour\n";
+		_state = "Nui failed to disable tracking colour.";
 	}
 }
 
@@ -220,17 +309,17 @@ void KinectFactory::EnableDepth(bool enable) {
 			_numEvents++;
 			InitEvents();
 
-			cout << "Nui tracking depth\n";
+			_state = "Nui tracking depth.";
 		} else
-			cout << "Nui unable to track depth\n";
+			_state = "Nui unable to track depth.";
 	} else if (_enabledEvents[DEPTH]) {
 		_numEvents--;
-		cout << "Nui disabled tracking depth\n";
+		_state = "Nui disabled tracking depth.";
 	}
 }
 
 void KinectFactory::Start() {
-	if (_initialised)
+	//if (_initialised)
 		CreateThread(NULL, 0,Nui_ProcessThread, this, 0, NULL);
 }
 
@@ -369,7 +458,7 @@ void KinectFactory::Poll() {
 	Poll(true);
 }
 void KinectFactory::Poll(bool fromExternal) {
-	if (fromExternal && _polling)
+	if (fromExternal && _polling && _initialised)
 		return;
 	WaitForMultipleObjects(_numEvents, _hEvents, false, 1000);
 
@@ -435,13 +524,13 @@ DWORD WINAPI KinectFactory::Nui_ProcessThread (LPVOID p) {
 
 DWORD WINAPI KinectFactory::Nui_ProcessThread() {
 	_polling = true;
-	cout << "\nThread running \n";
+	_state = "Thread running.";
 
 	while (_polling) {
 		Poll(false);
 		Sleep(5);
 	}
-	cout << "Thread stopped\n";
+	_state = "Thread stopped";
 	return 0;
 }
 
@@ -474,12 +563,12 @@ void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 		//If this point is reached a new skeleton has been found
 		if (skeletonLost) {
 			//If there previously hadn't been a skeleton
-			cout << "Skeleton found.\n";
+			//cout << "Skeleton found.\n";
 			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
 				(*i)->SkeletonFound(index);
 		} else {
 			//If there was a skeleton before but that has been lost
-			cout << "Skeleton switched.\n";
+			//cout << "Skeleton switched.\n";
 			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
 				(*i)->SkeletonSwitched(index);
 		}
@@ -491,7 +580,7 @@ void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 	} else if(!skeletonLost) {
 		skeletonLost = true;
 		//No skeleton was found and there had previously been a skeleton
-		cout << "Skeleton lost.\n";
+		//cout << "Skeleton lost.\n";
 		for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
 			(*i)->SkeletonLost(_currentSkeleton);
 		ProcessLostSkeleton();

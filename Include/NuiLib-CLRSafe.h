@@ -15,11 +15,16 @@ typedef DLL void (* SkeletonCallbackFunction)();
 
 DLL void RegisterCallbacks(
 	CallbackFunction tickCallback,
+	CallbackFunction connectedCallback,
+	CallbackFunction disconnectedCallback,
 	SkeletonCallbackFunction foundCallback,
 	SkeletonCallbackFunction lostCallback,
 	SkeletonCallbackFunction switchedCallback);
 
 DLL bool Init();
+DLL bool IsInitialised();
+DLL void Uninitialise();
+DLL char*GetState();
 DLL void SetAutoPoll(bool val);
 DLL void Poll();
 DLL void Pause();

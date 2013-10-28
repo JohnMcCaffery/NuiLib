@@ -152,6 +152,8 @@ namespace NuiLib {
 	class INuiListener {
 	public:
 		virtual void Tick() = 0;
+		virtual void DeviceConnected() = 0;
+		virtual void DeviceDisconnected() = 0;
 		virtual void SkeletonFound(int index) = 0;
 		virtual void SkeletonLost(int index) = 0;
 		virtual void SkeletonSwitched(int index) = 0;
@@ -185,6 +187,11 @@ namespace NuiLib {
 		///
 		/// Value = 0
 		Scalar();
+		///
+		/// Value = 0
+		/// Initialise the scalar without registering it. Only use this if you are later going to reassign the vector.
+		///
+		Scalar(int x);
 		///
 		/// Value = value
 		///
@@ -246,6 +253,11 @@ namespace NuiLib {
 		///
 		/// Value = 0
 		Condition();
+		///
+		/// Value = 0
+		/// Initialise the condition without registering it. Only use this if you are later going to reassign the vector.
+		///
+		Condition(int x);
 		///
 		/// Value = value
 		/// @param name The name to identify this Condition by.
@@ -1441,6 +1453,15 @@ namespace NuiLib {
 		virtual void Dispose() = 0;
 
 		///
+		/// Whether or not the factory has been initialised successfully.
+		///
+		virtual bool IsInitialised() = 0;
+		///
+		/// If initialised release the NUI device.
+		///
+		virtual void Uninitialise() = 0;
+
+		///
 		/// Set whether the factory auto polls.
 		/// If true the factory will automatically update all entities it has created whenever the Nui device sends and update or only update them when the Poll method is called.
 		/// @param value True to auto poll. False to only poll when the method is called.
@@ -1549,6 +1570,10 @@ namespace NuiLib {
 		/// Remove a listener that was being notified of NUI events.
 		///
 		virtual void RemoveNuiListener(INuiListener *listener) = 0;
+		///
+		/// Get a string representing the current state of the factory. May change after any interaction.
+		///
+		virtual char *GetState() = 0;
 	};
 
 	///

@@ -26,6 +26,8 @@ public:
 class NuiListener : public INuiListener {
 private:
 	CallbackFunction _tickCallback;
+	CallbackFunction _connectedCallback;
+	CallbackFunction _disconnectedCallback;
 	SkeletonCallbackFunction _foundCallback;
 	SkeletonCallbackFunction _lostCallback;
 	SkeletonCallbackFunction _switchedCallback;
@@ -33,10 +35,14 @@ private:
 public:
 	NuiListener(
 		CallbackFunction tickCallback,
+		CallbackFunction connectedCallback,
+		CallbackFunction disconnectedCallback,
 		SkeletonCallbackFunction foundCallback,
 		SkeletonCallbackFunction lostCallback,
 		SkeletonCallbackFunction switchedCallback) :
 			_tickCallback(tickCallback), 
+			_connectedCallback(connectedCallback), 
+			_disconnectedCallback(disconnectedCallback), 
 			_foundCallback(foundCallback), 
 			_lostCallback(lostCallback), 
 			_switchedCallback(switchedCallback) {
@@ -44,6 +50,8 @@ public:
 	}
 
 	void Tick() { _tickCallback(); }
+	void DeviceConnected() { _connectedCallback(); }
+	void DeviceDisconnected() { _disconnectedCallback(); }
 	void SkeletonFound(int index) { _foundCallback(); }
 	void SkeletonLost(int index) { _lostCallback(); }
 	void SkeletonSwitched(int index) { _switchedCallback(); }
@@ -54,11 +62,16 @@ NuiListener *listener;
 
 void NuiLibSafe::RegisterCallbacks(
 		CallbackFunction tickCallback,
+		CallbackFunction connectedCallback,
+		CallbackFunction disconnectedCallback,
 		SkeletonCallbackFunction foundCallback,
 		SkeletonCallbackFunction lostCallback,
 		SkeletonCallbackFunction switchedCallback) {
 
-	listener = new NuiListener(tickCallback, foundCallback, lostCallback, switchedCallback);
+	NuiLib::RegisterFactory();
+
+
+	listener = new NuiListener(tickCallback, connectedCallback, disconnectedCallback, foundCallback, lostCallback, switchedCallback);
 	NuiLib::NuiFactory()->AddNuiListener(listener);
 }
 
@@ -69,6 +82,15 @@ const double DEPTH_SCALE_FACTOR = 255./65535.;
 bool NuiLibSafe::Init() {
 	NuiLib::RegisterFactory();
 	return NuiLib::NuiFactory()->Init();
+}
+bool NuiLibSafe::IsInitialised() {
+	return NuiLib::NuiFactory()->IsInitialised();
+}
+void NuiLibSafe::Uninitialise() {
+	NuiLib::NuiFactory()->Uninitialise();
+}
+char *NuiLibSafe::GetState() {
+	return NuiLib::NuiFactory()->GetState();
 }
 void NuiLibSafe::SetAutoPoll(bool value) {
 	NuiLib::NuiFactory()->SetAutoPoll(value);

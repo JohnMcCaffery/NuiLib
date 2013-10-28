@@ -5,6 +5,7 @@ using System.Text;
 using NuiLibDotNet;
 using System.Windows.Forms;
 using CShartTest;
+using System.Threading;
 
 namespace CSharpTest {
     public static class Program {
@@ -15,11 +16,38 @@ namespace CSharpTest {
             //SingleInstanceLauncher launcher = new SingleInstanceLauncher();
             //ProcessWrangler.BlockingRunForm(launcher.Form, launcher.Coordinator);
 
-            Nui.Init();
+            Nui.DeviceConnected += () => {
+                Console.WriteLine("New device detected.");
+            };
+
+            Nui.DeviceDisconnected += () => {
+                Console.WriteLine("Device disconnected. - " + Nui.Initialised);
+            };
+
+            Nui.SetAutoPoll(true);
+
+            /*
+            int attempt = 1;
+            int wait = 2000;
+            while (!Nui.Init()) {
+                if (attempt > 10)
+                    return;
+
+                Console.WriteLine("NuiLib unable to initialise Kinect because {2} after attempt {0}. Waiting {1}s and retrying.", attempt, (wait / 1000), Nui.State);
+
+                Thread.Sleep(wait);
+
+                attempt++;
+                float newWait = wait * 1.5f;
+                wait = (int)newWait;
+            }
+
             Nui.SetAutoPoll(true);
 
             Vector v = Nui.smooth(Nui.joint(Nui.Hand_Right), 5);
             Scalar s = Nui.smooth(Nui.x(Nui.joint(Nui.Hand_Right)), 5);
+
+             */
 
             Application.EnableVisualStyles();
             Application.Run(new TestForm());
