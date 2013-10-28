@@ -1027,6 +1027,19 @@ namespace NuiLib {
 	///
 	DLL Scalar dot(const Vector &a, const Vector &b);
 	///
+	/// The angle between two vectors
+	/// @param a The first vector.
+	/// @param b The second vector.
+	///
+	DLL Scalar angle(const Vector &a, const Vector &b);
+	///
+	/// The signed angle between two vectors
+	/// @param a The first vector.
+	/// @param b The second vector.
+	/// @param plane The plane to use
+	///
+	DLL Scalar signedAngle(const Vector &a, const Vector &b, const int type);
+	///
 	/// Normalize the value of a scalar against the maximum value it has ever been.
 	/// @param scalar The scalar to normalize.
 	///

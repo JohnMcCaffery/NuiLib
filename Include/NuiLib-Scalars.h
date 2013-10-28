@@ -24,6 +24,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	/* pi */ 
+#define M_DEGTORAD	M_PI / 180
 #endif
 
 #ifndef SCALARS_H
@@ -253,6 +254,34 @@ namespace NuiLib {
 		inline static string GetTypeName() { return "DotScalar"; }
 	};
 
+	class DLL AngleScalar : public TwoVectorWrappingScalar  {
+	public:
+		AngleScalar();
+		float CalculateValue();
+		inline static string GetTypeName() { return "AngleScalar"; }
+	};
+
+	class DLL SignedAngleScalarX : public AngleScalar  {
+	public:
+		SignedAngleScalarX();
+		float CalculateValue();
+		inline static string GetTypeName() { return "SignedAngleScalarX"; }
+	};
+
+	class DLL SignedAngleScalarY : public AngleScalar  {
+	public:
+		SignedAngleScalarY();
+		float CalculateValue();
+		inline static string GetTypeName() { return "SignedAngleScalarY"; }
+	};
+
+	class DLL SignedAngleScalarZ : public AngleScalar  {
+	public:
+		SignedAngleScalarZ();
+		float CalculateValue();
+		inline static string GetTypeName() { return "SignedAngleScalarZ"; }
+	};
+
 	class DLL InvertScalar : public IScalar {
 	private:
 		ICondition *_condition;
@@ -331,6 +360,8 @@ namespace NuiLib {
 	DLL VectorScalar *yP(IVector *);
 	DLL VectorScalar *zP(IVector *);
 	DLL VectorScalar *magnitudeP(IVector *);
+	DLL AngleScalar *angleP(IVector *, IVector *);
+	DLL AngleScalar *signedAngleP(IVector *, IVector *, const int);
 	DLL DotScalar *dotP(IVector *, IVector *);
 	DLL MaxNormalizedScalar *normalizeP(IScalar *);
 	DLL ValueNormalizedScalar *normalizeP(IScalar *, float);
