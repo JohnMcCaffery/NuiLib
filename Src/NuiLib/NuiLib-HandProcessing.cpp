@@ -314,6 +314,7 @@ HandProcessor *NuiLib::GetHandProcessor(bool rightHand) {
 
 void NuiLib::OnTracker(int val, void *userData) {
 	TrackerScalar *t = (TrackerScalar*) userData;
+	t->_value = val;
 	if (t)
 		t->Update();
 }
@@ -329,7 +330,7 @@ IScalar(name, value),
 			windowCreated = true;
 			namedWindow("TrackerWindow", CV_WINDOW_NORMAL);
 		}
-		_value = (value * _scale) + _shift;
+		_value = (value - _shift) * _scale;
 		createTrackbar(name, "TrackerWindow", &_value, _ticks, NuiLib::OnTracker, this);
 #endif
 }
@@ -339,7 +340,7 @@ void TrackerScalar::Update() {
 }
 
 float TrackerScalar::CalculateValue() {
-	return (_value * _scale) + _shift;
+	return (_value / _scale) + _shift;
 }
 
 TrackerScalar *NuiLib::trackerP(string title, float max, float min, float value) {
