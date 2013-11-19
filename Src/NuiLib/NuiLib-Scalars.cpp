@@ -18,6 +18,7 @@ along with NuiLib.  If not, see <http://www.gnu.org/licenses/>.
 
 **************************************************************************/
 #include <NuiLib-Scalars.h>
+#include <NuiLib-Vectors.h>
 #include <cmath>
 
 float mathacos(float value) {
@@ -58,6 +59,26 @@ VectorScalar *NuiLib::magnitudeP(IVector *vector) {
 }
 DotScalar *NuiLib::dotP(IVector *vector1, IVector *vector2) {
 	DotScalar *scalar = ExtensionFactory()->Make<DotScalar>(vector1->GetName() + "." + vector2->GetName());
+	scalar->SetVector1(vector1);
+	scalar->SetVector2(vector2);
+	scalar->Changed(vector1);
+	return scalar;
+}
+AngleScalar *NuiLib::signedAngleP(IVector *vector1, IVector *vector2, const int type) {
+	AngleScalar *scalar;
+	if(type == 0) {
+		scalar = ExtensionFactory()->Make<SignedAngleScalarX>(vector1->GetName() + "." + vector2->GetName());
+		vector1 = limitP(vector1, false, true, true);
+		vector2 = limitP(vector2, false, true, true);
+	} else if(type == 1) {
+		scalar = ExtensionFactory()->Make<SignedAngleScalarY>(vector1->GetName() + "." + vector2->GetName());
+		vector1 = limitP(vector1, true, false, true);
+		vector2 = limitP(vector2, true, false, true);
+	} else {
+		scalar = ExtensionFactory()->Make<SignedAngleScalarZ>(vector1->GetName() + "." + vector2->GetName());
+		vector1 = limitP(vector1, true, true, false);
+		vector2 = limitP(vector2, true, true, false);
+	}
 	scalar->SetVector1(vector1);
 	scalar->SetVector2(vector2);
 	scalar->Changed(vector1);
@@ -222,6 +243,9 @@ Scalar NuiLib::magnitude(const Vector &vector) {
 }
 Scalar NuiLib::dot(const Vector &vector1, const Vector &vector2) {
 	return dotP(vector1._p, vector2._p);
+}
+Scalar NuiLib::signedAngle(const Vector &vector1, const Vector &vector2, const int type) {
+	return signedAngleP(vector1._p, vector2._p, type);
 }
 Scalar NuiLib::normalize(const Scalar &wrappedScalar) {
 	return normalizeP(wrappedScalar._p);
@@ -718,6 +742,107 @@ float DotScalar::CalculateValue() {
 	else {
 		float dot = (**_vector1).dot(**_vector2);
 		return (**_vector1).dot(**_vector2);
+	}
+}
+
+//------------------------ Angle Scalar -------------------------
+
+AngleScalar::AngleScalar() :
+       	TwoVectorWrappingScalar(GetTypeName()) { }
+
+float AngleScalar::CalculateValue() {
+	if (_vector1 == NULL || _vector2 == NULL)
+		return _value;
+	else {
+		float dot = (**_vector1).dot(**_vector2);
+		float angle = ::acos(dot);
+		return angle;
+	}
+}
+//------------------------ Singed Angle Scalar X -------------------------
+
+SignedAngleScalarX::SignedAngleScalarX() :
+       	AngleScalar() { }
+
+float SignedAngleScalarX::CalculateValue() {
+	if (_vector1 == NULL || _vector2 == NULL)
+		return _value;
+	else {
+		float mag = _vector1->Magnitude();
+		cv::Point3f normal_1 = cv::Point3f(mag != 0 ? _vector1->X() / mag : 0, 
+		mag != 0 ? _vector1->Y() / mag : 0, 
+		mag != 0 ? _vector1->Z() / mag : 0);
+
+		mag = _vector2->Magnitude();
+		cv::Point3f normal_2 = cv::Point3f(mag != 0 ? _vector2->X() / mag : 0, 
+		mag != 0 ? _vector2->Y() / mag : 0, 
+		mag != 0 ? _vector2->Z() / mag : 0);
+		float dot = (normal_1).dot(normal_2);
+		float angle = ::acos(dot);
+		cv::Point3f cross = cv::Point3f((_vector1->Y() * _vector2->Z()) - (_vector1->Z() * _vector2->Y()),
+			(_vector1->X() * _vector2->Z()) - (_vector1->Z() * _vector2->X()),
+			(_vector1->X() * _vector2->Y()) - (_vector1->Y() * _vector2->X()));
+		if(cross.x < 0)
+			angle *= -1;
+		return angle;
+	}
+}
+
+//------------------------ Singed Angle Scalar Y -------------------------
+
+SignedAngleScalarY::SignedAngleScalarY() :
+       	AngleScalar() { }
+
+float SignedAngleScalarY::CalculateValue() {
+	if (_vector1 == NULL || _vector2 == NULL)
+		return _value;
+	else {
+		float mag = _vector1->Magnitude();
+		cv::Point3f normal_1 = cv::Point3f(mag != 0 ? _vector1->X() / mag : 0, 
+		mag != 0 ? _vector1->Y() / mag : 0, 
+		mag != 0 ? _vector1->Z() / mag : 0);
+
+		mag = _vector2->Magnitude();
+		cv::Point3f normal_2 = cv::Point3f(mag != 0 ? _vector2->X() / mag : 0, 
+		mag != 0 ? _vector2->Y() / mag : 0, 
+		mag != 0 ? _vector2->Z() / mag : 0);
+		float dot = (normal_1).dot(normal_2);
+		float angle = ::acos(dot);
+		cv::Point3f cross = cv::Point3f((_vector1->Y() * _vector2->Z()) - (_vector1->Z() * _vector2->Y()),
+			(_vector1->X() * _vector2->Z()) - (_vector1->Z() * _vector2->X()),
+			(_vector1->X() * _vector2->Y()) - (_vector1->Y() * _vector2->X()));
+		if(cross.y < 0)
+			angle *= -1;
+		return angle;
+	}
+}
+
+//------------------------ Singed Angle Scalar Z -------------------------
+
+SignedAngleScalarZ::SignedAngleScalarZ() :
+       	AngleScalar() { }
+
+float SignedAngleScalarZ::CalculateValue() {
+	if (_vector1 == NULL || _vector2 == NULL)
+		return _value;
+	else {
+		float mag = _vector1->Magnitude();
+		cv::Point3f normal_1 = cv::Point3f(mag != 0 ? _vector1->X() / mag : 0, 
+		mag != 0 ? _vector1->Y() / mag : 0, 
+		mag != 0 ? _vector1->Z() / mag : 0);
+
+		mag = _vector2->Magnitude();
+		cv::Point3f normal_2 = cv::Point3f(mag != 0 ? _vector2->X() / mag : 0, 
+		mag != 0 ? _vector2->Y() / mag : 0, 
+		mag != 0 ? _vector2->Z() / mag : 0);
+		float dot = (normal_1).dot(normal_2);
+		float angle = ::acos(dot);
+		cv::Point3f cross = cv::Point3f((_vector1->Y() * _vector2->Z()) - (_vector1->Z() * _vector2->Y()),
+			(_vector1->X() * _vector2->Z()) - (_vector1->Z() * _vector2->X()),
+			(_vector1->X() * _vector2->Y()) - (_vector1->Y() * _vector2->X()));
+		if(cross.z < 0)
+			angle *= -1;
+		return angle;
 	}
 }
 

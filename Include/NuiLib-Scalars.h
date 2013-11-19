@@ -253,6 +253,34 @@ namespace NuiLib {
 		inline static string GetTypeName() { return "DotScalar"; }
 	};
 
+	class DLL AngleScalar : public TwoVectorWrappingScalar  {
+	public:
+		AngleScalar();
+		float CalculateValue();
+		inline static string GetTypeName() { return "AngleScalar"; }
+	};
+
+	class DLL SignedAngleScalarX : public AngleScalar  {
+	public:
+		SignedAngleScalarX();
+		float CalculateValue();
+		inline static string GetTypeName() { return "SignedAngleScalarX"; }
+	};
+
+	class DLL SignedAngleScalarY : public AngleScalar  {
+	public:
+		SignedAngleScalarY();
+		float CalculateValue();
+		inline static string GetTypeName() { return "SignedAngleScalarY"; }
+	};
+
+	class DLL SignedAngleScalarZ : public AngleScalar  {
+	public:
+		SignedAngleScalarZ();
+		float CalculateValue();
+		inline static string GetTypeName() { return "SignedAngleScalarZ"; }
+	};
+
 	class DLL InvertScalar : public IScalar {
 	private:
 		ICondition *_condition;
@@ -332,6 +360,7 @@ namespace NuiLib {
 	DLL VectorScalar *zP(IVector *);
 	DLL VectorScalar *magnitudeP(IVector *);
 	DLL DotScalar *dotP(IVector *, IVector *);
+	DLL AngleScalar *signedAngleP(IVector *, IVector *, const int);
 	DLL MaxNormalizedScalar *normalizeP(IScalar *);
 	DLL ValueNormalizedScalar *normalizeP(IScalar *, float);
 	DLL ValueNormalizedScalar *normalizeP(IScalar *, IScalar *);
