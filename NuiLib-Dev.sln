@@ -34,7 +34,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpTest", "Src\CSharpTes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CTest", "Src\CTest\CTest.vcxproj", "{28C247AC-AF6F-4AD3-B669-8F06CEE66CA8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87C9A64C-2122-422A-861D-1B08B8B15F8E}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		NuiLib-Dev.vsmdi = NuiLib-Dev.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = NuiLib-Dev.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
