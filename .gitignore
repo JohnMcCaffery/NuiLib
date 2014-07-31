@@ -46,6 +46,8 @@ Thumbs.db
 *Release*
 *ReleaseVisual*
 NuiLib-Mine.*
+*.testsettings
+*.vsmdi
 
 # Folders #
 ###################
