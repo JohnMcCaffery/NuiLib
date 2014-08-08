@@ -19,6 +19,7 @@ DLL void RegisterCallbacks(
 	SkeletonCallbackFunction lostCallback,
 	SkeletonCallbackFunction switchedCallback);
 
+DLL void SelectSkeleton(float x, float y, float radius);
 DLL bool Init();
 DLL void SetAutoPoll(bool val);
 DLL void Poll();

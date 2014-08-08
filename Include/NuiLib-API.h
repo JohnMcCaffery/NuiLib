@@ -1411,6 +1411,8 @@ namespace NuiLib {
 		///
 		virtual ~INuiFactory();
 
+		virtual void SelectSkeleton(float x, float y, float radius) = 0;
+
 		///
 		/// Initialise the factory. Any logic to do with starting up the factory should go here.
 		///

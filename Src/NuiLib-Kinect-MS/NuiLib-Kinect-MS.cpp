@@ -86,6 +86,13 @@ void KinectFactory::Dispose() {
 	}
 }
 
+void KinectFactory::SelectSkeleton(FLOAT x, FLOAT y, FLOAT radius) {
+	_SkeletonSelect = true;
+	_targetPositionX = x;
+	_targetPositionY = y;
+	_targetRadius = radius * radius;
+}
+
 bool KinectFactory::Init() {
 	if (_initialised) {
 		cout << "NuiFactory already initialised. Ignored Init request.\n";
@@ -152,7 +159,7 @@ void KinectFactory::EnableSkeleton(bool enable) {
 	if (!_initialised)
 		return;
 	if (enable && !_enabledEvents[SKELETON]) {
-		HRESULT hr = _pNuiSensor->NuiSkeletonTrackingEnable(_eventHandles[SKELETON], 0);
+		HRESULT hr = _pNuiSensor->NuiSkeletonTrackingEnable(_eventHandles[SKELETON], _SkeletonSelect ? NUI_SKELETON_TRACKING_FLAG_TITLE_SETS_TRACKED_SKELETONS : 0);
 		if(!hr) {
 			_enabledEvents[SKELETON] = true;
 			_numEvents++;
@@ -399,7 +406,10 @@ void KinectFactory::Poll(bool fromExternal) {
 			if (!depthUpdated)
 				_debugFrame = _depthFrame.clone();
 			skeletonFrame = frame.dwFrameNumber;
-			ProcessSkeletons(frame);
+			if(_SkeletonSelect)
+				ProcessSkeletonsPosition(frame);
+			else
+				ProcessSkeletons(frame);
 		}
 	} 
 
@@ -482,6 +492,75 @@ void KinectFactory::ProcessSkeletons(NUI_SKELETON_FRAME &frame) {
 		NUI_SKELETON_DATA *skeleton = &frame.SkeletonData[index];
 		_currentSkeleton = skeleton->dwTrackingID;
 		ProcessSkeleton(skeleton);
+	} else if(!skeletonLost) {
+		skeletonLost = true;
+		//No skeleton was found and there had previously been a skeleton
+		cout << "Skeleton lost.\n";
+		for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+			(*i)->SkeletonLost(_currentSkeleton);
+		ProcessLostSkeleton();
+		_currentSkeleton = 0;
+	} else {
+		//No skeleton found, justl like the previous frame
+		//Do nothing
+	}
+}
+
+void KinectFactory::ProcessSkeletonsPosition(NUI_SKELETON_FRAME &frame) {
+	//http://msdn.microsoft.com/en-us/library/jj131024.aspx
+	//_pNuiSensor->NuiTransformSmooth(&frame, NULL);
+	//const NUI_TRANSFORM_SMOOTH_PARAMETERS smooth = {
+		//.8, .2, .2, .02, .05 
+	//};
+	//_pNuiSensor->NuiTransformSmooth(&frame, &smooth);
+	DWORD dwTrackingIDs[2]={0,0};
+	int index = -1;
+	//Iterate through every skeleton
+	FLOAT minRadius = _targetRadius;
+	for (int i = 0; i < NUI_SKELETON_COUNT; i++) {
+		if(frame.SkeletonData[i].eTrackingState != NUI_SKELETON_NOT_TRACKED)
+		{
+		//Check if the current skeleton is tracked
+		FLOAT x = frame.SkeletonData[i].Position.x - _targetPositionX;
+		FLOAT y = frame.SkeletonData[i].Position.z - _targetPositionY;
+		FLOAT radius = (x * x) + (y * y);
+		if (radius < _targetRadius) {
+			//If this is the first tracked skeleton record it in index
+			if (radius < minRadius) {
+				index =  i;
+				minRadius = radius;
+			}
+			DWORD id = frame.SkeletonData[i].dwTrackingID;
+			//If this skeleton is the currently tracked skeleton update it and return
+			if (id != 0 && id == _currentSkeleton) {
+				ProcessSkeleton(&frame.SkeletonData[i]);
+				return;
+			}
+		}
+		}
+	}
+	//If this point is reached either the previously tracked skeleton has been lost
+	//Or there wasn't a previously tracked skeleton
+	if (index != -1) {
+		//If this point is reached a new skeleton has been found
+		if (skeletonLost) {
+			//If there previously hadn't been a skeleton
+			cout << "Skeleton found.\n";
+			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+				(*i)->SkeletonFound(index);
+		} else {
+			//If there was a skeleton before but that has been lost
+			cout << "Skeleton switched. Old " << _currentSkeleton << " New " << frame.SkeletonData[index].dwTrackingID << " i " << index << "\n";
+			for (auto i = _nuiListeners.begin(); i != _nuiListeners.end(); i++)
+				(*i)->SkeletonSwitched(index);
+		}
+		skeletonLost = false;
+
+		NUI_SKELETON_DATA *skeleton = &frame.SkeletonData[index];
+		_currentSkeleton = skeleton->dwTrackingID;
+		dwTrackingIDs[0] = _currentSkeleton;
+		_pNuiSensor->NuiSkeletonSetTrackedSkeletons(dwTrackingIDs);
+		//ProcessSkeleton(skeleton);
 	} else if(!skeletonLost) {
 		skeletonLost = true;
 		//No skeleton was found and there had previously been a skeleton

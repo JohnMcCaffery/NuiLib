@@ -734,6 +734,10 @@ namespace NuiLibDotNet {
 				bool get () { return NuiLibSafe::HasSkeleton(); }
 			}
 
+			static void SelectSkeleton(float x, float y, float radius) {
+				return NuiLibSafe::SelectSkeleton(x, y, radius);
+			}
+
 			static bool Init() {
 				return NuiLibSafe::Init();
 			}

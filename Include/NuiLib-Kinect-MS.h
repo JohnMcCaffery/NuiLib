@@ -117,6 +117,11 @@ namespace NuiLib {
 			HANDLE _eventHandles[3];
 			bool _enabledEvents[3];
 
+			bool _SkeletonSelect;
+			FLOAT _targetPositionX;
+			FLOAT _targetPositionY;
+			FLOAT _targetRadius;
+
 			list<IListener<NUI_SKELETON_DATA>*> _skeletonListeners;
 			list<IListener<NUI_IMAGE_FRAME>*> _colourListeners;
 			list<IListener<NUI_IMAGE_FRAME>*> _depthListeners;
@@ -138,6 +143,7 @@ namespace NuiLib {
 			void Start();
 			void Stop();
 			void ProcessSkeletons(NUI_SKELETON_FRAME &);
+			void ProcessSkeletonsPosition(NUI_SKELETON_FRAME &);
 			void ProcessSkeleton(NUI_SKELETON_DATA *);
 			void ProcessLostSkeleton();
 			void ProcessDepth(NUI_IMAGE_FRAME *);
@@ -155,6 +161,8 @@ namespace NuiLib {
 		public:
 			KinectFactory();
 			virtual ~KinectFactory();
+
+			void SelectSkeleton(FLOAT x, FLOAT y, FLOAT radius);
 
 			bool Init();
 			bool GetAutoPoll();

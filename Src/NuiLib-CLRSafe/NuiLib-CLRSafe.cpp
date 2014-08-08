@@ -65,6 +65,10 @@ cv::Mat depth;
 std::vector<cv::Mat> inArray;
 const double DEPTH_SCALE_FACTOR = 255./65535.;
 
+void NuiLibSafe::SelectSkeleton(float x, float y, float radius) {
+	return NuiLib::NuiFactory()->SelectSkeleton(x, y, radius);
+}
+
 bool NuiLibSafe::Init() {
 	return NuiLib::NuiFactory()->Init();
 }
